@@ -1,0 +1,16 @@
+# Smart Scheduler Environment Variables
+# Copy this content to a file named ".env" in your project root
+# Then fill in your actual API keys and credentials
+
+# OpenAI API Key (for embeddings)
+# Get from: https://platform.openai.com/api-keys
+OPENAI_API_KEY=sk-your_openai_api_key_here
+
+# Supabase Connection Details
+# Get from: Your Supabase Project Settings → API
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_KEY=your_supabase_anon_key_here
+
+# Mem0 API Key (optional for prototype, needed for Tier 3)
+# Get from: https://mem0.ai
+MEM0_API_KEY=your_mem0_api_key_here 
