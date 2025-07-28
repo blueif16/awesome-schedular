@@ -9,7 +9,14 @@ OPENAI_API_KEY=sk-your_openai_api_key_here
 # Supabase Connection Details
 # Get from: Your Supabase Project Settings → API
 SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_KEY=your_supabase_anon_key_here
+
+# Supabase Keys - Use SERVICE_ROLE for prototyping to bypass RLS
+# ANON key: Limited permissions, respects Row Level Security
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
+
+# SERVICE_ROLE key: Full access, bypasses RLS (use for prototyping)
+# ⚠️ NEVER expose this key in client-side code - server only!
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
 
 # Mem0 API Key (optional for prototype, needed for Tier 3)
 # Get from: https://mem0.ai

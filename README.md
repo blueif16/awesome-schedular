@@ -76,7 +76,7 @@ smart-scheduler/
   # .env
   OPENAI_API_KEY=your_key_here
   SUPABASE_URL=your_supabase_url
-  SUPABASE_KEY=your_supabase_anon_key
+  SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
   MEM0_API_KEY=your_mem0_key
   ```
 - [ ] Create GitHub repository
@@ -1425,7 +1425,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
       - MEM0_API_KEY=${MEM0_API_KEY}
 ```
 
