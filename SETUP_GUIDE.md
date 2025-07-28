@@ -44,7 +44,7 @@ You'll need:
    # Edit .env with your credentials:
    OPENAI_API_KEY=your_openai_api_key_here
    SUPABASE_URL=https://your-project.supabase.co
-   SUPABASE_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
    ```
 
 ### Step 4: Run the Prototype
@@ -154,7 +154,7 @@ from supabase import create_client
 import os
 from dotenv import load_dotenv
 load_dotenv()
-client = create_client(os.getenv('SUPABASE_URL'), os.getenv('SUPABASE_KEY'))
+client = create_client(os.getenv('SUPABASE_URL'), os.getenv('SUPABASE_SERVICE_ROLE_KEY'))
 print('✅ Supabase connected!')
 "
 ```

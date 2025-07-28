@@ -17,17 +17,16 @@ class UserRole(str, Enum):
     EXECUTIVE = "executive"
 
 
-class TaskCategory(str, Enum):
-    FOCUSED = "focused"          # Deep work, coding, studying
-    COLLABORATIVE = "collaborative"  # Meetings, team work
-    ADMINISTRATIVE = "administrative"  # Email, planning, admin tasks
-
-
 class User(BaseModel):
     id: UUID
     email: str
     role: UserRole
     timezone: str = "UTC"
+    
+    # Weekly energy pattern (168 elements: 24 hours × 7 days)
+    # Index formula: day_of_week * 24 + hour (0=Sunday 00:00, 167=Saturday 23:59)
+    weekly_energy_pattern: List[float] = Field(default_factory=lambda: [0.5] * 168)
+    
     created_at: datetime
 
 
@@ -36,18 +35,25 @@ class TaskType(BaseModel):
     id: UUID
     user_id: UUID
     task_type: str
-    category: TaskCategory
+    description: Optional[str] = None  # Optional description for better embedding
     
-    # 24-hour arrays (indices 0-23 for hours 00:00-23:59)
-    hourly_scores: List[float] = Field(default_factory=lambda: [0.5] * 24)
-    confidence_scores: List[float] = Field(default_factory=lambda: [0.1] * 24)
-    performance_by_hour: List[float] = Field(default_factory=lambda: [0.5] * 24)
+    # 168-hour weekly array (24 hours × 7 days)
+    # Index formula: day_of_week * 24 + hour (0=Sunday 00:00, 167=Saturday 23:59)
+    weekly_habit_scores: List[float] = Field(default_factory=lambda: [0.0] * 168)
+    
+    # 7x24 confidence matrix (confidence for each time slot)
+    slot_confidence: List[List[float]] = Field(default_factory=lambda: [[0.0]*24 for _ in range(7)])
+    
+    # Completion tracking
+    completion_count: int = 0        # Total number of times this task type has been completed
+    completions_since_last_update: int = 0  # Completions since last mem0 update (resets to 0 after update)
+    last_mem0_update: Optional[datetime] = None  # Track when last updated from mem0 insights
     
     # Task characteristics
-    cognitive_load: float = 0.5      # 0-1: How mentally demanding
-    recovery_hours: float = 0.5      # Hours needed to recover
     typical_duration: float = 1.0    # Average duration in hours
-    importance_score: float = 0.5    # Learned importance
+    importance_score: float = 0.5    # Learned importance from mem0 (0-1)
+    recovery_hours: float = 0.5      # Buffer time needed after this task
+    cognitive_load: float = 0.5      # Task mental difficulty (0-1)
     
     # Vector embedding for similarity
     embedding: Optional[List[float]] = None
@@ -92,7 +98,6 @@ class CreateUserRequest(BaseModel):
 
 class CreateTaskTypeRequest(BaseModel):
     task_type: str
-    category: TaskCategory
     description: Optional[str] = None
 
 
@@ -128,9 +133,29 @@ class TaskTypeSimilarity(BaseModel):
     similarity: float
 
 
-def initialize_neutral_arrays() -> tuple:
-    """Initialize neutral 24-hour arrays for new task types"""
-    hourly_scores = [0.5] * 24      # Neutral preference
-    confidence_scores = [0.1] * 24  # Low confidence initially  
-    performance_by_hour = [0.5] * 24  # Neutral performance
-    return hourly_scores, confidence_scores, performance_by_hour 
+def initialize_neutral_weekly_habit_array() -> List[float]:
+    """Initialize zero 168-hour weekly habit array for new task types"""
+    weekly_habit_scores = [0.0] * 168  # Start from zero for all week
+    return weekly_habit_scores
+
+
+def get_weekly_index(day_of_week: int, hour: int) -> int:
+    """Convert day of week (0=Sunday) and hour (0-23) to weekly array index"""
+    return day_of_week * 24 + hour
+
+
+def get_day_hour_from_index(index: int) -> tuple:
+    """Convert weekly array index back to (day_of_week, hour)"""
+    day_of_week = index // 24
+    hour = index % 24
+    return day_of_week, hour
+
+
+def initialize_neutral_weekly_energy() -> List[float]:
+    """Initialize neutral 168-hour weekly energy pattern for new users"""
+    weekly_energy = [0.5] * 168  # Neutral energy for all 168 hours (24 * 7)
+    return weekly_energy
+
+def initialize_slot_confidence() -> List[List[float]]:
+    """Initialize slot confidence matrix (7x24 = 7 days, 24 hours)"""
+    return [[0.0]*24 for _ in range(7)]

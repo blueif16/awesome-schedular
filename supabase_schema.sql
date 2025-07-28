@@ -10,6 +10,11 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT UNIQUE NOT NULL,
     role TEXT CHECK (role IN ('student', 'pm', 'developer', 'executive')),
     timezone TEXT DEFAULT 'UTC',
+    
+    -- Weekly energy pattern (168 elements: 24 hours × 7 days)
+    -- Index formula: day_of_week * 24 + hour (0=Sunday 00:00, 167=Saturday 23:59)
+    weekly_energy_pattern JSONB DEFAULT '[]',  -- User's energy levels by hour across the week
+    
     created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -20,18 +25,22 @@ CREATE TABLE IF NOT EXISTS task_types (
     
     -- Identity
     task_type TEXT NOT NULL,
-    category TEXT CHECK (category IN ('focused', 'collaborative', 'administrative')),
+    description TEXT,                        -- Optional description for better embedding
     
-    -- Learned patterns (24-hour arrays: indices 0-23 represent hours 00:00-23:59)
-    hourly_scores JSONB DEFAULT '[]',        -- User's preference for this task at each hour
-    confidence_scores JSONB DEFAULT '[]',    -- Confidence in the pattern (0-1)
-    performance_by_hour JSONB DEFAULT '[]', -- Energy/success levels by hour
+    -- Learned patterns (168-hour weekly array: 24 hours × 7 days)
+    -- Index formula: day_of_week * 24 + hour (0=Sunday 00:00, 167=Saturday 23:59)
+    weekly_habit_scores JSONB DEFAULT '[]', -- User's habit scores for this task across the week
+    slot_confidence JSONB DEFAULT '[]',     -- 7x24 confidence matrix for each time slot
     
-    -- Task characteristics  
-    cognitive_load FLOAT DEFAULT 0.5,       -- How mentally demanding (0-1)
-    recovery_hours FLOAT DEFAULT 0.5,       -- Hours needed to recover after
+    completion_count INTEGER DEFAULT 0,     -- Total number of times this task type has been completed
+    completions_since_last_update INTEGER DEFAULT 0, -- Completions since last mem0 update (resets to 0 after update)
+    last_mem0_update TIMESTAMP,            -- Track when last updated from mem0 insights
+    
+    -- Task characteristics
     typical_duration FLOAT DEFAULT 1.0,     -- Average duration in hours
-    importance_score FLOAT DEFAULT 0.5,     -- Learned importance (0-1)
+    importance_score FLOAT DEFAULT 0.5,     -- Learned importance from mem0 (0-1)
+    recovery_hours FLOAT DEFAULT 0.5,       -- Buffer time needed after this task
+    cognitive_load FLOAT DEFAULT 0.5,       -- Task mental difficulty (0-1)
     
     -- Vector for similarity matching
     embedding vector(1536),                 -- OpenAI text-embedding-3-small
@@ -75,7 +84,7 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE INDEX IF NOT EXISTS idx_events_user_time ON events(user_id, scheduled_start);
 CREATE INDEX IF NOT EXISTS idx_task_types_user ON task_types(user_id);
 CREATE INDEX IF NOT EXISTS idx_task_types_embedding ON task_types USING ivfflat (embedding vector_cosine_ops);
-CREATE INDEX IF NOT EXISTS idx_task_types_category ON task_types(user_id, category);
+CREATE INDEX IF NOT EXISTS idx_task_types_completion_count ON task_types(completion_count);
 
 -- Row Level Security
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -98,6 +107,9 @@ CREATE POLICY "Users can access own task types" ON task_types
 CREATE POLICY "Users can access own events" ON events
     FOR ALL USING (TRUE);  -- Simplified for prototype
 
+-- Drop existing function first to avoid return type conflicts
+DROP FUNCTION IF EXISTS match_task_types(vector, float, int, uuid);
+
 -- Vector similarity search function
 CREATE OR REPLACE FUNCTION match_task_types(
     query_embedding vector(1536),
@@ -108,14 +120,15 @@ CREATE OR REPLACE FUNCTION match_task_types(
 RETURNS TABLE (
     id uuid,
     task_type text,
-    category text,
-    hourly_scores jsonb,
-    confidence_scores jsonb,
-    performance_by_hour jsonb,
-    cognitive_load float,
-    recovery_hours float,
+    description text,
+    weekly_habit_scores jsonb,
+    slot_confidence jsonb,
+    completion_count integer,
+    completions_since_last_update integer,
     typical_duration float,
     importance_score float,
+    recovery_hours float,
+    cognitive_load float,
     similarity float
 )
 LANGUAGE plpgsql
@@ -125,14 +138,15 @@ BEGIN
     SELECT
         tt.id,
         tt.task_type,
-        tt.category,
-        tt.hourly_scores,
-        tt.confidence_scores,
-        tt.performance_by_hour,
-        tt.cognitive_load,
-        tt.recovery_hours,
+        tt.description,
+        tt.weekly_habit_scores,
+        tt.slot_confidence,
+        tt.completion_count,
+        tt.completions_since_last_update,
         tt.typical_duration,
         tt.importance_score,
+        tt.recovery_hours,
+        tt.cognitive_load,
         1 - (tt.embedding <=> query_embedding) as similarity
     FROM task_types tt
     WHERE (target_user_id IS NULL OR tt.user_id = target_user_id)
@@ -142,38 +156,73 @@ BEGIN
 END;
 $$;
 
--- Helper function to initialize neutral 24-hour arrays
-CREATE OR REPLACE FUNCTION initialize_neutral_arrays()
-RETURNS jsonb[]
+-- Helper function to initialize neutral 168-hour weekly habit array  
+CREATE OR REPLACE FUNCTION initialize_neutral_weekly_habit_array()
+RETURNS jsonb
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    hourly_scores jsonb;
-    confidence_scores jsonb;
-    performance_scores jsonb;
+    weekly_habit_scores jsonb;
+    i integer;
 BEGIN
-    -- Initialize all hours with neutral values
-    hourly_scores := jsonb_build_array(
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,  -- 00-05: Neutral preference
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,  -- 06-11: Neutral preference  
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,  -- 12-17: Neutral preference
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5   -- 18-23: Neutral preference
-    );
+    -- Initialize with neutral habit pattern for all 168 hours (24 hours × 7 days)
+    weekly_habit_scores := '[]'::jsonb;
     
-    confidence_scores := jsonb_build_array(
-        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,  -- 00-05: Low confidence initially
-        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,  -- 06-11: Low confidence initially
-        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,  -- 12-17: Low confidence initially
-        0.1, 0.1, 0.1, 0.1, 0.1, 0.1   -- 18-23: Low confidence initially
-    );
+    -- Build 168-element array (7 days × 24 hours each)
+    FOR i IN 0..167 LOOP
+        weekly_habit_scores := weekly_habit_scores || jsonb_build_array(0.0);
+    END LOOP;
     
-    performance_scores := jsonb_build_array(
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,  -- 00-05: Neutral performance
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,  -- 06-11: Neutral performance
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,  -- 12-17: Neutral performance
-        0.5, 0.5, 0.5, 0.5, 0.5, 0.5   -- 18-23: Neutral performance
-    );
-    
-    RETURN ARRAY[hourly_scores, confidence_scores, performance_scores];
+    RETURN weekly_habit_scores;
 END;
-$$; 
+$$;
+
+-- Helper function to initialize neutral weekly energy pattern (168 elements)
+CREATE OR REPLACE FUNCTION initialize_neutral_weekly_energy()
+RETURNS jsonb
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    weekly_energy jsonb;
+    daily_pattern jsonb;
+    i integer;
+BEGIN
+    -- Initialize with neutral energy pattern for all 168 hours (24 hours × 7 days)
+    weekly_energy := '[]'::jsonb;
+    
+    -- Build 168-element array (7 days × 24 hours each)
+    FOR i IN 0..167 LOOP
+        weekly_energy := weekly_energy || jsonb_build_array(0.5);
+    END LOOP;
+    
+    RETURN weekly_energy;
+END;
+$$;
+
+-- Helper function to initialize slot confidence matrix (7x24 matrix)
+CREATE OR REPLACE FUNCTION initialize_slot_confidence()
+RETURNS jsonb
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    confidence_matrix jsonb;
+    day_array jsonb;
+    day integer;
+    hour integer;
+BEGIN
+    -- Initialize 7x24 matrix with all zeros (7 days, 24 hours each)
+    confidence_matrix := '[]'::jsonb;
+    
+    FOR day IN 0..6 LOOP
+        day_array := '[]'::jsonb;
+        
+        FOR hour IN 0..23 LOOP
+            day_array := day_array || jsonb_build_array(0.0);
+        END LOOP;
+        
+        confidence_matrix := confidence_matrix || jsonb_build_array(day_array);
+    END LOOP;
+    
+    RETURN confidence_matrix;
+END;
+$$;
