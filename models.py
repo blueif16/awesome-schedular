@@ -107,6 +107,7 @@ class ScheduleEventRequest(BaseModel):
     duration: float = 1.0  # hours
     preferred_date: Optional[datetime] = None
     deadline: Optional[datetime] = None
+    importance_score: float = 0.5  # 0.0-1.0, default moderate importance
 
 
 class CompleteEventRequest(BaseModel):
