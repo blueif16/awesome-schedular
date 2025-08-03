@@ -14,6 +14,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from supabase import create_client, Client
+from typing import List
 
 # Add parent directory to path to import our services
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -137,6 +138,28 @@ class SmartSchedulerAPI:
             "conflicts": []  # Empty for demo
         }
     
+    async def _get_user_energy_pattern(self, user_id: str) -> List[float]:
+        """Fetch user's energy pattern from database (168-element weekly array)"""
+        try:
+            result = self.supabase.table("users").select("weekly_energy_pattern").eq("id", user_id).execute()
+            
+            if result.data and result.data[0].get('weekly_energy_pattern'):
+                energy_pattern = result.data[0]['weekly_energy_pattern']
+                # Ensure we have 168 elements (24 hours × 7 days)
+                if len(energy_pattern) == 168:
+                    return energy_pattern
+                else:
+                    print(f"⚠️ User energy pattern has {len(energy_pattern)} elements, expected 168")
+            
+            # Return neutral energy pattern as fallback (0.5 for all 168 hours)
+            print(f"🔄 Using neutral energy pattern for user {user_id[:8]}...")
+            return [0.5] * 168
+            
+        except Exception as e:
+            print(f"❌ Error fetching user energy pattern: {e}")
+            # Return neutral energy pattern as fallback
+            return [0.5] * 168
+
     async def handle_chat_message(self, content: str, timestamp: str, user_id: str = None) -> dict:
         """Handle chat message and return BackendEventResponse"""
         try:
@@ -163,11 +186,47 @@ class SmartSchedulerAPI:
             )
             
             try:
-                # Schedule the event
-                result = await self.scheduler_service.schedule_event(
-                    user_id=actual_user_id,
-                    request=request
-                )
+                # Fetch user's energy pattern for enhanced behavioral scheduling
+                user_energy_pattern = await self._get_user_energy_pattern(actual_user_id)
+                
+                # Try enhanced behavioral scheduling first (pattern-based)
+                try:
+                    print(f"🎯 Attempting enhanced behavioral scheduling...")
+                    result = await self.scheduler_service.schedule_with_behavioral_patterns(
+                        user_id=actual_user_id,
+                        user_energy_pattern=user_energy_pattern,
+                        request=request,
+                        existing_events=[],  # TODO: Fetch actual existing events
+                        available_periods=None,  # Use default 7-day window
+                        openai_client=None,  # Will trigger LLM fallback if needed
+                        memory_service=None   # TODO: Add memory service if available
+                    )
+                    
+                    print(f"✅ Enhanced behavioral scheduling successful!")
+                    print(f"📊 Scheduling method: {result.get('scheduling_method', 'unknown')}")
+                    
+                    # Add scheduling insights to the response
+                    scheduling_insights = {
+                        'method': result.get('scheduling_method', 'enhanced_behavioral_patterns'),
+                        'scoring_factors': result.get('scoring_factors', {}),
+                        'task_type_used': result.get('task_type_used', {}),
+                        'optimal_slot': result.get('optimal_slot', {})
+                    }
+                    
+                except Exception as enhanced_error:
+                    print(f"⚠️ Enhanced behavioral scheduling failed: {enhanced_error}")
+                    print(f"🔄 Falling back to basic scheduling...")
+                    
+                    # Fallback to basic schedule_event method
+                    result = await self.scheduler_service.schedule_event(
+                        user_id=actual_user_id,
+                        request=request
+                    )
+                    
+                    scheduling_insights = {
+                        'method': 'basic_scheduling_fallback',
+                        'fallback_reason': str(enhanced_error)
+                    }
                 
                 internal_event = result['event']
                 
@@ -193,7 +252,7 @@ class SmartSchedulerAPI:
                 elif any(word in content.lower() for word in ['personal', 'friend', 'family']):
                     category = 'personal'
                 
-                # Build BackendEventResponse
+                # Build BackendEventResponse with scheduling insights
                 event_response = {
                     'success': True,
                     'event': {
@@ -209,7 +268,8 @@ class SmartSchedulerAPI:
                         'category': category,
                         'description': f"Meeting generated from: '{content}'",
                         'priorities': self._generate_priorities_array(priority),
-                        'availability': self._generate_availability_info()
+                        'availability': self._generate_availability_info(),
+                        'scheduling_insights': scheduling_insights  # Enhanced scheduling metadata
                     },
                     'message': "I've created a meeting proposal for you!"
                 }
@@ -623,6 +683,244 @@ def legacy_schedule():
             'success': False,
             'message': f'Server error: {str(e)}'
         }), 500
+
+@app.route('/api/schedule/unified', methods=['POST'])
+def unified_schedule():
+    """
+    Unified scheduling endpoint using behavioral patterns and automatic rescheduling
+    
+    Request format:
+    {
+        "title": "Critical Client Meeting",
+        "description": "Emergency meeting with key stakeholder",
+        "duration": 2.0,
+        "importance_score": 0.9,
+        "deadline": "2024-08-01T14:00:00Z",
+        "user_id": "optional_user_id"
+    }
+    """
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        title = data.get('title')
+        if not title:
+            return jsonify({
+                'success': False,
+                'message': 'Title is required'
+            }), 400
+        
+        # Extract scheduling parameters
+        description = data.get('description', '')
+        duration = float(data.get('duration', 1.0))  # Default 1 hour
+        importance_score = float(data.get('importance_score', 0.5))
+        user_id = data.get('user_id', scheduler_api.demo_user_id)
+        
+        # Parse deadline if provided
+        deadline = None
+        if data.get('deadline'):
+            try:
+                deadline = datetime.fromisoformat(data['deadline'].replace('Z', '+00:00'))
+            except Exception as e:
+                print(f"⚠️ Invalid deadline format: {e}")
+        
+        # Create scheduling request
+        from models import ScheduleEventRequest
+        schedule_request = ScheduleEventRequest(
+            title=title,
+            description=description,
+            duration=duration,
+            deadline=deadline,
+            importance_score=importance_score
+        )
+        
+        # Run scheduling in async context
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            # Get user energy pattern
+            user_energy_pattern = loop.run_until_complete(
+                scheduler_api._get_user_energy_pattern(user_id)
+            )
+            
+            # Get existing events from database
+            existing_events = []
+            try:
+                # Fetch existing events from database
+                events_result = scheduler_api.supabase.table("events").select("*").eq("user_id", user_id).execute()
+                
+                if events_result.data:
+                    for event_data in events_result.data:
+                        # Parse datetime fields
+                        start_time = datetime.fromisoformat(event_data['scheduled_start'])
+                        end_time = datetime.fromisoformat(event_data['scheduled_end'])
+                        
+                        existing_events.append({
+                            'id': event_data['id'],
+                            'title': event_data['title'],
+                            'description': event_data.get('description', ''),
+                            'scheduled_start': start_time,
+                            'scheduled_end': end_time,
+                            'calculated_priority': event_data.get('calculated_priority', 0.5),
+                            'task_type_id': event_data.get('task_type_id')
+                        })
+                        
+                print(f"📅 Found {len(existing_events)} existing events for user {user_id[:8]}...")
+                        
+            except Exception as e:
+                print(f"⚠️ Could not fetch existing events: {e}")
+                existing_events = []  # Continue with empty list
+            
+            # Call unified scheduling
+            result = loop.run_until_complete(
+                scheduler_api.scheduler_service.schedule_with_unified_scoring(
+                    user_id=user_id,
+                    user_energy_pattern=user_energy_pattern,
+                    request=schedule_request,
+                    existing_events=existing_events,
+                    search_window_days=7
+                )
+            )
+            
+            # Format response for frontend
+            response_data = {
+                'success': True,
+                'event': {
+                    'id': result['event']['id'],
+                    'title': result['event']['title'],
+                    'description': result['event'].get('description', ''),
+                    'startTime': result['event']['scheduled_start'].isoformat(),
+                    'endTime': result['event']['scheduled_end'].isoformat(),
+                    'duration': int(duration * 60),  # Convert to minutes for frontend
+                    'priority': _map_priority_score_to_level(result['event']['calculated_priority']),
+                    'type': _map_task_type_to_frontend(result['task_type_used']['name']),
+                    'color': _get_task_color_by_priority(result['event']['calculated_priority'])
+                },
+                'scheduling_method': result['scheduling_method'],
+                'slot_score': result.get('slot_score', 0.0),
+                'rescheduled_events': [],
+                'rescheduling_summary': result.get('rescheduling_summary', {}),
+                'task_type_used': result['task_type_used']
+            }
+            
+            # Format rescheduled events if any
+            if result.get('rescheduled_events'):
+                response_data['rescheduled_events'] = []
+                for rescheduled in result['rescheduled_events']:
+                    original_event = rescheduled['original_event']
+                    response_data['rescheduled_events'].append({
+                        'id': original_event['id'],
+                        'title': original_event['title'],
+                        'original_start': original_event['scheduled_start'].isoformat(),
+                        'original_end': original_event['scheduled_end'].isoformat(),
+                        'new_start': rescheduled['new_start'].isoformat(),
+                        'new_end': rescheduled['new_end'].isoformat(),
+                        'score_change': rescheduled.get('score_change', 0.0)
+                    })
+            
+            return jsonify(response_data)
+            
+        finally:
+            loop.close()
+        
+    except Exception as e:
+        print(f"❌ Unified scheduling error: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        return jsonify({
+            'success': False,
+            'message': f'Scheduling failed: {str(e)}',
+            'error_type': type(e).__name__
+        }), 500
+
+def _map_priority_score_to_level(score: float) -> str:
+    """Map numerical priority score to frontend priority level"""
+    if score >= 0.7:
+        return 'high'
+    elif score >= 0.4:
+        return 'medium'
+    else:
+        return 'low'
+
+def _map_task_type_to_frontend(task_type_name: str) -> str:
+    """Map backend task type to frontend TaskType"""
+    # Simple mapping - could be enhanced with more sophisticated matching
+    lower_name = task_type_name.lower()
+    
+    if 'meeting' in lower_name or 'call' in lower_name:
+        return 'meeting'
+    elif 'workout' in lower_name or 'exercise' in lower_name or 'gym' in lower_name:
+        return 'workout'
+    elif 'project' in lower_name or 'work' in lower_name:
+        return 'project'
+    elif 'study' in lower_name or 'learn' in lower_name or 'read' in lower_name:
+        return 'study'
+    elif 'date' in lower_name or 'dinner' in lower_name:
+        return 'date'
+    else:
+                 return 'personal'
+
+def _get_task_color_by_priority(priority_score: float) -> str:
+    """Get color for task based on priority score"""
+    if priority_score >= 0.7:
+        return '#ef4444'  # red for high priority
+    elif priority_score >= 0.4:
+        return '#f59e0b'  # amber for medium priority
+    else:
+        return '#10b981'  # green for low priority
+
+@app.route('/api/events', methods=['GET'])
+def get_user_events():
+    """Get all events for a user - used by frontend calendar"""
+    try:
+        user_id = request.args.get('user_id', scheduler_api.demo_user_id)
+        start_date = request.args.get('start_date')  # Optional date filter
+        end_date = request.args.get('end_date')
+        
+        # Fetch events from database
+        query = scheduler_api.supabase.table("events").select("*").eq("user_id", user_id)
+        
+        if start_date and end_date:
+            query = query.gte("scheduled_start", start_date).lte("scheduled_end", end_date)
+        
+        events_result = query.execute()
+        
+        frontend_events = []
+        if events_result.data:
+            for event_data in events_result.data:
+                # Parse datetime fields
+                start_time = datetime.fromisoformat(event_data['scheduled_start'])
+                end_time = datetime.fromisoformat(event_data['scheduled_end'])
+                duration_minutes = int((end_time - start_time).total_seconds() / 60)
+                
+                # Convert to frontend format
+                frontend_event = {
+                    'id': event_data['id'],
+                    'title': event_data['title'],
+                    'description': event_data.get('description', ''),
+                    'startTime': start_time.isoformat(),
+                    'endTime': end_time.isoformat(),
+                    'duration': duration_minutes,
+                    'priority': _map_priority_score_to_level(event_data.get('calculated_priority', 0.5)),
+                    'type': _map_task_type_to_frontend(event_data.get('title', '')),
+                                 'color': _get_task_color_by_priority(event_data.get('calculated_priority', 0.5))
+                 }
+                frontend_events.append(frontend_event)
+        
+        return jsonify({
+            'success': True,
+            'events': frontend_events,
+            'count': len(frontend_events)
+        })
+        
+    except Exception as e:
+        print(f"❌ Error fetching events: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Failed to fetch events: {str(e)}'
+                 }), 500
 
 @app.route('/demo-status', methods=['GET'])
 def demo_status():

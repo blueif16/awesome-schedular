@@ -353,7 +353,7 @@ class SchedulerService:
             print(f"🚀 SCHEDULER: Calling TaskTypeService.create_task_type('{request.title}')")
             try:
                 task_type = await self.task_type_service.create_task_type(
-                    user_id, request.title, request.description
+                    user_id, request.title, request.description, self
                 )
                 print(f"✅ SCHEDULER: Task type created successfully: {task_type.task_type}")
             except Exception as create_error:
@@ -439,15 +439,21 @@ class SchedulerService:
             }
         } 
     
-    async def schedule_with_habit(self, 
-                                user_id: str, 
-                                request: ScheduleEventRequest,
-                                existing_events: List[Dict],
-                                available_periods: Optional[List[Tuple[datetime, datetime]]] = None,
-                                openai_client = None,
-                                memory_service = None) -> Dict:
+    async def schedule_with_behavioral_patterns(self, 
+                                          user_id: str,
+                                          user_energy_pattern: List[float], 
+                                          request: ScheduleEventRequest,
+                                          existing_events: List[Dict],
+                                          available_periods: Optional[List[Tuple[datetime, datetime]]] = None,
+                                          openai_client = None,
+                                          memory_service = None) -> Dict:
         """
-        Passive scheduling using pure behavioral patterns (no LLM)
+        Enhanced behavioral scheduling using multiple pattern factors:
+        - Task habit patterns (when user typically does this task)
+        - User energy patterns (when user has highest/lowest energy)
+        - Cognitive load matching (high-cognitive tasks during high-energy periods)
+        - Duration optimization (respecting typical duration patterns)
+        
         Uses RAG to find similar task_type, falls back to LLM if no good match
         """
         
@@ -472,15 +478,15 @@ class SchedulerService:
                 end_date = start_date + timedelta(days=7)
                 available_periods = [(start_date, end_date)]
             
-            # 3. Pure behavioral scoring - find optimal slot
-            optimal_result = await self.find_optimal_slot(
-                user_id, task_type, request.duration, available_periods, existing_events
+            # 3. Enhanced behavioral scoring considering all patterns
+            optimal_result = await self.find_optimal_slot_with_energy(
+                user_id, task_type, user_energy_pattern, request.duration, available_periods, existing_events
             )
             
             if not optimal_result:
-                raise ValueError("No available time slots found using behavioral patterns")
+                raise ValueError("No available time slots found using enhanced behavioral patterns")
             
-            # 4. Create event with behavioral scoring only
+            # 4. Create event with comprehensive behavioral scoring
             optimal_slot = optimal_result['optimal_slot']
             
             return {
@@ -494,13 +500,20 @@ class SchedulerService:
                     "scheduled_end": optimal_slot['end_time'],
                     "calculated_priority": optimal_slot['score']
                 },
-                "scheduling_method": "behavioral_patterns_only",
+                "scheduling_method": "enhanced_behavioral_patterns",
+                "scoring_factors": {
+                    "habit_patterns": True,
+                    "energy_cognitive_fit": True
+                },
                 "optimal_slot": optimal_slot,
                 "alternatives": optimal_result.get('alternatives', []),
+                "pattern_insights": optimal_result.get('pattern_insights', {}),
                 "task_type_used": {
                     "id": str(task_type.id),
                     "name": task_type.task_type,
-                    "similarity_score": similar_task.similarity
+                    "similarity_score": similar_task.similarity,
+                    "cognitive_load": task_type.cognitive_load,
+                    "typical_duration": task_type.typical_duration
                 }
             }
         else:
@@ -550,7 +563,7 @@ class SchedulerService:
             print(f"🆕 Creating new task type for LLM: '{request.title}'")
             try:
                 task_type = await self.task_type_service.create_task_type(
-                    user_id, request.title, request.description
+                    user_id, request.title, request.description, self
                 )
             except Exception as create_error:
                 if "duplicate key" in str(create_error).lower():
@@ -1078,3 +1091,936 @@ Be concise! Output only the pattern string.
                 continue
         
         return patterns 
+    
+    async def analyze_task_characteristics(self, openai_client, task_type: str, description: str = None) -> Dict[str, float]:
+        """Use LLM to analyze task characteristics: cognitive load, importance, duration, and recovery time"""
+        
+        # Prepare task context for analysis
+        task_context = f"Task: {task_type}"
+        if description:
+            task_context += f"\nDescription: {description}"
+        
+        function_schema = {
+            "name": "analyze_task_characteristics",
+            "description": "Analyze task characteristics",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "cognitive_load": {
+                        "type": "number",
+                        "description": "Mental effort (0.0-1.0): 0.2=routine, 0.5=moderate, 0.8=complex",
+                        "minimum": 0.0,
+                        "maximum": 1.0
+                    },
+                    "importance_score": {
+                        "type": "number", 
+                        "description": "Task importance (0.0-1.0): 0.3=low, 0.5=normal, 0.8=critical",
+                        "minimum": 0.0,
+                        "maximum": 1.0
+                    },
+                    "typical_duration": {
+                        "type": "number",
+                        "description": "Duration in hours (0.25-8.0)",
+                        "minimum": 0.25,
+                        "maximum": 8.0
+                    },
+                    "recovery_hours": {
+                        "type": "number",
+                        "description": "Recovery time (0.0-2.0)",
+                        "minimum": 0.0,
+                        "maximum": 2.0
+                    }
+                },
+                "required": ["cognitive_load", "importance_score"]
+            }
+        }
+        
+        analysis_prompt = f"""
+Analyze: {task_context}
+
+Examples:
+- "Email": cognitive_load=0.2, importance=0.4
+- "Strategic planning": cognitive_load=0.8, importance=0.8  
+- "Code review": cognitive_load=0.7, importance=0.6
+- "Social media": cognitive_load=0.2, importance=0.3
+"""
+        
+        try:
+            response = openai_client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "Analyze task cognitive load (mental effort) and importance. Be precise."
+                    },
+                    {
+                        "role": "user", 
+                        "content": analysis_prompt
+                    }
+                ],
+                functions=[function_schema],
+                function_call={"name": "analyze_task_characteristics"},
+                temperature=0.3
+            )
+            
+            function_call = response.choices[0].message.function_call
+            if function_call and function_call.name == "analyze_task_characteristics":
+                result = json.loads(function_call.arguments)
+                
+                # Validate and clamp values with smart defaults
+                cognitive_load = max(0.0, min(1.0, result.get("cognitive_load", 0.5)))
+                importance_score = max(0.0, min(1.0, result.get("importance_score", 0.5)))
+                
+                # Smart defaults based on cognitive load if not provided
+                typical_duration = result.get("typical_duration")
+                if typical_duration is None:
+                    # Higher cognitive load = longer typical duration
+                    typical_duration = 0.5 + (cognitive_load * 2.0)  # 0.5-2.5 hours
+                typical_duration = max(0.25, min(8.0, typical_duration))
+                
+                recovery_hours = result.get("recovery_hours")
+                if recovery_hours is None:
+                    # Recovery scales with cognitive load
+                    recovery_hours = cognitive_load * 0.6  # 0.0-0.6 hours
+                recovery_hours = max(0.0, min(2.0, recovery_hours))
+                
+                analysis = {
+                    "cognitive_load": cognitive_load,
+                    "importance_score": importance_score,
+                    "typical_duration": typical_duration,
+                    "recovery_hours": recovery_hours,
+                    "reasoning": f"LLM analysis: cognitive={cognitive_load:.1f}, importance={importance_score:.1f}"
+                }
+                
+                print(f"   💭 LLM Result: {analysis['reasoning']}")
+                return analysis
+            else:
+                raise ValueError("LLM did not return expected function call")
+                
+        except Exception as e:
+            print(f"   ❌ Error in LLM task analysis: {e}")
+            # Return intelligent defaults based on task keywords
+            return self._get_fallback_task_analysis(task_type, description)
+    
+    def _get_fallback_task_analysis(self, task_type: str, description: str = None) -> Dict[str, float]:
+        """Provide intelligent fallback analysis based on task keywords"""
+        
+        task_text = f"{task_type} {description or ''}".lower()
+        
+        # Default values
+        cognitive_load = 0.5
+        importance_score = 0.5
+        typical_duration = 1.0
+        recovery_hours = 0.3
+        
+        # Keyword-based adjustments
+        high_cognitive_keywords = ['analysis', 'planning', 'design', 'programming', 'research', 'strategy', 'complex', 'technical', 'creative', 'presentation']
+        low_cognitive_keywords = ['email', 'check', 'review', 'update', 'routine', 'admin', 'simple', 'quick']
+        
+        high_importance_keywords = ['critical', 'urgent', 'client', 'meeting', 'ceo', 'presentation', 'deadline', 'important', 'emergency']
+        low_importance_keywords = ['optional', 'later', 'when possible', 'free time', 'break', 'casual']
+        
+        long_duration_keywords = ['workshop', 'training', 'session', 'deep', 'comprehensive', 'full', 'complete']
+        short_duration_keywords = ['quick', 'brief', 'check', 'update', 'short', 'scan']
+        
+        # Adjust cognitive load
+        if any(keyword in task_text for keyword in high_cognitive_keywords):
+            cognitive_load = 0.7
+        elif any(keyword in task_text for keyword in low_cognitive_keywords):
+            cognitive_load = 0.3
+            
+        # Adjust importance
+        if any(keyword in task_text for keyword in high_importance_keywords):
+            importance_score = 0.8
+        elif any(keyword in task_text for keyword in low_importance_keywords):
+            importance_score = 0.3
+            
+        # Adjust duration
+        if any(keyword in task_text for keyword in long_duration_keywords):
+            typical_duration = 2.5
+        elif any(keyword in task_text for keyword in short_duration_keywords):
+            typical_duration = 0.5
+            
+        # Adjust recovery based on cognitive load
+        recovery_hours = cognitive_load * 0.5  # Higher cognitive load = more recovery
+        
+        print(f"   🔄 Using keyword-based fallback analysis")
+        return {
+            "cognitive_load": cognitive_load,
+            "importance_score": importance_score,
+            "typical_duration": typical_duration,
+            "recovery_hours": recovery_hours,
+            "reasoning": "Keyword-based fallback analysis"
+        }
+
+    async def find_optimal_slot_with_energy(self, user_id: str, 
+                                           task_type: TaskType,
+                                           user_energy_pattern: List[float],
+                                           duration: float,
+                                           available_periods: List[Tuple[datetime, datetime]],
+                                           existing_events: List[Dict]) -> Optional[Dict]:
+        """Enhanced slot finding using comprehensive behavioral patterns:
+        - Task habit patterns (when user typically does this task)
+        - User energy patterns (when user has highest/lowest energy) 
+        - Cognitive load matching (high-cognitive tasks during high-energy periods)
+        - Duration optimization (respecting typical duration vs requested duration)
+        """
+        
+        slot_candidates = []
+        
+        # Search within each available time period
+        for period_start, period_end in available_periods:
+            # Try each potential start time (30-min intervals for speed)
+            current_time = period_start.replace(minute=0, second=0, microsecond=0)
+            
+            # Ensure we start at the beginning of the period or later
+            if current_time < period_start:
+                current_time = period_start
+            
+            while current_time + timedelta(hours=duration) <= period_end:
+                # Check basic availability
+                if self.is_slot_available(current_time, duration, existing_events):
+                    
+                    # Calculate comprehensive score using all behavioral factors
+                    score = self.calculate_enhanced_slot_score(
+                        current_time, 
+                        duration, 
+                        task_type,
+                        user_energy_pattern,
+                        existing_events
+                    )
+                    
+                    # Store candidate with detailed scoring
+                    slot_candidates.append({
+                        'start_time': current_time,
+                        'end_time': current_time + timedelta(hours=duration),
+                        'score': score,
+                        'reasoning': self.generate_enhanced_slot_reasoning(
+                            current_time, duration, task_type, user_energy_pattern, score
+                        ),
+                        'period': f"{period_start.strftime('%m/%d %H:%M')}-{period_end.strftime('%H:%M')}"
+                    })
+                
+                # Move to next 30-minute interval
+                current_time += timedelta(minutes=30)
+        
+        if not slot_candidates:
+            return None
+        
+        # Sort by score and return best option with reasoning
+        best_slots = sorted(slot_candidates, key=lambda x: x['score'], reverse=True)
+        
+        return {
+            'optimal_slot': best_slots[0],
+            'alternatives': best_slots[1:3],  # Top 3 alternatives
+            'pattern_insights': self.get_enhanced_pattern_insights(task_type, user_energy_pattern),
+            'schedule_optimization': self.analyze_schedule_fit(
+                best_slots[0], existing_events, task_type
+            ),
+            'periods_searched': len(available_periods),
+            'total_candidates': len(slot_candidates)
+        }
+
+    def calculate_enhanced_slot_score(self, start_time: datetime, 
+                           duration: float, 
+                           task_type: TaskType,
+                           user_energy_pattern: List[float],
+                           existing_events: List[Dict] = None) -> float:
+        """Calculate comprehensive score for a time slot using enhanced behavioral patterns"""
+        
+        # Get patterns from task_type (Tier 2)
+        weekly_habit_scores = task_type.weekly_habit_scores  # 168-hour weekly patterns
+        slot_confidence = task_type.slot_confidence          # 7x24 confidence matrix
+        cognitive_load = task_type.cognitive_load
+        recovery_hours = task_type.recovery_hours
+        
+        # Get user energy patterns (Tier 3)
+        user_energy_scores = user_energy_pattern
+        
+        total_score = 0
+        total_weight = 0
+        
+        # Score each hour the task spans
+        current_hour = start_time.hour
+        remaining_duration = duration
+        hour_scores = []
+        
+        while remaining_duration > 0:
+            hour_fraction = min(1.0, remaining_duration)
+            hour_index = current_hour % 24
+            # Convert Python weekday (0=Monday) to our schema (0=Sunday)
+            python_weekday = start_time.weekday()  # 0=Monday, 6=Sunday
+            day_of_week = (python_weekday + 1) % 7  # Convert to 0=Sunday, 6=Saturday
+            
+            # Convert to weekly index (day_of_week * 24 + hour)
+            weekly_index = day_of_week * 24 + hour_index
+            
+            # Get pattern scores from Tier 2 arrays
+            if weekly_index < len(weekly_habit_scores):
+                preference = weekly_habit_scores[weekly_index]  # Weekly habit pattern
+            else:
+                preference = 0.5  # Neutral fallback
+            
+            # Get confidence from 7x24 matrix
+            if (day_of_week < len(slot_confidence) and 
+                hour_index < len(slot_confidence[day_of_week])):
+                confidence = slot_confidence[day_of_week][hour_index]
+            else:
+                confidence = 0.1  # Low confidence fallback
+            
+            # Get user energy score at this weekly time
+            if weekly_index < len(user_energy_scores):
+                energy_score = user_energy_scores[weekly_index]
+            else:
+                energy_score = 0.5  # Neutral fallback
+            
+            # Enhanced scoring combining all factors:
+            # 1. Task habit preference (50% weight)
+            # 2. Energy-cognitive fit (50% weight) - energy adjusted for cognitive load requirements
+            habit_component = preference * 0.5
+            
+            # Energy-cognitive fit: adjust energy score based on task's cognitive demands
+            if cognitive_load > 0.7:  # High cognitive load task
+                # High-cognitive tasks need high energy - penalize low energy periods
+                energy_cognitive_fit = energy_score  # Direct energy score (0.0-1.0)
+            elif cognitive_load < 0.3:  # Low cognitive load task  
+                # Low-cognitive tasks can work with lower energy - boost low energy periods
+                energy_cognitive_fit = 1.0 - (1.0 - energy_score) * 0.5  # Reduce penalty for low energy
+            else:  # Medium cognitive load
+                # Medium-cognitive tasks have moderate energy requirements
+                energy_cognitive_fit = energy_score * 0.8 + 0.2  # Slight boost across all energy levels
+            
+            energy_component = energy_cognitive_fit * 0.5
+            
+            base_score = habit_component + energy_component
+            weighted_score = base_score * max(0.1, confidence) * hour_fraction
+            
+            hour_scores.append({
+                'hour': current_hour,
+                'base_score': base_score,
+                'confidence': confidence,
+                'energy_score': energy_score,
+                'habit_preference': preference,
+                'energy_cognitive_fit': energy_cognitive_fit,
+                'weighted_score': weighted_score
+            })
+            
+            total_score += weighted_score
+            total_weight += confidence * hour_fraction
+            
+            remaining_duration -= hour_fraction
+            current_hour += 1
+        
+        # Base score from patterns
+        pattern_score = total_score / total_weight if total_weight > 0 else 0.5
+        
+
+        
+        # Apply additional cognitive load penalty if average energy is too low
+        avg_energy = sum(h['energy_score'] for h in hour_scores) / len(hour_scores)
+        if cognitive_load > 0.7 and avg_energy < 0.4:
+            pattern_score *= 0.6  # Strong penalty for high-cognitive tasks during very low energy
+        elif cognitive_load > 0.5 and avg_energy < 0.3:
+            pattern_score *= 0.7  # Moderate penalty
+        
+        # Check recovery time from previous tasks
+        recovery_penalty = self.calculate_recovery_penalty(
+            start_time, existing_events or [], recovery_hours
+        )
+        
+        final_score = pattern_score * recovery_penalty
+        
+        return min(1.0, max(0.1, final_score))  # Clamp between 0.1-1.0
+
+    def generate_enhanced_slot_reasoning(self, start_time: datetime, 
+                              duration: float, 
+                              task_type: TaskType,
+                              user_energy_pattern: List[float],
+                              score: float) -> str:
+        """Generate human-readable reasoning for slot selection using enhanced patterns"""
+        hour = start_time.hour
+        day_of_week = start_time.weekday()  # 0=Monday, 6=Sunday
+        weekly_index = day_of_week * 24 + hour
+        
+        # Get pattern data from weekly arrays
+        if weekly_index < len(task_type.weekly_habit_scores):
+            preference = task_type.weekly_habit_scores[weekly_index]
+        else:
+            preference = 0.5  # Neutral fallback
+            
+        # Get confidence from 7x24 matrix
+        if (day_of_week < len(task_type.slot_confidence) and 
+            hour < len(task_type.slot_confidence[day_of_week])):
+            confidence = task_type.slot_confidence[day_of_week][hour]
+        else:
+            confidence = 0.1  # Low confidence fallback
+            
+        cognitive_load = task_type.cognitive_load
+        
+        reasoning_parts = []
+        
+        # Time preference reasoning
+        if preference > 0.7:
+            reasoning_parts.append(f"High preference for {task_type.task_type} at {hour}:00")
+        elif preference < 0.3:
+            reasoning_parts.append(f"Low preference for {task_type.task_type} at {hour}:00")
+        
+        # Cognitive load reasoning with energy matching
+        if cognitive_load > 0.7:
+            reasoning_parts.append("High-cognitive task")
+        elif cognitive_load < 0.3:
+            reasoning_parts.append("Low-cognitive task")
+        
+        # Energy level reasoning
+        energy_score = user_energy_pattern[weekly_index] if weekly_index < len(user_energy_pattern) else 0.5
+        if energy_score > 0.7:
+            reasoning_parts.append("High energy period")
+        elif energy_score < 0.3:
+            reasoning_parts.append("Low energy period")
+        
+        # Energy-cognitive fit reasoning
+        if cognitive_load > 0.7:  # High cognitive load
+            if energy_score > 0.7:
+                reasoning_parts.append("High-cognitive task during high energy (excellent fit)")
+            elif energy_score < 0.4:
+                reasoning_parts.append("High-cognitive task during low energy (poor fit)")
+        elif cognitive_load < 0.3:  # Low cognitive load
+            if energy_score < 0.4:
+                reasoning_parts.append("Low-cognitive task during low energy (good fit)")
+            else:
+                reasoning_parts.append("Low-cognitive task (flexible energy requirements)")
+        
+        # Confidence level
+        if confidence > 0.8:
+            reasoning_parts.append("High confidence in pattern")
+        elif confidence < 0.3:
+            reasoning_parts.append("Limited historical data")
+        
+        return " • ".join(reasoning_parts) if reasoning_parts else f"Score: {score:.2f}"
+
+    def get_enhanced_pattern_insights(self, task_type: TaskType, user_energy_pattern: List[float]) -> Dict:
+        """Extract key insights from enhanced behavioral patterns"""
+        weekly_habit_scores = task_type.weekly_habit_scores
+        
+        # Find peak hours across the week (convert weekly index back to hours)
+        peak_hours = []
+        if weekly_habit_scores:
+            for i, score in enumerate(weekly_habit_scores):
+                if score > 0.7:
+                    # Convert weekly index back to hour (0-23)
+                    hour = i % 24
+                    if hour not in peak_hours:
+                        peak_hours.append(hour)
+        
+        # Find peak energy hours (highest energy scores)
+        peak_energy_hours = []
+        if user_energy_pattern:
+            max_energy_score = max(user_energy_pattern)
+            for i, energy_score in enumerate(user_energy_pattern):
+                if energy_score > 0.7: # High energy threshold
+                    if i not in peak_energy_hours:
+                        peak_energy_hours.append(i)
+        
+        return {
+            'best_hours': peak_hours,
+            'cognitive_load': task_type.cognitive_load,
+            'typical_duration': task_type.typical_duration,
+            'recovery_needed': task_type.recovery_hours,
+            'total_completions': task_type.completion_count,
+            'peak_energy_hours': peak_energy_hours
+        } 
+
+    def generate_comprehensive_time_window_scores(self, user_id: str, 
+                                                 user_energy_pattern: List[float],
+                                                 search_window_days: int = 7) -> List[Dict]:
+        """Generate scored time slots for entire window - foundation for unified scheduling"""
+        
+        time_slots = []
+        start_time = self._get_next_clean_hour(datetime.now())
+        end_time = start_time + timedelta(days=search_window_days)
+        
+        print(f"🕒 Generating time window scores from {start_time.strftime('%m/%d %H:%M')} to {end_time.strftime('%m/%d %H:%M')}")
+        
+        # Generate all possible 30-minute slots in window
+        current_time = start_time
+        slot_count = 0
+        
+        while current_time < end_time:
+            slot = {
+                'start_time': current_time,
+                'end_time': current_time + timedelta(minutes=30),
+                'is_free': True,
+                'occupying_event': None,
+                'occupying_event_priority': 0.0,
+                'behavioral_scores': {},  # Will store scores for different task types
+                'weekly_index': self._get_weekly_index(current_time)
+            }
+            time_slots.append(slot)
+            current_time += timedelta(minutes=30)
+            slot_count += 1
+        
+        print(f"✅ Generated {slot_count} time slots ({slot_count/48:.1f} days)")
+        return time_slots
+    
+    def _get_weekly_index(self, dt: datetime) -> int:
+        """Get weekly index (0-167) for a datetime"""
+        # Convert Python weekday (0=Monday) to our schema (0=Sunday)
+        python_weekday = dt.weekday()  # 0=Monday, 6=Sunday
+        day_of_week = (python_weekday + 1) % 7  # Convert to 0=Sunday, 6=Saturday
+        return day_of_week * 24 + dt.hour
+    
+    def mark_busy_slots(self, time_slots: List[Dict], existing_events: List[Dict]) -> None:
+        """Mark time slots as busy and store occupying event information"""
+        
+        busy_count = 0
+        for event in existing_events:
+            event_start = event['scheduled_start']
+            event_end = event['scheduled_end']
+            event_priority = event.get('calculated_priority', 0.5)
+            
+            # Mark all overlapping slots as busy
+            for slot in time_slots:
+                if (slot['start_time'] < event_end and slot['end_time'] > event_start):
+                    slot['is_free'] = False
+                    slot['occupying_event'] = event
+                    slot['occupying_event_priority'] = event_priority
+                    busy_count += 1
+        
+        print(f"📅 Marked {busy_count} slots as busy from {len(existing_events)} existing events")
+    
+    def calculate_event_priority(self, request_or_event, task_type: TaskType = None) -> float:
+        """Unified priority calculation using task_type.importance_score + deadline urgency"""
+        
+        # For existing events, use stored priority
+        if isinstance(request_or_event, dict) and 'calculated_priority' in request_or_event:
+            return request_or_event['calculated_priority']
+        
+        # For new requests, use task_type.importance_score if available
+        if task_type:
+            base_importance = task_type.importance_score  # Use learned importance from task type
+        else:
+            base_importance = getattr(request_or_event, 'importance_score', 0.5)
+        
+        # Calculate deadline urgency (if deadline provided)
+        if hasattr(request_or_event, 'deadline') and request_or_event.deadline:
+            time_to_deadline = (request_or_event.deadline - datetime.now()).total_seconds() / 3600
+            if time_to_deadline <= 0:
+                deadline_urgency = 1.0  # Past due
+            elif time_to_deadline <= 24:
+                deadline_urgency = 0.9  # Within 24 hours
+            elif time_to_deadline <= 72:
+                deadline_urgency = 0.7  # Within 3 days
+            else:
+                deadline_urgency = max(0.1, 1.0 - (time_to_deadline / (7*24)))  # Decay over week
+        else:
+            deadline_urgency = 0.3  # No deadline = moderate urgency
+        
+        # Combine: 70% learned importance, 30% deadline urgency
+        priority = (base_importance * 0.7) + (deadline_urgency * 0.3)
+        final_priority = min(1.0, max(0.1, priority))
+        
+        return final_priority
+    
+    def score_slots_for_task(self, time_slots: List[Dict], 
+                           task_type: TaskType,
+                           user_energy_pattern: List[float],
+                           duration: float) -> None:
+        """Score all time slots for a specific task type using our existing behavioral algorithm"""
+        
+        print(f"🎯 Scoring slots for task: {task_type.task_type} (cognitive load: {task_type.cognitive_load})")
+        
+        for slot in time_slots:
+            # Use our existing enhanced scoring algorithm
+            score = self._calculate_slot_behavioral_score(
+                slot['start_time'], 
+                duration,
+                task_type, 
+                user_energy_pattern
+            )
+            
+            # Store the score for this task type
+            slot['behavioral_scores'][task_type.task_type] = score
+    
+    def _calculate_slot_behavioral_score(self, start_time: datetime,
+                                       duration: float,
+                                       task_type: TaskType,
+                                       user_energy_pattern: List[float]) -> float:
+        """Calculate behavioral score for a single time slot (simplified version of our main algorithm)"""
+        
+        weekly_index = self._get_weekly_index(start_time)
+        
+        # Get habit preference
+        if weekly_index < len(task_type.weekly_habit_scores):
+            preference = task_type.weekly_habit_scores[weekly_index]
+        else:
+            preference = 0.5
+        
+        # Get energy score
+        if weekly_index < len(user_energy_pattern):
+            energy_score = user_energy_pattern[weekly_index]
+        else:
+            energy_score = 0.5
+        
+        # Apply energy-cognitive fit logic
+        cognitive_load = task_type.cognitive_load
+        if cognitive_load > 0.7:  # High cognitive load
+            energy_cognitive_fit = energy_score  # Direct energy score
+        elif cognitive_load < 0.3:  # Low cognitive load  
+            energy_cognitive_fit = 1.0 - (1.0 - energy_score) * 0.5  # Boost low energy periods
+        else:  # Medium cognitive load
+            energy_cognitive_fit = energy_score * 0.8 + 0.2  # Slight boost
+        
+        # Combine factors (50/50 split)
+        habit_component = preference * 0.5
+        energy_component = energy_cognitive_fit * 0.5
+        
+        return habit_component + energy_component
+    
+    def group_slots_by_duration(self, time_slots: List[Dict], duration_hours: float) -> List[Dict]:
+        """Group consecutive time slots to match requested duration"""
+        
+        duration_slots = int(duration_hours * 2)  # 30-minute slots
+        slot_groups = []
+        
+        for i in range(len(time_slots) - duration_slots + 1):
+            slots_group = time_slots[i:i + duration_slots]
+            
+            # Check if slots are consecutive
+            consecutive = True
+            for j in range(len(slots_group) - 1):
+                if slots_group[j]['end_time'] != slots_group[j + 1]['start_time']:
+                    consecutive = False
+                    break
+            
+            if consecutive:
+                slot_groups.append({
+                    'start_time': slots_group[0]['start_time'],
+                    'end_time': slots_group[-1]['end_time'],
+                    'duration': duration_hours,
+                    'slots': slots_group,
+                    'total_score': 0.0,
+                    'requires_rescheduling': False,
+                    'reschedulable': True
+                })
+        
+        return slot_groups
+    
+    def is_slot_group_viable(self, slot_group: Dict, new_request, task_type: TaskType) -> bool:
+        """Check if a slot group is free or reschedulable by higher priority event"""
+        
+        new_event_priority = self.calculate_event_priority(new_request, task_type)
+        rescheduling_required = False
+        
+        # Check each slot in the group
+        for slot in slot_group['slots']:
+            if not slot['is_free']:
+                existing_priority = slot['occupying_event_priority']
+                
+                # Can we reschedule? Need buffer to prevent thrashing
+                if new_event_priority <= existing_priority + 0.15:  # 0.15 buffer
+                    slot_group['reschedulable'] = False
+                    return False
+                else:
+                    rescheduling_required = True
+        
+        # Calculate total behavioral score for this slot group
+        if task_type.task_type in slot_group['slots'][0]['behavioral_scores']:
+            slot_group['total_score'] = sum(
+                slot['behavioral_scores'][task_type.task_type] 
+                for slot in slot_group['slots']
+            ) / len(slot_group['slots'])  # Average score
+        else:
+            slot_group['total_score'] = 0.5  # Neutral fallback
+        
+        slot_group['requires_rescheduling'] = rescheduling_required
+        return True 
+
+    async def schedule_with_unified_scoring(self, user_id: str,
+                                           user_energy_pattern: List[float],
+                                           request: ScheduleEventRequest,
+                                           existing_events: List[Dict],
+                                           search_window_days: int = 7) -> Dict:
+        """
+        Unified scheduling algorithm using comprehensive time window scoring.
+        Automatically pushes lower priority events when urgent events come in.
+        """
+        
+        print(f"🚀 UNIFIED SCHEDULING: '{request.title}' (duration: {request.duration}h)")
+        
+        # 1. Find or create task type
+        similar_task = await self.task_type_service.find_similar_task_type(
+            user_id, f"{request.title} {request.description or ''}"
+        )
+        
+        if similar_task and similar_task.similarity > 0.4:
+            task_type = similar_task.task_type
+            print(f"🎯 Using existing task type: '{task_type.task_type}' (similarity: {similar_task.similarity:.3f})")
+        else:
+            print(f"🆕 Creating new task type for: '{request.title}'")
+            task_type = await self.task_type_service.create_task_type(
+                user_id, request.title, request.description, self
+            )
+        
+        # 2. Generate all time slots with scores
+        all_slots = self.generate_comprehensive_time_window_scores(
+            user_id, user_energy_pattern, search_window_days
+        )
+        
+        # 3. Mark busy slots from existing events
+        self.mark_busy_slots(all_slots, existing_events)
+        
+        # 4. Score all slots for this specific task
+        self.score_slots_for_task(all_slots, task_type, user_energy_pattern, request.duration)
+        
+        # 5. Group slots by duration and find viable options
+        slot_groups = self.group_slots_by_duration(all_slots, request.duration)
+        viable_groups = []
+        
+        for group in slot_groups:
+            if self.is_slot_group_viable(group, request, task_type):
+                viable_groups.append(group)
+        
+        if not viable_groups:
+            raise ValueError("No viable time slots found - all slots blocked by higher priority events")
+        
+        # 6. Sort by behavioral score and select best
+        viable_groups.sort(key=lambda x: x['total_score'], reverse=True)
+        best_group = viable_groups[0]
+        
+        print(f"✅ Found viable slot: {best_group['start_time'].strftime('%A %m/%d %H:%M')} "
+              f"(score: {best_group['total_score']:.3f}, rescheduling: {best_group['requires_rescheduling']})")
+        
+        # 7. Execute scheduling (with rescheduling if needed)
+        if best_group['requires_rescheduling']:
+            return await self.execute_rescheduling_and_scheduling(
+                best_group, request, task_type, user_id, user_energy_pattern, existing_events
+            )
+        else:
+            return self.create_simple_scheduled_event(best_group, request, task_type, user_id)
+    
+    async def execute_rescheduling_and_scheduling(self, chosen_slot_group: Dict,
+                                                new_request: ScheduleEventRequest,
+                                                new_task_type: TaskType,
+                                                user_id: str,
+                                                user_energy_pattern: List[float],
+                                                existing_events: List[Dict]) -> Dict:
+        """Execute rescheduling of colliding events and schedule the new urgent event"""
+        
+        print(f"🔄 RESCHEDULING: Moving lower priority events to make room for urgent event")
+        
+        # 1. Identify events that need to be rescheduled
+        events_to_reschedule = []
+        for slot in chosen_slot_group['slots']:
+            if not slot['is_free'] and slot['occupying_event'] not in events_to_reschedule:
+                events_to_reschedule.append(slot['occupying_event'])
+        
+        print(f"📋 Need to reschedule {len(events_to_reschedule)} events:")
+        for event in events_to_reschedule:
+            print(f"   • {event['title']} (priority: {event.get('calculated_priority', 0.5):.3f})")
+        
+        # 2. Find alternative slots for each event to be rescheduled
+        rescheduled_events = []
+        updated_existing_events = [e for e in existing_events if e not in events_to_reschedule]
+        
+        for event_to_move in events_to_reschedule:
+            print(f"🔍 Finding alternative slot for: {event_to_move['title']}")
+            
+            # Convert event back to a request-like object
+            move_request = ScheduleEventRequest(
+                title=event_to_move['title'],
+                description=event_to_move.get('description', ''),
+                duration=(event_to_move['scheduled_end'] - event_to_move['scheduled_start']).total_seconds() / 3600,
+                preferred_date=event_to_move['scheduled_start']
+            )
+            
+            # Find task type for the event being moved
+            similar_task_for_move = await self.task_type_service.find_similar_task_type(
+                user_id, f"{event_to_move['title']} {event_to_move.get('description', '')}"
+            )
+            
+            if similar_task_for_move and similar_task_for_move.similarity > 0.4:
+                move_task_type = similar_task_for_move.task_type
+            else:
+                # Fallback: create basic task type
+                move_task_type = await self.task_type_service.create_task_type(
+                    user_id, event_to_move['title'], event_to_move.get('description'), self
+                )
+            
+            # Find alternative slot for this event (excluding the time we want to claim)
+            alternative_slot = await self.find_alternative_slot_for_moved_event(
+                move_request, move_task_type, user_energy_pattern, 
+                updated_existing_events, chosen_slot_group
+            )
+            
+            if alternative_slot:
+                # Update the event with new timing
+                event_to_move['scheduled_start'] = alternative_slot['start_time']
+                event_to_move['scheduled_end'] = alternative_slot['end_time']
+                event_to_move['calculated_priority'] = alternative_slot['total_score']
+                
+                rescheduled_events.append({
+                    'original_event': event_to_move,
+                    'new_start': alternative_slot['start_time'],
+                    'new_end': alternative_slot['end_time'],
+                    'score_change': alternative_slot['total_score'] - event_to_move.get('calculated_priority', 0.5)
+                })
+                
+                # Add to updated events list for next iteration
+                updated_existing_events.append(event_to_move)
+                
+                print(f"   ✅ Moved to: {alternative_slot['start_time'].strftime('%A %m/%d %H:%M')} "
+                      f"(score: {alternative_slot['total_score']:.3f})")
+            else:
+                print(f"   ❌ Could not find alternative slot for: {event_to_move['title']}")
+                # In real implementation, might need to expand search window or notify user
+        
+        # 3. Create the new urgent event and persist to database
+        new_event_priority = self.calculate_event_priority(new_request, new_task_type)
+        new_event_data = {
+            "id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "task_type_id": str(new_task_type.id),
+            "title": new_request.title,
+            "description": new_request.description,
+            "scheduled_start": chosen_slot_group['start_time'],
+            "scheduled_end": chosen_slot_group['end_time'],
+            "calculated_priority": new_event_priority,
+            "deadline": new_request.deadline
+        }
+        
+        # Persist new event to database
+        try:
+            # Convert datetime objects to ISO format for database
+            db_event_data = new_event_data.copy()
+            db_event_data['scheduled_start'] = db_event_data['scheduled_start'].isoformat()
+            db_event_data['scheduled_end'] = db_event_data['scheduled_end'].isoformat()
+            if db_event_data['deadline']:
+                db_event_data['deadline'] = db_event_data['deadline'].isoformat()
+            
+            db_result = self.task_type_service.supabase.table("events").insert(db_event_data).execute()
+            print(f"✅ Created new urgent event in database: {new_event_data['id']}")
+        except Exception as e:
+            print(f"❌ Failed to create event in database: {e}")
+            # Continue anyway - return the event data for testing
+        
+        # Update rescheduled events in database
+        for rescheduled in rescheduled_events:
+            original_event = rescheduled['original_event']
+            try:
+                update_result = self.task_type_service.supabase.table("events").update({
+                    "scheduled_start": rescheduled['new_start'].isoformat(),
+                    "scheduled_end": rescheduled['new_end'].isoformat(),
+                    "calculated_priority": original_event['calculated_priority']
+                }).eq("id", original_event['id']).execute()
+                print(f"✅ Updated rescheduled event in database: {original_event['title']}")
+            except Exception as e:
+                print(f"❌ Failed to update rescheduled event in database: {e}")
+                # Continue anyway
+        
+        return {
+            "event": new_event_data,
+            "scheduling_method": "unified_scoring_with_rescheduling",
+            "slot_score": chosen_slot_group['total_score'],
+            "rescheduled_events": rescheduled_events,
+            "rescheduling_summary": {
+                "events_moved": len(rescheduled_events),
+                "new_event_priority": new_event_data['calculated_priority'],
+                "average_moved_priority": sum(e['original_event'].get('calculated_priority', 0.5) for e in rescheduled_events) / len(rescheduled_events) if rescheduled_events else 0
+            },
+            "task_type_used": {
+                "id": str(new_task_type.id),
+                "name": new_task_type.task_type,
+                "cognitive_load": new_task_type.cognitive_load
+            }
+        }
+    
+    async def find_alternative_slot_for_moved_event(self, move_request: ScheduleEventRequest,
+                                                  move_task_type: TaskType,
+                                                  user_energy_pattern: List[float],
+                                                  current_events: List[Dict],
+                                                  excluded_slot_group: Dict) -> Optional[Dict]:
+        """Find the next best slot for an event that's being moved"""
+        
+        # Generate fresh time slots (broader search for alternatives)
+        alternative_slots = self.generate_comprehensive_time_window_scores(
+            "alternative_search", user_energy_pattern, search_window_days=14  # Broader search
+        )
+        
+        # Mark busy slots from current events
+        self.mark_busy_slots(alternative_slots, current_events)
+        
+        # Score slots for the task being moved
+        self.score_slots_for_task(alternative_slots, move_task_type, user_energy_pattern, move_request.duration)
+        
+        # Group by duration
+        alternative_groups = self.group_slots_by_duration(alternative_slots, move_request.duration)
+        
+        # Filter out the excluded time slot and find free slots only (no further rescheduling)
+        viable_alternatives = []
+        for group in alternative_groups:
+            # Skip the slot we're trying to claim
+            if (group['start_time'] >= excluded_slot_group['start_time'] and 
+                group['start_time'] < excluded_slot_group['end_time']):
+                continue
+            
+            # Only consider free slots (no cascading rescheduling)
+            all_free = all(slot['is_free'] for slot in group['slots'])
+            if all_free:
+                group['total_score'] = sum(
+                    slot['behavioral_scores'].get(move_task_type.task_type, 0.5) 
+                    for slot in group['slots']
+                ) / len(group['slots'])
+                viable_alternatives.append(group)
+        
+        if viable_alternatives:
+            # Return the best alternative
+            viable_alternatives.sort(key=lambda x: x['total_score'], reverse=True)
+            return viable_alternatives[0]
+        else:
+            return None
+    
+    def create_simple_scheduled_event(self, slot_group: Dict, 
+                                    request: ScheduleEventRequest,
+                                    task_type: TaskType,
+                                    user_id: str) -> Dict:
+        """Create event data for a simple scheduling (no rescheduling needed) and persist to database"""
+        
+        event_priority = self.calculate_event_priority(request, task_type)
+        event_data = {
+            "id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "task_type_id": str(task_type.id),
+            "title": request.title,
+            "description": request.description,
+            "scheduled_start": slot_group['start_time'],
+            "scheduled_end": slot_group['end_time'],
+            "calculated_priority": event_priority,
+            "deadline": request.deadline
+        }
+        
+        # Persist to database
+        try:
+            # Convert datetime objects to ISO format for database
+            db_event_data = event_data.copy()
+            db_event_data['scheduled_start'] = db_event_data['scheduled_start'].isoformat()
+            db_event_data['scheduled_end'] = db_event_data['scheduled_end'].isoformat()
+            if db_event_data['deadline']:
+                db_event_data['deadline'] = db_event_data['deadline'].isoformat()
+            
+            db_result = self.task_type_service.supabase.table("events").insert(db_event_data).execute()
+            print(f"✅ Created simple event in database: {event_data['id']}")
+        except Exception as e:
+            print(f"❌ Failed to create simple event in database: {e}")
+            # Continue anyway - return the event data for testing
+        
+        return {
+            "event": event_data,
+            "scheduling_method": "unified_scoring_simple",
+            "slot_score": slot_group['total_score'],
+            "rescheduled_events": [],
+            "task_type_used": {
+                "id": str(task_type.id),
+                "name": task_type.task_type,
+                "cognitive_load": task_type.cognitive_load
+            }
+        } 
