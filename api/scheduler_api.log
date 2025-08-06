@@ -1,0 +1,441 @@
+2025-08-04 17:11:20,208 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:11:20,586 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:11:20,589 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:11:48,859 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:11:48,859 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:11:48,859 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:11:50,931 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:11:51,337 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:11:51,340 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:12:09,772 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:12:09,773 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:12:12,542 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:12:12,919 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:12:12,921 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:12:19,388 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:12:19,388 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:12:22,154 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:12:22,544 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:12:22,547 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:12:46,419 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:12:46,419 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:12:48,880 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:12:49,269 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:12:49,271 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:12:59,367 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:12:59,368 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:12:59,368 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:01,434 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:13:01,813 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:13:01,816 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:13:17,876 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:17,876 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:17,877 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:20,116 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:13:20,499 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:13:20,501 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:13:29,297 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:29,297 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:31,718 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:13:32,094 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:13:32,097 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:13:38,944 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:38,945 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:41,194 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:13:41,617 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:13:41,619 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:13:50,594 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:50,595 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 17:13:52,761 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:13:53,140 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:13:53,143 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:14:07,502 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:14:07,502 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:14:10,360 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:14:10,742 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:14:10,745 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:14:21,909 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:14:21,909 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:14:21,910 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:14:24,926 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:14:25,311 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:14:25,313 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:14:44,137 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-04 17:14:44,137 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-04 17:14:44,137 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-04 17:14:46,675 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:14:47,053 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:14:47,056 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:37:56,564 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:37:56,565 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:37:59,784 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:38:00,178 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:38:00,181 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:49:51,122 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:49:51,122 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:49:51,123 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:49:53,862 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:49:54,257 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:49:54,259 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:49:58,763 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:49:58,764 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:49:58,764 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:50:01,510 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 17:50:01,920 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 17:50:01,923 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 17:50:08,000 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 17:50:08,001 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:20:00,394 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:20:00,798 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.86.34:5000
+2025-08-04 19:20:00,798 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-04 19:20:00,806 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:20:02,632 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:20:03,014 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:20:03,016 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:20:03,603 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\AppData\\Roaming\\Python\\Python312\\site-packages\\postgrest\\_sync\\request_builder.py', reloading
+2025-08-04 19:20:04,181 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:20:06,120 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:20:06,679 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:20:06,682 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:20:39,782 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:20:39,782 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:20:40,207 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:20:42,209 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:20:42,790 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:20:42,792 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:21:00,679 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:21:00,679 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:21:01,116 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:21:03,297 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:21:03,855 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:21:03,857 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:21:19,851 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:21:19,852 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:21:20,156 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:21:22,322 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:21:22,864 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:21:22,866 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:22:56,222 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-04 19:22:56,222 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-04 19:22:56,222 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-04 19:22:56,240 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-04 19:22:56,241 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-04 19:22:56,242 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-04 19:22:57,026 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:22:59,242 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:22:59,851 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:22:59,854 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:23:21,367 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:23:21,368 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:23:21,735 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-04 19:23:21,738 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-04 19:23:21,739 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-04 19:23:21,740 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-04 19:23:21,740 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-04 19:23:21,740 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-04 19:23:21,743 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-04 19:23:21,746 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-04 19:23:21,754 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-04 19:23:21,755 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-04 19:23:22,268 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:23:24,529 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:23:25,132 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:23:25,137 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:23:48,859 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:23:48,860 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:23:48,860 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:23:49,621 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:23:51,760 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:23:52,323 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:23:52,326 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:33:47,601 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:33:47,602 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:33:47,602 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:33:48,176 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:33:50,406 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:33:51,018 - __main__ - INFO - 🏗️ AGENT: Creating React agent with schedule tool
+2025-08-04 19:33:51,022 - __main__ - INFO - 🏗️ AGENT: React agent created successfully
+2025-08-04 19:33:51,037 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:33:51,040 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:34:18,667 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:34:18,668 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:34:19,666 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:34:21,861 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/users?select=%2A&email=eq.x "HTTP/2 200 OK"
+2025-08-04 19:34:22,466 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:34:22,471 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:34:22,486 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:34:22,489 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:34:31,751 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:34:31,751 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:34:32,794 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:34:35,039 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:34:35,044 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:34:35,058 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:34:35,061 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:34:42,685 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:34:42,686 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:34:43,325 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:34:45,590 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:34:45,594 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:34:45,609 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:34:45,611 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:36:05,499 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:36:05,499 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-04 19:36:05,688 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:36:07,734 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:36:07,739 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:36:07,752 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:36:07,756 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:36:48,902 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 19:36:48,903 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-04 19:36:49,487 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:36:51,720 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:36:51,724 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:36:51,738 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:36:51,742 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:44:12,955 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:44:12,955 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:44:12,956 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:44:13,859 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:44:16,113 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:44:16,118 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:44:16,130 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:44:16,133 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:44:37,280 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:44:37,281 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:44:37,281 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:44:37,552 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:44:39,721 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:44:39,726 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:44:39,741 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:44:39,744 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:45:01,297 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:01,297 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:02,207 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:45:04,453 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:45:04,457 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:45:04,473 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:45:04,476 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:45:12,157 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:12,158 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:12,158 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:12,727 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:45:14,908 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:45:14,913 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:45:14,929 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:45:14,932 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:45:34,489 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:34,489 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:35,343 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:45:37,560 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:45:37,565 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:45:37,580 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:45:37,584 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:45:44,452 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:44,452 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:44,891 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:45:47,504 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:45:47,510 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:45:47,510 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:45:47,510 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:45:47,511 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:45:47,527 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:45:47,531 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:45:57,360 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:57,360 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:57,361 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:45:57,860 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:46:00,162 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:46:00,168 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:46:00,168 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:46:00,168 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:46:00,168 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:46:00,181 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:46:00,185 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:46:07,876 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:46:07,878 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:46:07,878 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:46:08,454 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:46:10,101 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:46:10,710 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:46:10,714 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:46:10,715 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:46:10,715 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:46:10,715 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:46:10,730 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:46:10,733 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:46:10,808 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\AppData\\Roaming\\Python\\Python312\\site-packages\\langgraph\\prebuilt\\chat_agent_executor.py', reloading
+2025-08-04 19:46:10,809 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\AppData\\Roaming\\Python\\Python312\\site-packages\\langgraph\\prebuilt\\tool_node.py', reloading
+2025-08-04 19:46:11,907 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:46:13,601 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:46:14,118 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:46:14,122 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:46:14,123 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:46:14,123 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:46:14,123 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:46:14,138 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:46:14,141 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:46:21,118 - app - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:46:21,493 - app - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:46:21,498 - app - INFO - AGENT: React agent created successfully
+2025-08-04 19:46:21,498 - app - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:46:21,498 - app - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:46:21,498 - app - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:47:00,255 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:47:00,257 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-04 19:47:00,869 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:47:02,552 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:47:03,101 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:47:03,105 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:47:03,105 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:47:03,105 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:47:03,105 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:47:03,119 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:47:03,122 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:48:29,130 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:48:29,525 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:48:29,531 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:48:29,532 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:48:29,532 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:48:29,532 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:48:29,535 - werkzeug - INFO -  * Detected change in 'C:\\Python312\\Lib\\encodings\\utf_16_le.py', reloading
+2025-08-04 19:48:29,553 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.86.34:5000
+2025-08-04 19:48:29,554 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-04 19:48:29,562 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:48:30,369 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-04 19:48:31,117 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:48:31,583 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:48:31,588 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:48:31,589 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:48:31,589 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:48:31,589 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:48:31,604 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:48:31,607 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:48:32,151 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-04 19:48:32,790 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-04 19:48:32,794 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-04 19:48:32,794 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:48:32,795 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-04 19:48:32,795 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-04 19:48:32,809 - werkzeug - WARNING -  * Debugger is active!
+2025-08-04 19:48:32,812 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-04 19:48:48,058 - __main__ - INFO - API /schedule: Request received - task: 'Clean my dorm (30 mins)'
+2025-08-04 19:48:48,058 - __main__ - INFO - DIRECT SCHEDULE REQUEST: 'Clean my dorm (30 mins)'
+2025-08-04 19:48:48,058 - __main__ - INFO - Using demo user ID: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:48:48,059 - __main__ - INFO - Creating new event loop for async operation
+2025-08-04 19:48:48,059 - __main__ - INFO - Calling scheduler_service.schedule_with_pattern
+2025-08-04 19:48:48,059 - __main__ - INFO - Scheduler service available: True
+2025-08-04 19:48:48,060 - __main__ - INFO - Task type service available: True
+2025-08-04 19:48:48,060 - __main__ - INFO - OpenAI client available: True
+2025-08-04 19:48:48,060 - scheduler_service - INFO - 📅 SCHEDULE START: User 33a07e45-c5a8-4b95-9e39-c12752012e36, task 'Clean my dorm (30 mins)', duration 1.0h
+2025-08-04 19:48:48,060 - scheduler_service - INFO - 📅 SCHEDULE PARAMS: start=None, end=None, timezone=None
+2025-08-04 19:48:48,060 - scheduler_service - INFO - 📅 SCHEDULE PARAMS: importance=0.5, description='None'
+2025-08-04 19:48:48,060 - scheduler_service - INFO - 🎯 PATTERN-BASED SCHEDULING: Finding optimal time slot
+2025-08-04 19:48:48,061 - scheduler_service - INFO - 📅 TIME PERIODS: Setup 1 periods
+2025-08-04 19:48:48,581 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/events?select=%2A&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36&scheduled_start=gte.2025-08-04T20%3A00%3A00&scheduled_end=lte.2025-08-11T20%3A00%3A00 "HTTP/2 200 OK"
+2025-08-04 19:48:48,583 - scheduler_service - INFO - 📅 EXISTING EVENTS: Found 1 events
+2025-08-04 19:48:48,583 - scheduler_service - INFO - 🔍 SIMILARITY SEARCH: Looking for similar task types
+2025-08-04 19:48:48,718 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types?select=task_type%2C%20completion_count&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36 "HTTP/2 200 OK"
+2025-08-04 19:48:49,265 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:48:49,446 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/rpc/match_task_types "HTTP/2 200 OK"
+2025-08-04 19:48:49,448 - scheduler_service - INFO - 🔄 ROUTING TO LLM: no matches found < 0.4 threshold
+2025-08-04 19:48:49,521 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types?select=task_type%2C%20completion_count&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36 "HTTP/2 200 OK"
+2025-08-04 19:48:49,611 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:48:49,713 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/rpc/match_task_types "HTTP/2 200 OK"
+2025-08-04 19:48:49,820 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:48:49,920 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types "HTTP/2 409 Conflict"
+2025-08-04 19:48:50,020 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types?select=task_type%2C%20completion_count&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36 "HTTP/2 200 OK"
+2025-08-04 19:48:50,149 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:48:50,239 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/rpc/match_task_types "HTTP/2 200 OK"
+2025-08-04 19:48:50,240 - __main__ - ERROR - API /schedule ASYNC ERROR: {'code': '23505', 'details': 'Key (user_id, task_type)=(33a07e45-c5a8-4b95-9e39-c12752012e36, Clean my dorm (30 mins)) already exists.', 'hint': None, 'message': 'duplicate key value violates unique constraint "task_types_user_id_task_type_key"'}
+2025-08-04 19:48:50,240 - __main__ - ERROR - API /schedule ASYNC ERROR TYPE: <class 'postgrest.exceptions.APIError'>
+2025-08-04 19:48:50,242 - __main__ - ERROR - API /schedule ASYNC TRACEBACK: Traceback (most recent call last):
+  File "C:\Users\ran\Desktop\new_canlah\schedular\api\app.py", line 495, in schedule
+    result = loop.run_until_complete(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 150, in schedule_with_pattern
+    return await self.schedule_with_llm(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 198, in schedule_with_llm
+    task_type = await self._find_or_create_task_type(user_id, request)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 682, in _find_or_create_task_type
+    raise create_error
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 667, in _find_or_create_task_type
+    return await self.task_type_service.create_task_type(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\task_type_service.py", line 190, in create_task_type
+    result = self.supabase.table("task_types").insert(new_task_type).execute()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '23505', 'details': 'Key (user_id, task_type)=(33a07e45-c5a8-4b95-9e39-c12752012e36, Clean my dorm (30 mins)) already exists.', 'hint': None, 'message': 'duplicate key value violates unique constraint "task_types_user_id_task_type_key"'}
+
+2025-08-04 19:48:50,242 - __main__ - INFO - Event loop closed
+2025-08-04 19:48:50,243 - werkzeug - INFO - 127.0.0.1 - - [04/Aug/2025 19:48:50] "[35m[1mPOST /api/schedule HTTP/1.1[0m" 500 -
+2025-08-04 19:50:40,896 - __main__ - INFO - API /schedule: Request received - task: 'Test task'
+2025-08-04 19:50:40,896 - __main__ - INFO - DIRECT SCHEDULE REQUEST: 'Test task'
+2025-08-04 19:50:40,896 - __main__ - INFO - Using demo user ID: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-04 19:50:40,896 - __main__ - INFO - Creating new event loop for async operation
+2025-08-04 19:50:40,898 - __main__ - INFO - Calling scheduler_service.schedule_with_pattern
+2025-08-04 19:50:40,898 - __main__ - INFO - Scheduler service available: True
+2025-08-04 19:50:40,898 - __main__ - INFO - Task type service available: True
+2025-08-04 19:50:40,898 - __main__ - INFO - OpenAI client available: True
+2025-08-04 19:50:40,898 - scheduler_service - INFO - 📅 SCHEDULE START: User 33a07e45-c5a8-4b95-9e39-c12752012e36, task 'Test task', duration 1.0h
+2025-08-04 19:50:40,899 - scheduler_service - INFO - 📅 SCHEDULE PARAMS: start=None, end=None, timezone=None
+2025-08-04 19:50:40,899 - scheduler_service - INFO - 📅 SCHEDULE PARAMS: importance=0.5, description='None'
+2025-08-04 19:50:40,899 - scheduler_service - INFO - 🎯 PATTERN-BASED SCHEDULING: Finding optimal time slot
+2025-08-04 19:50:40,899 - scheduler_service - INFO - 📅 TIME PERIODS: Setup 1 periods
+2025-08-04 19:50:41,281 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/events?select=%2A&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36&scheduled_start=gte.2025-08-04T20%3A00%3A00&scheduled_end=lte.2025-08-11T20%3A00%3A00 "HTTP/2 200 OK"
+2025-08-04 19:50:41,282 - scheduler_service - INFO - 📅 EXISTING EVENTS: Found 1 events
+2025-08-04 19:50:41,282 - scheduler_service - INFO - 🔍 SIMILARITY SEARCH: Looking for similar task types
+2025-08-04 19:50:41,393 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types?select=task_type%2C%20completion_count&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36 "HTTP/2 200 OK"
+2025-08-04 19:50:41,567 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:50:41,705 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/rpc/match_task_types "HTTP/2 200 OK"
+2025-08-04 19:50:41,706 - scheduler_service - INFO - 🔄 ROUTING TO LLM: no matches found < 0.4 threshold
+2025-08-04 19:50:41,795 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types?select=task_type%2C%20completion_count&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36 "HTTP/2 200 OK"
+2025-08-04 19:50:41,924 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:50:42,018 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/rpc/match_task_types "HTTP/2 200 OK"
+2025-08-04 19:50:42,253 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:50:42,330 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types "HTTP/2 409 Conflict"
+2025-08-04 19:50:42,396 - httpx - INFO - HTTP Request: GET https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/task_types?select=task_type%2C%20completion_count&user_id=eq.33a07e45-c5a8-4b95-9e39-c12752012e36 "HTTP/2 200 OK"
+2025-08-04 19:50:42,502 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 401 Unauthorized"
+2025-08-04 19:50:42,577 - httpx - INFO - HTTP Request: POST https://oloqosncolwvxyzrcnsl.supabase.co/rest/v1/rpc/match_task_types "HTTP/2 200 OK"
+2025-08-04 19:50:42,577 - __main__ - ERROR - API /schedule ASYNC ERROR: {'code': '23505', 'details': 'Key (user_id, task_type)=(33a07e45-c5a8-4b95-9e39-c12752012e36, Test task) already exists.', 'hint': None, 'message': 'duplicate key value violates unique constraint "task_types_user_id_task_type_key"'}
+2025-08-04 19:50:42,577 - __main__ - ERROR - API /schedule ASYNC ERROR TYPE: <class 'postgrest.exceptions.APIError'>
+2025-08-04 19:50:42,578 - __main__ - ERROR - API /schedule ASYNC TRACEBACK: Traceback (most recent call last):
+  File "C:\Users\ran\Desktop\new_canlah\schedular\api\app.py", line 495, in schedule
+    result = loop.run_until_complete(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 150, in schedule_with_pattern
+    return await self.schedule_with_llm(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 198, in schedule_with_llm
+    task_type = await self._find_or_create_task_type(user_id, request)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 682, in _find_or_create_task_type
+    raise create_error
+  File "C:\Users\ran\Desktop\new_canlah\schedular\scheduler_service.py", line 667, in _find_or_create_task_type
+    return await self.task_type_service.create_task_type(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\Desktop\new_canlah\schedular\task_type_service.py", line 190, in create_task_type
+    result = self.supabase.table("task_types").insert(new_task_type).execute()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '23505', 'details': 'Key (user_id, task_type)=(33a07e45-c5a8-4b95-9e39-c12752012e36, Test task) already exists.', 'hint': None, 'message': 'duplicate key value violates unique constraint "task_types_user_id_task_type_key"'}
+
+2025-08-04 19:50:42,578 - __main__ - INFO - Event loop closed
+2025-08-04 19:50:42,578 - werkzeug - INFO - 127.0.0.1 - - [04/Aug/2025 19:50:42] "[35m[1mPOST /api/schedule HTTP/1.1[0m" 500 -

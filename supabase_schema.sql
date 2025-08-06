@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS users (
     
     -- Weekly energy pattern (168 elements: 24 hours × 7 days)
     -- Index formula: day_of_week * 24 + hour (0=Sunday 00:00, 167=Saturday 23:59)
-    weekly_energy_pattern JSONB DEFAULT '[]',  -- User's energy levels by hour across the week
+    -- Values 0.0-1.0: User's natural energy levels by hour across the week
+    weekly_energy_pattern JSONB DEFAULT '[]',
     
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -29,7 +30,8 @@ CREATE TABLE IF NOT EXISTS task_types (
     
     -- Learned patterns (168-hour weekly array: 24 hours × 7 days)
     -- Index formula: day_of_week * 24 + hour (0=Sunday 00:00, 167=Saturday 23:59)
-    weekly_habit_scores JSONB DEFAULT '[]', -- User's habit scores for this task across the week
+    -- Values 0.0-1.0: Task-specific success/preference patterns at each time
+    weekly_habit_scores JSONB DEFAULT '[]',
     slot_confidence JSONB DEFAULT '[]',     -- 7x24 confidence matrix for each time slot
     
     completion_count INTEGER DEFAULT 0,     -- Total number of times this task type has been completed

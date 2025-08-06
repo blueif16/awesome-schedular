@@ -107,6 +107,18 @@ class LearningService:
             )
         
         # TODO: Store energy_after in user's weekly_energy_pattern (not implemented yet)
+
+    # Update energy pattern every N completions across all task types
+    # Analyze energy trends over time
+
+    def update_energy_pattern_batch(user_id: str):
+        """
+        Update user energy pattern every 10-15 total completions
+        Analyze recent energy feedback across all task types
+        """
+        # Collect last 20 completions with energy_after data
+        # Group by time slots
+        # Update energy pattern based on trends
     
     def analyze_weekly_patterns(self, weekly_habit_scores: List[float], 
                                completion_count: int) -> dict:
