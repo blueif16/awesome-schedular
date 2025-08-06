@@ -2528,3 +2528,775 @@ AttributeError: 'str' object has no attribute 'get'
 2025-08-05 17:31:55,315 - __main__ - INFO - API_INIT: All services loaded successfully
 2025-08-05 17:31:55,333 - werkzeug - WARNING -  * Debugger is active!
 2025-08-05 17:31:55,336 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-05 19:42:40,524 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-05 19:42:40,525 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-05 19:42:40,525 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-05 19:42:40,525 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-05 19:42:40,525 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-05 19:42:40,526 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-05 19:42:40,526 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-05 19:42:40,526 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-05 19:42:40,526 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-05 19:42:40,527 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-05 19:42:40,527 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-05 19:42:40,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-05 19:42:40,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-05 19:42:40,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-05 19:42:40,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-05 19:42:40,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-05 19:42:40,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-05 19:42:40,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-05 19:42:40,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-05 19:42:40,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-05 19:42:40,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-05 19:42:40,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-05 19:42:40,530 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-05 19:42:40,530 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-05 19:42:40,530 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-05 19:42:41,232 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-05 19:42:43,664 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-05 19:42:44,060 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-05 19:42:44,080 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-05 19:42:44,081 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-05 19:42:44,081 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-05 19:42:44,081 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-05 19:42:44,134 - werkzeug - WARNING -  * Debugger is active!
+2025-08-05 19:42:44,137 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-05 22:58:52,680 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-05 22:58:52,687 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-05 22:58:52,688 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-05 22:58:52,700 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-05 22:58:52,701 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-05 22:58:52,744 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-05 22:58:52,762 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-05 22:58:52,769 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-05 22:58:52,779 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-05 22:58:52,788 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-05 22:58:52,789 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-05 22:58:52,797 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-05 22:58:52,811 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-05 22:58:52,816 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-05 22:58:52,819 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-05 22:58:52,823 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-05 22:58:52,828 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-05 22:58:52,835 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-05 22:58:52,841 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-05 22:58:52,844 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-05 22:58:52,850 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-05 22:58:52,851 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-05 22:58:52,860 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-05 22:58:52,861 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-05 22:58:52,867 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-05 22:58:53,227 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-05 22:58:56,418 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-05 22:58:56,824 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-05 22:58:56,845 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-05 22:58:56,846 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-05 22:58:56,846 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-05 22:58:56,846 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-05 22:58:56,910 - werkzeug - WARNING -  * Debugger is active!
+2025-08-05 22:58:56,913 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 11:29:12,626 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 11:29:12,935 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 11:29:14,785 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 11:29:15,145 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 11:29:15,150 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 11:29:15,150 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 11:29:15,150 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 11:29:15,150 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 11:29:15,168 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 11:29:15,172 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 11:30:51,261 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-06 11:30:51,262 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-06 11:30:51,262 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-06 11:30:51,262 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 11:30:51,263 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-06 11:30:51,264 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-06 11:30:51,264 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-06 11:30:51,264 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-06 11:30:51,264 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-06 11:30:51,265 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-06 11:30:51,265 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-06 11:30:51,265 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-06 11:30:51,265 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-06 11:30:51,266 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-06 11:30:51,266 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-06 11:30:51,266 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-06 11:30:51,266 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-06 11:30:51,267 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-06 11:30:51,275 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-06 11:30:51,275 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-06 11:30:51,276 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-06 11:30:51,276 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-06 11:30:51,276 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-06 11:30:52,397 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 11:30:53,870 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 11:30:54,227 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 11:30:54,232 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 11:30:54,232 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 11:30:54,232 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 11:30:54,232 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 11:30:54,246 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 11:30:54,249 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:05:11,253 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:05:11,253 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:05:12,187 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:05:14,453 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:05:14,837 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:05:14,856 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:05:14,856 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:05:14,856 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:05:14,856 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:05:14,913 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:05:14,916 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:09:28,180 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:09:28,181 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:09:28,831 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:09:31,014 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:09:31,394 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:09:31,417 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:09:31,417 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:09:31,417 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:09:31,418 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:09:31,469 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:09:31,472 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:09:52,576 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:09:52,577 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:09:52,923 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:09:54,440 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:09:54,816 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:09:54,820 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:09:54,820 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:09:54,821 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:09:54,821 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:09:54,834 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:09:54,836 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:10:08,974 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:08,974 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:08,975 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:09,198 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:10:10,722 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:10:11,095 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:10:11,100 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:10:11,100 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:10:11,100 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:10:11,100 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:10:11,117 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:10:11,120 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:10:17,853 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:17,854 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:17,854 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:18,389 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:10:19,887 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:10:20,265 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:10:20,270 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:10:20,270 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:10:20,270 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:10:20,270 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:10:20,287 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:10:20,290 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:10:28,457 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:28,458 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:28,459 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:28,687 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:10:30,337 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:10:30,743 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:10:30,747 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:10:30,747 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:10:30,748 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:10:30,748 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:10:30,762 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:10:30,765 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:10:45,782 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:45,783 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:45,784 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:10:46,134 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:10:47,630 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:10:48,001 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:10:48,006 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:10:48,006 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:10:48,007 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:10:48,007 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:10:48,021 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:10:48,025 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:11:12,940 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:12,940 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:12,941 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:12,942 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:13,489 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:11:15,024 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:11:15,399 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:11:15,404 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:11:15,404 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:11:15,404 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:11:15,404 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:11:15,419 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:11:15,422 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:11:25,934 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:25,935 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:25,936 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:26,690 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:11:28,260 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:11:28,647 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:11:28,653 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:11:28,653 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:11:28,653 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:11:28,653 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:11:28,669 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:11:28,673 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:11:33,985 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:33,986 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:33,986 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:34,892 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:11:36,363 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:11:36,721 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:11:36,726 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:11:36,726 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:11:36,726 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:11:36,726 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:11:36,740 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:11:36,744 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:11:40,628 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:40,628 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:11:40,950 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:11:42,397 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:11:42,750 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:11:42,757 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:11:42,757 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:11:42,757 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:11:42,758 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:11:42,772 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:11:42,775 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:16:59,637 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:16:59,637 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:16:59,638 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:17:00,259 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:17:01,789 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:17:02,154 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:17:02,159 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:17:02,159 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:17:02,159 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:17:02,159 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:17:02,173 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:17:02,175 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:19:40,802 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:19:40,803 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:19:40,803 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:19:40,803 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:19:41,089 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:19:42,621 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:19:42,986 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:19:42,991 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:19:42,991 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:19:42,992 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:19:42,992 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:19:43,007 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:19:43,010 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:20:02,349 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:20:02,350 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:20:03,406 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:20:04,900 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:20:05,270 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:20:05,275 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:20:05,275 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:20:05,275 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:20:05,275 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:20:05,290 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:20:05,293 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:20:20,236 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:20:20,237 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:20:20,690 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:20:22,228 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:20:22,602 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:20:22,608 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:20:22,608 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:20:22,608 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:20:22,608 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:20:22,624 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:20:22,626 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:20:37,499 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:20:37,500 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:20:38,005 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:20:39,601 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:20:39,971 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:20:39,976 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:20:39,976 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:20:39,976 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:20:39,976 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:20:39,990 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:20:39,993 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:00,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\AppData\\Roaming\\Python\\Python312\\site-packages\\supabase\\_sync\\client.py', reloading
+2025-08-06 12:21:00,372 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:21:01,829 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:21:02,203 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:21:02,207 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:21:02,208 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:21:02,208 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:21:02,208 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:21:02,222 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:21:02,225 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:34,390 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:34,390 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:34,691 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:21:36,149 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:21:36,513 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:21:36,517 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:21:36,517 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:21:36,518 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:21:36,518 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:21:36,531 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:21:36,534 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:38,629 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:38,629 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:39,723 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:21:41,185 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:21:41,559 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:21:41,564 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:21:41,564 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:21:41,565 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:21:41,565 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:21:41,578 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:21:41,581 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:48,988 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:48,988 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:48,989 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:49,809 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:21:51,241 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:21:51,605 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:21:51,609 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:21:51,610 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:21:51,610 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:21:51,610 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:21:51,624 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:21:51,626 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:53,453 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:53,453 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:53,777 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:21:55,182 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:21:55,549 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:21:55,554 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:21:55,554 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:21:55,554 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:21:55,554 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:21:55,568 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:21:55,570 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:55,612 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,612 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,612 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,643 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,644 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,644 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,672 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,673 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,673 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,703 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,704 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:55,704 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:56,710 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:21:58,131 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:21:58,498 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:21:58,503 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:21:58,503 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:21:58,503 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:21:58,503 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:21:58,518 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:21:58,521 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:21:58,801 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:58,801 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:58,801 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,305 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,306 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,306 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,334 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,335 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,335 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,367 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,367 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,368 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,415 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,415 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,415 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,441 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,441 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,472 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,472 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,472 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,503 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,503 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,534 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,534 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,534 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 12:21:59,683 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:22:01,128 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:22:01,490 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:22:01,494 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:22:01,494 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:22:01,494 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:22:01,494 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:22:01,508 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:22:01,511 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:28:06,886 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:28:06,887 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:28:07,964 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:28:09,416 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:28:09,777 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:28:09,781 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:28:09,781 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:28:09,782 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:28:09,782 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:28:09,795 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:28:09,798 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:28:29,223 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:28:29,224 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:28:30,212 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:28:31,652 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:28:32,018 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:28:32,022 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:28:32,022 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:28:32,022 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:28:32,023 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:28:32,036 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:28:32,039 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 12:29:13,726 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:29:13,727 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 12:29:14,766 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 12:29:16,199 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 12:29:16,565 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 12:29:16,569 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 12:29:16,570 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 12:29:16,570 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 12:29:16,570 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 12:29:16,584 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 12:29:16,587 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 13:20:03,658 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:20:03,658 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:20:03,659 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:20:04,498 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 13:20:05,947 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 13:20:06,307 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 13:20:06,311 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 13:20:06,311 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 13:20:06,312 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 13:20:06,312 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 13:20:06,326 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 13:20:06,329 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 13:23:23,412 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:23:23,413 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:23:23,611 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 13:23:25,112 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 13:23:25,476 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 13:23:25,481 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 13:23:25,481 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 13:23:25,481 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 13:23:25,481 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 13:23:25,497 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 13:23:25,501 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 13:23:50,511 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:23:50,512 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:23:50,973 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 13:23:52,430 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 13:23:52,801 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 13:23:52,805 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 13:23:52,805 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 13:23:52,805 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 13:23:52,805 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 13:23:52,820 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 13:23:52,822 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 13:24:11,047 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:24:11,048 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 13:24:12,206 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 13:24:13,668 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 13:24:14,029 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 13:24:14,034 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 13:24:14,034 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 13:24:14,034 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 13:24:14,034 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 13:24:14,049 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 13:24:14,053 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 13:41:39,423 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-06 13:41:39,423 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 13:41:39,433 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-06 13:41:39,433 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-06 13:41:39,433 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-06 13:41:39,434 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-06 13:41:39,443 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-06 13:41:39,443 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-06 13:41:39,443 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-06 13:41:39,444 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-06 13:41:39,445 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-06 13:41:39,445 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-06 13:41:39,446 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-06 13:41:39,451 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-06 13:41:39,451 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-06 13:41:39,454 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-06 13:41:39,455 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-06 13:41:39,455 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-06 13:41:39,456 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-06 13:41:39,461 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-06 13:41:39,464 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-06 13:41:39,465 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-06 13:41:39,465 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-06 13:41:39,466 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-06 13:41:40,395 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 13:41:41,846 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 13:41:42,219 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 13:41:42,224 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 13:41:42,224 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 13:41:42,224 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 13:41:42,225 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 13:41:42,238 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 13:41:42,241 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:19:53,404 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:19:53,405 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:19:54,268 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:19:56,174 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:19:56,538 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:19:56,543 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:19:56,543 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:19:56,543 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:19:56,543 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:19:56,561 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:19:56,565 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:28:10,532 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:10,533 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:11,229 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:28:12,698 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:28:13,059 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:28:13,064 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:28:13,064 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:28:13,064 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:28:13,064 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:28:13,078 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:28:13,080 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:28:19,385 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:19,386 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:20,310 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:28:21,784 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:28:22,137 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:28:22,142 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:28:22,142 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:28:22,142 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:28:22,142 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:28:22,157 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:28:22,160 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:28:29,810 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:29,811 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:29,811 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:30,489 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:28:32,309 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:28:32,683 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:28:32,688 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:28:32,688 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:28:32,688 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:28:32,688 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:28:32,702 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:28:32,705 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:28:43,745 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:43,745 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:43,746 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:44,052 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:28:45,507 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:28:45,871 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:28:45,876 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:28:45,876 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:28:45,876 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:28:45,876 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:28:45,890 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:28:45,894 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:28:57,142 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:57,143 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:28:58,208 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:28:59,688 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:29:00,053 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:29:00,058 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:29:00,058 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:29:00,058 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:29:00,058 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:29:00,071 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:29:00,075 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 14:48:52,068 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:48:52,069 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 14:48:52,525 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 14:48:54,053 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 14:48:54,429 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 14:48:54,433 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 14:48:54,434 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 14:48:54,434 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 14:48:54,434 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 14:48:54,448 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 14:48:54,452 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:17:55,577 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:17:55,577 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:17:56,362 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:17:57,828 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:17:58,195 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:17:58,199 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:17:58,200 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:17:58,200 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:17:58,200 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:17:58,214 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:17:58,217 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:18:04,919 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:04,919 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:04,920 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:05,438 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:18:06,876 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:18:07,240 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:18:07,246 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:18:07,246 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:18:07,246 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:18:07,246 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:18:07,262 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:18:07,264 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:18:14,518 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:14,518 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:15,503 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:18:16,953 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:18:17,318 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:18:17,322 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:18:17,322 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:18:17,322 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:18:17,322 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:18:17,336 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:18:17,339 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:18:51,531 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:51,532 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:51,532 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:18:51,870 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:18:53,381 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:18:53,750 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:18:53,754 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:18:53,754 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:18:53,754 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:18:53,754 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:18:53,768 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:18:53,770 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:19:00,520 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:19:00,521 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:19:00,521 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:19:01,032 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:19:02,568 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:19:02,933 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:19:02,939 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:19:02,939 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:19:02,939 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:19:02,939 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:19:02,956 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:19:02,959 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:19:08,483 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:19:08,483 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:19:08,483 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:19:09,162 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:19:10,662 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:19:11,035 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:19:11,039 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:19:11,039 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:19:11,039 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:19:11,039 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:19:11,053 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:19:11,057 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:23:57,246 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-06 15:23:58,339 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:23:59,781 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:24:00,135 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:24:00,140 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:24:00,140 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:24:00,140 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:24:00,140 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:24:00,155 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:24:00,157 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:36:08,533 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:08,533 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:09,342 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:36:10,814 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:36:11,182 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:36:11,186 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:36:11,186 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:36:11,186 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:36:11,186 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:36:11,201 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:36:11,203 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:36:22,796 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:22,797 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:23,492 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:36:24,940 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:36:25,307 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:36:25,311 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:36:25,311 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:36:25,311 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:36:25,311 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:36:25,326 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:36:25,328 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:36:37,744 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:37,744 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:38,636 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:36:40,087 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:36:40,455 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:36:40,460 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:36:40,460 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:36:40,460 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:36:40,460 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:36:40,474 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:36:40,477 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:36:47,827 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:47,828 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:48,699 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:36:50,158 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:36:50,545 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:36:50,550 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:36:50,550 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:36:50,550 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:36:50,550 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:36:50,564 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:36:50,566 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:36:58,233 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:58,233 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 15:36:58,809 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:37:00,254 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:37:00,621 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:37:00,625 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:37:00,626 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:37:00,626 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:37:00,626 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:37:00,639 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:37:00,643 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:37:18,794 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 15:37:19,045 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:37:20,562 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:37:20,941 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:37:20,946 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:37:20,946 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:37:20,946 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:37:20,946 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:37:20,960 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:37:20,963 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 15:41:33,594 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-06 15:41:33,595 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-06 15:41:33,598 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-06 15:41:33,598 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-06 15:41:33,598 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-06 15:41:33,600 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-06 15:41:33,601 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-06 15:41:33,604 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-06 15:41:33,605 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-06 15:41:33,606 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-06 15:41:33,608 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-06 15:41:33,609 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-06 15:41:33,610 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-06 15:41:33,610 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-06 15:41:33,610 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-06 15:41:33,611 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-06 15:41:33,612 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-06 15:41:33,613 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-06 15:41:33,613 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-06 15:41:33,613 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-06 15:41:33,614 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-06 15:41:33,864 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 15:41:35,296 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 15:41:35,680 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 15:41:35,685 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 15:41:35,685 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 15:41:35,685 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 15:41:35,685 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 15:41:35,701 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 15:41:35,704 - werkzeug - INFO -  * Debugger PIN: 124-098-567
