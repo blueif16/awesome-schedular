@@ -39,27 +39,19 @@ class TaskTypeService:
         print(f"Warning: Unexpected embedding type: {type(embedding_data)}")
         return None
     
-    def generate_embedding(self, task_type: str, description: str = None) -> List[float]:
-        """Generate OpenAI embedding from task type and optional description"""
+    def generate_embedding(self, task_type: str) -> List[float]:
+        """Generate OpenAI embedding from task type name only"""
         try:
-            # Combine task type and description for richer embedding
-            text_parts = [task_type]
-            if description and description.strip():
-                text_parts.append(description.strip())
-            
-            combined_text = " - ".join(text_parts)
-            
             response = self.openai_client.embeddings.create(
                 model="text-embedding-3-small",
-                input=combined_text
+                input=task_type.strip()
             )
-            return response.data[0].embedding
+            embedding = response.data[0].embedding
+            print(f"   🧮 Generated embedding: first 3 values = {embedding[:3]}")
+            return embedding
         except Exception as e:
-            print(f"Error generating embedding: {e}")
-            # Return zero vector as fallback
-            return [0.0] * 1536
-    
-
+            print(f"❌ Error generating embedding: {e}")
+            raise  # Don't return zeros, let it fail
     
     async def find_similar_task_type(self, user_id: str, 
                                    task_type: str,
@@ -83,14 +75,9 @@ class TaskTypeService:
         except Exception as e:
             print(f"⚠️ Could not check existing task types: {e}")
         
-        # Create search query for logging
-        search_query = f"'{task_type}'"
-        if description:
-            search_query += f" + '{description}'"
+        print(f"🔍 RAG Search: '{task_type}' (threshold: {threshold:.2f})")
         
-        print(f"🔍 RAG Search: {search_query} (threshold: {threshold:.2f})")
-        
-        embedding = self.generate_embedding(task_type, description)
+        embedding = self.generate_embedding(task_type)
         
         try:
             # First, search with a low threshold to get the highest match regardless
@@ -156,35 +143,16 @@ class TaskTypeService:
     
     async def create_task_type(self, user_id: str, 
                              task_type: str, 
-                             description: Optional[str] = None,
-                             scheduler_service = None) -> TaskType:
-        """Create new task type with LLM-analyzed cognitive load and importance"""
+                             description: Optional[str] = None) -> TaskType:
+        """Create new task type with neutral patterns"""
         
         print(f"🆕 Creating new task type: '{task_type}' for user {user_id[:8]}...")
         if description:
             print(f"   📝 Description: {description}")
         
-        # Generate embedding from task type and description
-        embedding = self.generate_embedding(task_type, description)
+        # Generate embedding from task type name only
+        embedding = self.generate_embedding(task_type)
         print(f"   🧮 Generated embedding (dimensions: {len(embedding)})")
-        
-        # Analyze task characteristics using LLM (from scheduler service)
-        if scheduler_service:
-            task_analysis = await scheduler_service.analyze_task_characteristics(
-                self.openai_client, task_type, description
-            )
-            print(f"   🧠 LLM Analysis - Cognitive Load: {task_analysis['cognitive_load']:.2f}, "
-                  f"Importance: {task_analysis['importance_score']:.2f}, "
-                  f"Duration: {task_analysis['typical_duration']:.1f}h")
-        else:
-            # Fallback to simple defaults if no scheduler service provided
-            task_analysis = {
-                "cognitive_load": 0.5,
-                "importance_score": 0.5,
-                "typical_duration": 1.0,
-                "recovery_hours": 0.5
-            }
-            print(f"   🔄 Using default analysis (no scheduler service provided)")
         
         # Initialize neutral patterns and confidence matrix
         weekly_habit_scores = initialize_neutral_weekly_habit_array()
@@ -199,10 +167,10 @@ class TaskTypeService:
             "slot_confidence": slot_confidence,
             "completion_count": 0,
             "completions_since_last_update": 0,
-            "typical_duration": task_analysis['typical_duration'],
-            "importance_score": task_analysis['importance_score'],
-            "recovery_hours": task_analysis['recovery_hours'],
-            "cognitive_load": task_analysis['cognitive_load'],
+            "typical_duration": 1.0,
+            "importance_score": 0.5,  # Neutral importance initially
+            "recovery_hours": 0.5,    # Default buffer time
+            "cognitive_load": 0.5,    # Default cognitive load
             "embedding": embedding
         }
         
