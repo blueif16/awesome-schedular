@@ -9,7 +9,7 @@ import json
 import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional, Tuple
-from models import TaskType, Event, ScheduleEventRequest, SchedulingResult
+from models import TaskType, Event, SchedulingResult
 from task_type_service import TaskTypeService
 from db_service import DatabaseService
 
@@ -36,9 +36,7 @@ class SchedulerService:
                                    category: str = None,
                                    duration: float = 1.0,
                                    importance_score: float = 0.5,
-                                   available_periods: Optional[List[Tuple[datetime, datetime]]] = None,
-                                   openai_client = None,
-                                   memory_service = None) -> Dict:
+                                   available_periods: Optional[List[Tuple[datetime, datetime]]] = None) -> Dict:
         """
         Creates a NEW calendar event with the provided details using pattern-based scheduling.
         Routes to LLM if similarity < 0.4 threshold.
@@ -55,8 +53,6 @@ class SchedulerService:
             duration: Duration in hours (default: 1.0)
             importance_score: Task importance 0.0-1.0 (default: 0.5)
             available_periods: Optional time periods to search within
-            openai_client: OpenAI client for LLM fallback
-            memory_service: Memory service for preference storage
             
         Returns:
             str: Brief message if successful with Firebase ID 
@@ -116,9 +112,9 @@ class SchedulerService:
                 logger.info(f"🎯 PATTERN SCHEDULING: Using '{task_type.task_type}' (similarity: {similar_task.similarity:.3f}, completions: {task_type.completion_count})")
                 
                 # Find optimal slot using behavioral patterns + energy + cognitive load
-                logger.info(f"🔍 SLOT FINDING: Searching for optimal slot")
+                logger.info(f"SLOT_FINDING: Searching for optimal slot")
                 optimal_result = await self.find_optimal_slot(
-                    user_id, task_type, duration, time_periods, existing_events
+                    user_id, task_type, duration, time_periods, existing_events, importance_score
                 )
                 
                 if not optimal_result:
@@ -131,35 +127,46 @@ class SchedulerService:
                 logger.info(f"🎯 PATTERN SCHEDULING: Found slot at {optimal_slot['start_time']} - {optimal_slot['end_time']}")
                 
             else:
-                # Auto-fallback to LLM scheduling when similarity < 0.4
+                # Create new task type when similarity < 0.4
                 similarity_msg = f"similarity: {similar_task.similarity:.3f}" if similar_task else "no matches found"
-                logger.info(f"🔄 ROUTING TO LLM: {similarity_msg} < 0.4 threshold")
+                logger.info(f"🆕 CREATING NEW TASK TYPE: {similarity_msg} < 0.4 threshold")
                 
-                user_preferences = f"Creating task: '{summary}'. " + \
-                                 "Please analyze optimal scheduling based on patterns, energy, and cognitive load."
+                # Create new task type with LLM analysis
+                task_type = await self.task_type_service.create_task_type(
+                    user_id, summary, description
+                )
+                logger.info(f"🆕 NEW TASK TYPE: Created '{task_type.task_type}' with LLM-generated patterns")
                 
-                # Create a request object for LLM compatibility
-                from models import ScheduleEventRequest
-                request = ScheduleEventRequest(
-                    title=summary,
-                    description=description,
-                    duration=duration,
-                    importance_score=importance_score
+                # Find optimal slot using the new task type's behavioral patterns
+                logger.info(f"SLOT_FINDING: Searching for optimal slot using new patterns")
+                optimal_result = await self.find_optimal_slot(
+                    user_id, task_type, duration, time_periods, existing_events, importance_score
                 )
                 
-                return await self.schedule_with_llm(
-                    user_id=user_id,
-                    request=request,
-                    user_preferences=user_preferences,
-                    existing_events=existing_events,
-                    available_periods=available_periods,
-                    openai_client=openai_client,
-                    memory_service=memory_service
-                )
+                if not optimal_result:
+                    logger.error("🔍 SLOT FINDING ERROR: No available time slots found")
+                    raise ValueError("No available time slots found using pattern-based scheduling")
+                
+                optimal_slot = optimal_result['optimal_slot']
+                task_type_id = str(task_type.id)
+                scheduling_method = "new_pattern_based"
+                logger.info(f"🎯 NEW PATTERN SCHEDULING: Found slot at {optimal_slot['start_time']} - {optimal_slot['end_time']}")
         
         # Single event creation for both direct and pattern-based scheduling
-        logger.info(f"💾 DATABASE: Creating event in database")
+        logger.info(f"DATABASE_CREATE: Creating event in database")
         try:
+            # Prepare alternative slots for storage
+            alternative_slots = []
+            if 'alternatives' in optimal_result:
+                for alt in optimal_result['alternatives'][:5]:  # Store top 5 alternatives
+                    alternative_slots.append({
+                        "start": alt['start_time'].isoformat(),
+                        "end": alt['end_time'].isoformat(),
+                        "score": alt.get('full_score', alt.get('fit_score', 0.5)),
+                        "fit_score": alt.get('fit_score', 0.5),
+                        "priority_score": alt.get('priority_score', importance_score)
+                    })
+            
             event_id = await self.db_service.create_event(
                 user_id=user_id,
                 title=summary,
@@ -167,90 +174,20 @@ class SchedulerService:
                 scheduled_start=optimal_slot['start_time'],
                 scheduled_end=optimal_slot['end_time'],
                 task_type_id=task_type_id,
-                calculated_priority=importance_score
+                calculated_priority=importance_score,
+                fit_score=optimal_slot.get('fit_score', 0.5),
+                alternative_slots=alternative_slots
             )
-            logger.info(f"💾 DATABASE: Event created successfully with ID: {event_id}")
+            logger.info(f"DATABASE_CREATE_SUCCESS: Event created with ID: {event_id}, {len(alternative_slots)} alternatives stored")
         except Exception as e:
-            logger.error(f"💾 DATABASE ERROR: Failed to create event: {e}")
+            logger.error(f"DATABASE_CREATE_ERROR: Failed to create event: {e}")
             raise
         
         logger.info(f"📅 SCHEDULE SUCCESS: Event {event_id} scheduled using {scheduling_method}")
         return event_id
 
-    async def schedule_with_llm(self,
-                               user_id: str,
-                               request: ScheduleEventRequest,
-                               user_preferences: str,
-                               existing_events: List[Dict],
-                               available_periods: Optional[List[Tuple[datetime, datetime]]] = None,
-                               openai_client = None,
-                               memory_service = None) -> Dict:
-        """
-        LLM-based scheduling with behavioral context for semantic understanding
-        """
-        
-        # 1. Find/create task type for behavioral context
-        task_type = await self._find_or_create_task_type(user_id, request)
-        
-        # 2. Set up time periods with deadline awareness
-        time_periods = self._setup_time_periods(available_periods)
-        
-        # 3. Extract free slots from calendar data
-        free_slots = self._extract_free_slots_from_periods(
-            time_periods, existing_events, request.duration
-        )
-        
-        # 4. Prepare comprehensive context for LLM
-        llm_context = await self._prepare_llm_context(
-            user_id, task_type, user_preferences, free_slots, existing_events, request, memory_service
-        )
-        
-        # 5. Get LLM scheduling decision
-        if not openai_client:
-            raise ValueError("OpenAI client required for LLM scheduling")
-        
-        llm_response = await self._call_llm_for_scheduling(openai_client, llm_context, free_slots)
-        
-        # 6. Create event from LLM decision
-        selected_slot = self._parse_llm_scheduling_response(llm_response, free_slots)
-        
-        # 7. Create event in database (was missing!)
-        logger.info(f"💾 DATABASE: Creating LLM-scheduled event in database")
-        try:
-            event_id = await self.db_service.create_event(
-                user_id=user_id,
-                title=request.title,
-                description=request.description,
-                scheduled_start=selected_slot['start_time'],
-                scheduled_end=selected_slot['end_time'],
-                task_type_id=str(task_type.id),
-                calculated_priority=selected_slot.get('priority', 0.8)
-            )
-            logger.info(f"💾 DATABASE: LLM event created successfully with ID: {event_id}")
-        except Exception as e:
-            logger.error(f"💾 DATABASE ERROR: Failed to create LLM event: {e}")
-            raise
-        
-        # 8. Store new preferences if memory service available
-        if memory_service and user_preferences:
-            await self._store_scheduling_preferences(
-                user_id, user_preferences, task_type, llm_response, memory_service, openai_client
-            )
-        
-        return event_id
 
-    async def schedule_event(self, user_id: str, 
-                           request: ScheduleEventRequest,
-                           available_periods: Optional[List[Tuple[datetime, datetime]]] = None) -> Dict:
-        """
-        Legacy scheduling method - calls schedule_with_pattern for backward compatibility
-        """
-        return await self.schedule_with_pattern(
-            user_id=user_id,
-            request=request,
-            existing_events=[],
-            available_periods=available_periods
-        )
+
     
     # ============================================================================
     # CORE SCORING AND PATTERN ANALYSIS
@@ -260,7 +197,7 @@ class SchedulerService:
                            duration: float, 
                            task_type: TaskType,
                            user_id: str,
-                           existing_events: List[Dict] = None) -> float:
+                        ) -> float:
         """Calculate comprehensive score: 50% habit patterns + 50% energy matching, with confidence multiplier"""
         
         weekly_habit_scores = task_type.weekly_habit_scores  # 168-hour task-specific patterns
@@ -405,70 +342,250 @@ class SchedulerService:
     # SLOT FINDING AND AVAILABILITY
     # ============================================================================
 
+    def filter_available_periods(self, available_periods: List[Tuple[datetime, datetime]], 
+                               fixed_events: List[Dict]) -> List[Tuple[datetime, datetime]]:
+        """Filter out time periods blocked by fixed (immovable) events"""
+        filtered_periods = []
+        
+        for period_start, period_end in available_periods:
+            current_segments = [(period_start, period_end)]
+            
+            # Remove segments blocked by fixed events
+            for event in fixed_events:
+                if not event.get('task_type_id'):  # Fixed event (no task_type_id)
+                    event_start = event['scheduled_start']
+                    event_end = event['scheduled_end']
+                    
+                    new_segments = []
+                    for seg_start, seg_end in current_segments:
+                        # Check if event overlaps with this segment
+                        if event_start < seg_end and event_end > seg_start:
+                            # Add segment before event
+                            if seg_start < event_start:
+                                new_segments.append((seg_start, event_start))
+                            # Add segment after event
+                            if event_end < seg_end:
+                                new_segments.append((event_end, seg_end))
+                        else:
+                            # No overlap, keep segment
+                            new_segments.append((seg_start, seg_end))
+                    current_segments = new_segments
+            
+            # Add all valid segments (minimum 30 minutes)
+            for seg_start, seg_end in current_segments:
+                if (seg_end - seg_start).total_seconds() >= 1800:  # 30 minutes
+                    filtered_periods.append((seg_start, seg_end))
+        
+        return filtered_periods
+
+    async def reschedule_using_alternatives(self, event: Dict, existing_events: List[Dict]) -> Optional[Dict]:
+        """Try to reschedule event using stored alternative slots"""
+        alternative_slots = event.get('alternative_slots', [])
+        
+        if not alternative_slots:
+            logger.info(f"RESCHEDULE_NO_ALTERNATIVES: Event '{event['title']}' has no stored alternatives")
+            return None
+        
+        logger.info(f"RESCHEDULE_CHECK_ALTERNATIVES: Checking {len(alternative_slots)} stored alternatives for '{event['title']}'")
+        
+        # Check each alternative slot for conflicts
+        for i, alt_slot in enumerate(alternative_slots):
+            try:
+                alt_start = datetime.fromisoformat(alt_slot['start'])
+                alt_end = datetime.fromisoformat(alt_slot['end'])
+                
+                # Check if this alternative conflicts with any existing events
+                has_conflict = False
+                for existing_event in existing_events:
+                    if existing_event['id'] == event['id']:  # Skip self
+                        continue
+                    
+                    existing_start = existing_event['scheduled_start']
+                    existing_end = existing_event['scheduled_end']
+                    
+                    if (alt_start < existing_end and alt_end > existing_start):
+                        has_conflict = True
+                        break
+                
+                if not has_conflict:
+                    logger.info(f"RESCHEDULE_ALTERNATIVE_FOUND: Using alternative slot {i+1} for '{event['title']}'")
+                    return {
+                        'start_time': alt_start,
+                        'end_time': alt_end,
+                        'fit_score': alt_slot.get('fit_score', 0.5),
+                        'priority_score': alt_slot.get('priority_score', 0.5),
+                        'full_score': alt_slot.get('score', 0.5),
+                        'source': 'alternative_slot'
+                    }
+                    
+            except (ValueError, KeyError) as e:
+                logger.warning(f"RESCHEDULE_ALTERNATIVE_ERROR: Invalid alternative slot data: {e}")
+                continue
+        
+        logger.info(f"RESCHEDULE_NO_VALID_ALTERNATIVES: All {len(alternative_slots)} alternatives have conflicts")
+        return None
+
     async def find_optimal_slot(self, user_id: str, 
                               task_type: TaskType,
                               duration: float,
                               available_periods: List[Tuple[datetime, datetime]],
-                              existing_events: List[Dict]) -> Optional[Dict]:
-        """Find optimal time slot using comprehensive pattern analysis"""
+                              existing_events: List[Dict],
+                              priority_score: float = 0.5) -> Optional[Dict]:
+        """Find optimal time slot with smart conflict resolution and rescheduling"""
         
-        logger.info(f"🔍 OPTIMAL SLOT: Searching for {duration}h slot for '{task_type.task_type}'")
-        logger.info(f"🔍 OPTIMAL SLOT: {len(available_periods)} periods, {len(existing_events)} existing events")
+        logger.info(f"SLOT_SEARCH: Finding {duration}h slot for '{task_type.task_type}' with priority {priority_score:.2f}")
+        
+        # Separate fixed and movable events
+        fixed_events = [e for e in existing_events if not e.get('task_type_id')]
+        movable_events = [e for e in existing_events if e.get('task_type_id')]
+        
+        logger.info(f"EVENTS_BREAKDOWN: {len(fixed_events)} fixed events, {len(movable_events)} movable events")
+        
+        # Filter periods to exclude fixed events
+        available_periods = self.filter_available_periods(available_periods, fixed_events)
+        
+        if not available_periods:
+            logger.warning("SLOT_SEARCH_FAILED: No time periods available after filtering fixed events")
+            return None
         
         slot_candidates = []
         
-        # Search within each available time period
+        # Search within filtered periods
         for period_start, period_end in available_periods:
             current_time = period_start.replace(minute=0, second=0, microsecond=0)
             
-            # Ensure we start at the beginning of the period or later
             if current_time < period_start:
                 current_time = period_start
             
             while current_time + timedelta(hours=duration) <= period_end:
-                # Check basic availability
-                if self.is_slot_available(current_time, duration, existing_events):
-                    
-                    # Calculate comprehensive score
-                    score = await self.calculate_slot_score(
-                        current_time, duration, task_type, user_id, existing_events
-                    )
-                    
-                    # Generate detailed reasoning
-                    reasoning = self.generate_slot_reasoning(
-                        current_time, duration, task_type, score
-                    )
-                    
+                # Calculate fit_score (50% habit + 50% energy)
+                fit_score = await self.calculate_slot_score(
+                    current_time, duration, task_type, user_id
+                )
+                
+                # Check conflicts with movable events only
+                conflict_result = self.resolve_slot_conflicts(
+                    current_time, duration, fit_score, priority_score, movable_events
+                )
+                
+                if conflict_result['available']:
+                    full_score = self.calculate_full_score(fit_score, priority_score)
                     slot_candidates.append({
                         'start_time': current_time,
                         'end_time': current_time + timedelta(hours=duration),
-                        'score': score,
-                        'reasoning': reasoning,
-                        'period': f"{period_start.strftime('%m/%d %H:%M')}-{period_end.strftime('%H:%M')}"
+                        'fit_score': fit_score,
+                        'priority_score': priority_score,
+                        'full_score': full_score,
+                        'action': conflict_result['action'],
+                        'displaced_events': conflict_result.get('displaced_events', [])
                     })
                 
-                # Move to next 30-minute interval
                 current_time += timedelta(minutes=30)
         
         if not slot_candidates:
-            logger.warning(f"🔍 OPTIMAL SLOT: No candidates found")
+            logger.warning("SLOT_SEARCH_FAILED: No suitable slots found")
             return None
         
-        # Sort by score and return best options
-        best_slots = sorted(slot_candidates, key=lambda x: x['score'], reverse=True)
-        logger.info(f"🔍 OPTIMAL SLOT: Found {len(slot_candidates)} candidates, best score: {best_slots[0]['score']:.3f}")
-        logger.info(f"🔍 OPTIMAL SLOT: Best slot: {best_slots[0]['start_time']} - {best_slots[0]['end_time']}")
+        # Sort by full_score
+        best_slots = sorted(slot_candidates, key=lambda x: x['full_score'], reverse=True)
+        best_slot = best_slots[0]
+        
+        # Handle displacement and rescheduling
+        if best_slot['action'] == 'displace':
+            logger.info(f"SLOT_SELECTED_WITH_DISPLACEMENT: Displacing {len(best_slot['displaced_events'])} events")
+            
+            # Reschedule displaced events
+            for displaced_event in best_slot['displaced_events']:
+                try:
+                    # First try to use alternative slots
+                    alternative_slot = await self.reschedule_using_alternatives(displaced_event, existing_events)
+                    
+                    if alternative_slot:
+                        # Update event with alternative slot
+                        await self.db_service.update_event_time(
+                            displaced_event['id'],
+                            alternative_slot['start_time'],
+                            alternative_slot['end_time']
+                        )
+                        logger.info(f"RESCHEDULED_ALTERNATIVE: Event '{displaced_event['title']}' moved to alternative slot")
+                    else:
+                        # Delete and reschedule using full search
+                        await self.db_service.delete_event(displaced_event['id'])
+                        
+                        # Reschedule it (recursive call)
+                        await self.schedule_with_pattern(
+                            user_id=displaced_event['user_id'],
+                            summary=displaced_event['title'],
+                            description=displaced_event.get('description'),
+                            duration=(displaced_event['scheduled_end'] - displaced_event['scheduled_start']).total_seconds() / 3600,
+                            importance_score=displaced_event.get('priority_score', 0.5),
+                            available_periods=available_periods
+                        )
+                        logger.info(f"RESCHEDULED_FULL_SEARCH: Event '{displaced_event['title']}' rescheduled via full search")
+                        
+                except Exception as e:
+                    logger.error(f"RESCHEDULE_FAILED: Could not reschedule event '{displaced_event['title']}': {e}")
+        
+        logger.info(f"SLOT_SELECTED: {best_slot['start_time'].strftime('%m/%d %H:%M')} to {best_slot['end_time'].strftime('%H:%M')} (full_score: {best_slot['full_score']:.3f})")
         
         return {
-            'optimal_slot': best_slots[0],
-            'alternatives': best_slots[1:3],  # Top 3 alternatives
-            'pattern_insights': self.get_pattern_insights(task_type),
-            'schedule_optimization': self.analyze_schedule_fit(
-                best_slots[0], existing_events, task_type
-            ),
-            'periods_searched': len(available_periods),
-            'total_candidates': len(slot_candidates)
+            'optimal_slot': best_slot,
+            'alternatives': best_slots[1:3],
+            'total_candidates': len(slot_candidates),
+            'displacement_required': best_slot['action'] == 'displace'
         }
+
+    def calculate_full_score(self, fit_score: float, priority_score: float) -> float:
+        """Calculate full score using formula: (priority^1.5) * (fit^0.5)"""
+        return (priority_score ** 1.5) * (fit_score ** 0.5)
+
+    def resolve_slot_conflicts(self, start_time: datetime, 
+                             duration: float, 
+                             new_task_fit_score: float,
+                             new_task_priority_score: float,
+                             existing_events: List[Dict]) -> Dict:
+        """Resolve slot conflicts by comparing full scores with displacement penalty"""
+        end_time = start_time + timedelta(hours=duration)
+        
+        conflicting_events = []
+        immovable_conflicts = []
+        
+        for event in existing_events:
+            event_start = event['scheduled_start']
+            event_end = event['scheduled_end']
+            
+            if (start_time < event_end and end_time > event_start):
+                # Check if event is movable (has task_type_id) or immovable
+                if event.get('task_type_id'):
+                    conflicting_events.append(event)
+                else:
+                    immovable_conflicts.append(event)
+        
+        # If any immovable conflicts, cannot use this slot
+        if immovable_conflicts:
+            return {'available': False, 'action': 'skip', 'reason': 'immovable_conflict'}
+        
+        if not conflicting_events:
+            return {'available': True, 'action': 'schedule', 'displaced_events': []}
+        
+        # Calculate full scores with displacement penalty
+        new_task_full_score = self.calculate_full_score(new_task_fit_score, new_task_priority_score)
+        total_conflict_full_score = 0
+        displacement_penalty = 0.1  # Penalty for moving existing tasks
+        
+        for event in conflicting_events:
+            stored_fit_score = event.get('fit_score', 0.5)
+            stored_priority_score = event.get('priority_score', 0.5)
+            event_full_score = self.calculate_full_score(stored_fit_score, stored_priority_score)
+            penalized_full_score = event_full_score + displacement_penalty
+            total_conflict_full_score += penalized_full_score
+        
+        # Compare full scores and decide
+        if new_task_full_score > total_conflict_full_score:
+            logger.info(f"CONFLICT_RESOLUTION: New task full_score {new_task_full_score:.3f} > conflicting events {total_conflict_full_score:.3f} (with penalty), displacing {len(conflicting_events)} events")
+            return {'available': True, 'action': 'displace', 'displaced_events': conflicting_events}
+        else:
+            return {'available': False, 'action': 'skip', 'reason': 'insufficient_score'}
 
     def is_slot_available(self, start_time: datetime, 
                          duration: float, 
@@ -614,7 +731,7 @@ class SchedulerService:
             
             # Query events from database
             result = self.task_type_service.supabase.table("events") \
-                .select("*") \
+                .select("id, user_id, task_type_id, title, description, scheduled_start, scheduled_end, cognitive_load, fit_score, priority_score, alternative_slots") \
                 .eq("user_id", user_id) \
                 .gte("scheduled_start", earliest_start.isoformat()) \
                 .lte("scheduled_end", latest_end.isoformat()) \
@@ -631,7 +748,10 @@ class SchedulerService:
                     "description": event_data.get("description"),
                     "scheduled_start": datetime.fromisoformat(event_data["scheduled_start"]),
                     "scheduled_end": datetime.fromisoformat(event_data["scheduled_end"]),
-                    "cognitive_load": event_data.get("cognitive_load", 0.5)
+                    "cognitive_load": event_data.get("cognitive_load", 0.5),
+                    "fit_score": event_data.get("fit_score", 0.5),
+                    "priority_score": event_data.get("priority_score", 0.5),
+                    "alternative_slots": event_data.get("alternative_slots", [])
                 })
             
             print(f"📅 Found {len(existing_events)} existing events in time range")
@@ -641,244 +761,6 @@ class SchedulerService:
             print(f"⚠️ Could not fetch existing events: {e}")
             return []  # Return empty list on error
 
-    async def _find_or_create_task_type(self, user_id: str, request: ScheduleEventRequest) -> TaskType:
-        """Find similar task type or create new one"""
-        similar_task = await self.task_type_service.find_similar_task_type(
-            user_id, request.title
-        )
-        
-        if similar_task and similar_task.similarity > 0.4:
-            print(f"🎯 LLM SCHEDULING: Using existing task type '{similar_task.task_type.task_type}' (completions: {similar_task.task_type.completion_count})")
-            return similar_task.task_type
-        else:
-            print(f"🆕 Creating new task type for LLM: '{request.title}'")
-            return await self.task_type_service.create_task_type(
-                user_id, request.title, request.description
-            )
-
-    def _extract_free_slots_from_periods(self, 
-                                       available_periods: List[Tuple[datetime, datetime]],
-                                       existing_events: List[Dict],
-                                       duration: float) -> List[Dict]:
-        """Extract actual free time slots that can fit the task duration"""
-        free_slots = []
-        
-        for period_start, period_end in available_periods:
-            current_time = period_start.replace(minute=0, second=0, microsecond=0)
-            
-            while current_time + timedelta(hours=duration) <= period_end:
-                if self.is_slot_available(current_time, duration, existing_events):
-                    free_slots.append({
-                        'start_time': current_time,
-                        'end_time': current_time + timedelta(hours=duration),
-                        'day_of_week': current_time.strftime('%A'),
-                        'time_of_day': current_time.strftime('%H:%M'),
-                        'date': current_time.strftime('%Y-%m-%d')
-                    })
-                
-                current_time += timedelta(minutes=30)
-        
-        return free_slots
-    
-    async def _prepare_llm_context(self,
-                                  user_id: str,
-                                  task_type: TaskType,
-                                  user_preferences: str,
-                                  free_slots: List[Dict],
-                                  existing_events: List[Dict],
-                                  request: ScheduleEventRequest,
-                                  memory_service = None) -> str:
-        """Prepare comprehensive context for LLM scheduling decision"""
-        
-        # Get behavioral insights
-        pattern_insights = self.get_pattern_insights(task_type)
-        
-        # Format calendar context
-        free_slots_summary = []
-        for slot in free_slots[:20]:  # Limit to prevent token overflow
-            free_slots_summary.append(
-                f"{slot['day_of_week']} {slot['date']} at {slot['time_of_day']}"
-            )
-        
-        # Existing events context for the day
-        today_events = [
-            f"{e['title']} from {e['scheduled_start'].strftime('%H:%M')} to {e['scheduled_end'].strftime('%H:%M')}"
-            for e in existing_events
-            if e['scheduled_start'].date() == datetime.now().date()
-        ]
-        
-        context = f"""
-TASK TO SCHEDULE:
-- Title: {request.title}
-- Description: {request.description or 'None provided'}
-- Duration: {request.duration} hours
-- Cognitive Load: {task_type.cognitive_load:.2f} (0=easy, 1=demanding)
-
-USER PREFERENCES (CURRENT REQUEST):
-{user_preferences}
-
-HISTORICAL PATTERNS FROM MEMORY:
-"""
-        if memory_service:
-            from mem0_service import Mem0Service
-            mem0_service = Mem0Service(memory_service, self.task_type_service)
-            mem0_context = await mem0_service.query_scheduling_context(
-                user_id, task_type, request
-            )
-            context += mem0_context if mem0_context else "No previous patterns found"
-        else:
-            context += "Memory service not available to query historical patterns."
-
-        context += f"""
-
-BEHAVIORAL PATTERNS FOR THIS TASK TYPE:
-- Task Type: {task_type.task_type}
-- Completion History: {task_type.completion_count} times
-- Best Hours: {pattern_insights.get('best_hours', [])}
-- Peak Energy Hours: {pattern_insights.get('peak_energy_hours', [])}
-- Recovery Time Needed: {task_type.recovery_hours} hours
-
-AVAILABLE FREE SLOTS:
-{chr(10).join(free_slots_summary)}
-
-TODAY'S EXISTING EVENTS:
-{chr(10).join(today_events) if today_events else 'No events scheduled today'}
-
-Please analyze the user preferences, historical patterns, behavioral data, and available slots to recommend the best scheduling option.
-Consider energy levels, task complexity, user's stated preferences, and learned patterns from memory.
-"""
-        return context
-    
-    async def _store_scheduling_preferences(self, user_id: str, user_preferences: str, 
-                                           task_type: TaskType, llm_response: Dict, 
-                                           memory_service, openai_client):
-        """Store new scheduling preferences from user input"""
-        try:
-            from mem0_service import Mem0Service
-            mem0_service = Mem0Service(memory_service, self.task_type_service)
-            await mem0_service.store_scheduling_preferences(
-                user_id, user_preferences, task_type, llm_response.get('detected_patterns', []), openai_client
-            )
-        except Exception as e:
-            print(f"⚠️ Could not store scheduling preferences: {e}")
-
-    async def _call_llm_for_scheduling(self, openai_client, context: str, free_slots: List[Dict]) -> Dict:
-        """Call LLM to make scheduling decision with structured output"""
-        
-        # Create structured schema for slot selection
-        slot_options = []
-        for i, slot in enumerate(free_slots[:10]):  # Limit to top 10 to prevent token overflow
-            slot_options.append({
-                "index": i,
-                "description": f"{slot['day_of_week']} {slot['date']} at {slot['time_of_day']}"
-            })
-        
-        function_schema = {
-            "name": "select_optimal_slot",
-            "description": "Select the optimal time slot for scheduling based on user preferences and behavioral patterns",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "selected_slot_index": {
-                        "type": "integer",
-                        "description": f"Index of selected slot from available options (0-{len(slot_options)-1})",
-                        "minimum": 0,
-                        "maximum": len(slot_options) - 1
-                    },
-                    "reasoning": {
-                        "type": "string",
-                        "description": "Detailed reasoning for why this slot was chosen, considering user preferences, behavioral patterns, and energy levels"
-                    },
-                    "confidence": {
-                        "type": "number",
-                        "description": "Confidence score in this scheduling decision (0.0-1.0)",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                    },
-                    "detected_patterns": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "List of scheduling patterns detected from user preferences (e.g., 'prefers evenings', 'needs quiet time', 'avoids mornings')"
-                    }
-                },
-                "required": ["selected_slot_index", "reasoning", "confidence", "detected_patterns"]
-            }
-        }
-        
-        # Enhanced context with slot options
-        enhanced_context = context + f"\n\nAVAILABLE SLOT OPTIONS:\n"
-        for option in slot_options:
-            enhanced_context += f"Option {option['index']}: {option['description']}\n"
-        
-        enhanced_context += "\nPlease select the best option and explain your reasoning."
-        
-        try:
-            response = openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {
-                        "role": "system", 
-                        "content": "You are an intelligent scheduling assistant. Analyze the user's preferences, behavioral patterns, and available time slots to make optimal scheduling decisions. Focus on semantic understanding of preferences like 'evenings', 'after coffee', 'quiet time', etc."
-                    },
-                    {
-                        "role": "user",
-                        "content": enhanced_context
-                    }
-                ],
-                functions=[function_schema],
-                function_call={"name": "select_optimal_slot"},
-                temperature=0.3
-            )
-            
-            # Parse function call response
-            function_call = response.choices[0].message.function_call
-            if function_call and function_call.name == "select_optimal_slot":
-                result = json.loads(function_call.arguments)
-                
-                # Validate slot index
-                selected_index = result.get("selected_slot_index", 0)
-                if selected_index >= len(free_slots):
-                    selected_index = 0  # Fallback to first slot
-                
-                return {
-                    "selected_slot_index": selected_index,
-                    "reasoning": result.get("reasoning", "LLM scheduling decision"),
-                    "confidence": result.get("confidence", 0.8),
-                    "detected_patterns": result.get("detected_patterns", []),
-                    "raw_response": response.choices[0].message.content
-                }
-            else:
-                raise ValueError("LLM did not return expected function call")
-                
-        except Exception as e:
-            print(f"❌ Error calling LLM for scheduling: {e}")
-            # Fallback to first available slot
-            return {
-                "selected_slot_index": 0,
-                "reasoning": f"Fallback scheduling due to LLM error: {str(e)}",
-                "confidence": 0.5,
-                "detected_patterns": [],
-                "error": str(e)
-            }
-    
-    def _parse_llm_scheduling_response(self, llm_response: Dict, free_slots: List[Dict]) -> Dict:
-        """Parse LLM response and return selected time slot"""
-        selected_index = llm_response.get('selected_slot_index', 0)
-        if selected_index < len(free_slots):
-            selected_slot = free_slots[selected_index].copy()
-            # Add LLM metadata to the selected slot
-            selected_slot['priority'] = llm_response.get('confidence', 0.8)
-            selected_slot['llm_reasoning'] = llm_response.get('reasoning', '')
-            return selected_slot
-        else:
-            # Fallback to first slot if index is invalid
-            if free_slots:
-                fallback_slot = free_slots[0].copy()
-                fallback_slot['priority'] = 0.5
-                fallback_slot['llm_reasoning'] = 'Fallback due to invalid slot selection'
-                return fallback_slot
-            else:
-                return None
     
     async def parse_and_apply_time_preferences(self, 
                                           user_id: str,
