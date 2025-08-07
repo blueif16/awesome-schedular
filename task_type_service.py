@@ -17,9 +17,10 @@ load_dotenv()
 
 
 class TaskTypeService:
-    def __init__(self, supabase: Client):
+    def __init__(self, supabase: Client, memory_service=None):
         self.supabase = supabase
         self.openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.memory_service = memory_service  # SchedulerMemoryService instance
     
     def _parse_embedding(self, embedding_data: Any) -> Optional[List[float]]:
         """Parse embedding data from database - handles both string and list formats"""
@@ -158,9 +159,9 @@ class TaskTypeService:
         embedding = self.generate_embedding(task_type)
         print(f"   🧮 Generated embedding (dimensions: {len(embedding)})")
         
-        # Use LLM to analyze task and generate behavioral patterns
-        print(f"   🤖 Analyzing task with LLM to generate behavioral patterns...")
-        pattern_analysis = await self._analyze_task_patterns_with_llm(task_type, description)
+        # Use LLM to analyze task and generate behavioral patterns with Mem0 context
+        print(f"   🤖 Analyzing task with LLM to generate behavioral patterns (with Mem0 context)...")
+        pattern_analysis = await self._analyze_task_patterns_with_llm(task_type, description, user_id)
         
         weekly_habit_scores = pattern_analysis['weekly_habit_scores']
         slot_confidence = pattern_analysis['slot_confidence']
@@ -222,8 +223,15 @@ class TaskTypeService:
             print(f"❌ Error creating task type '{task_type}': {e}")
             raise
 
-    async def _analyze_task_patterns_with_llm(self, task_type: str, description: Optional[str] = None) -> Dict:
-        """Use LLM to analyze task and generate behavioral patterns"""
+    async def _analyze_task_patterns_with_llm(self, task_type: str, description: Optional[str] = None, user_id: str = None) -> Dict:
+        """Enhanced version with Mem0 context - use LLM to analyze task and generate behavioral patterns"""
+        
+        # Get user's full context from Mem0
+        user_context = ""
+        if user_id and self.memory_service:
+            user_context = await self.memory_service.get_full_context_for_task_creation(
+                user_id, task_type, description
+            )
         
         function_schema = {
             "name": "analyze_task_behavioral_patterns",
@@ -280,7 +288,11 @@ Analyze the following task type and generate behavioral scheduling patterns:
 TASK TYPE: "{task_type}"
 DESCRIPTION: "{description or 'No description provided'}"
 
-🔍 IMPORTANT: Carefully analyze the DESCRIPTION for time preferences like:
+{f"USER CONTEXT FROM MEMORY:\n{user_context}\n" if user_context else ""}
+
+IMPORTANT: Consider both the task description AND the user's personal context above when generating patterns.
+
+IMPORTANT: Carefully analyze the DESCRIPTION for time preferences like:
 - "morning", "afternoon", "evening" 
 - "prefer in morning", "focus", "creative hours"
 - Any specific time mentions or scheduling hints
@@ -326,7 +338,7 @@ Be specific! Generate patterns that match the described preferences.
         
         try:
             response = self.openai_client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o",
                 messages=[
                     {
                         "role": "system", 

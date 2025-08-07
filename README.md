@@ -1923,3 +1923,90 @@ Congratulations! You've built a sophisticated AI scheduler that:
 ---
 
 *Built with ❤️ using the YAGNI principle - ship it, then improve it!* 
+
+# 🧠 Simplified Mem0 Integration
+
+## 新增功能: 智能内存管理系统
+
+### 四类内存结构
+系统现在使用简化的4类内存结构来存储和检索用户偏好:
+
+1. **Priority (优先级)**: 任务重要性信号 
+   - 关键词: "important", "critical", "urgent", "priority", "deadline", "essential"
+   
+2. **Habit (习惯)**: 行为模式和偏好
+   - 关键词: "prefer", "like", "morning", "evening", "afternoon", "schedule", "time", "usually"
+   
+3. **Energy (能量)**: 能量模式和表现观察
+   - 关键词: "energy", "tired", "focused", "productive", "peak", "low", "performance"
+   
+4. **Context (上下文)**: 当前目标、感受、生活背景
+   - 通用回退类别，存储所有其他相关信息
+
+### 使用方法
+
+#### 初始化内存服务
+```python
+from mem0_service import get_scheduler_memory, SchedulerMemoryService
+
+# 获取简化内存服务
+memory_service = await get_scheduler_memory()
+
+# 或手动初始化
+scheduler_memory = SchedulerMemoryService()
+await scheduler_memory.initialize()
+```
+
+#### 存储偏好
+```python
+# 使用LLM智能分类存储用户内容
+results = await mem0_service.extract_and_store_text_insights(
+    user_id="user123",
+    text_content="I'm most productive in the morning and prefer deep work sessions before noon. This project is critical for our Q4 goals.",
+    context="project planning",
+    openai_client=openai_client
+)
+# Returns: {"priority": True, "habit": True, "energy": False, "context": True}
+
+# 简化的引导流程偏好存储
+results = await mem0_service.store_onboarding_preferences(
+    user_id="user123", 
+    user_input="I hate morning meetings, love focused afternoon work",
+    context="onboarding",
+    openai_client=openai_client
+)
+```
+
+#### 查询上下文
+```python
+# 获取完整任务创建上下文
+context = await memory_service.get_full_context_for_task_creation(
+    user_id="user123",
+    task_type="Deep Work",
+    description="Research and analysis"
+)
+```
+
+### 与TaskTypeService集成
+
+TaskTypeService现在在创建任务类型时自动使用Mem0上下文:
+
+```python
+# 创建TaskTypeService实例时传入内存服务
+memory_service = await get_scheduler_memory()
+task_service = TaskTypeService(supabase, memory_service=memory_service)
+
+# 创建任务类型时自动使用Mem0上下文
+new_task_type = await task_service.create_task_type(
+    user_id="user123",
+    task_type="Deep Work Session",
+    description="Focus work requiring high concentration"
+)
+```
+
+### 优势
+
+1. **高效分类**: 自动将用户偏好分类到4个明确类别
+2. **上下文感知**: LLM任务分析现在考虑用户历史偏好
+3. **降级兼容**: 同时支持原始AsyncMemory和简化结构
+4. **性能优化**: 结构化查询比通用搜索更高效 
