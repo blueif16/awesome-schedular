@@ -1,6 +1,7 @@
 """
 Mem0 Service - Centralized Memory Management
 Handles all mem0 operations for the smart scheduler using AsyncMemory
+Simplified structure with 4 memory categories: priority, habit, energy, context
 """
 
 import json
@@ -10,10 +11,173 @@ from models import TaskType, ScheduleEventRequest
 import uuid
 
 
+class SchedulerMemoryService:
+    """Simplified Mem0 structure for smart scheduler with 4 categories"""
+    
+    def __init__(self):
+        self.memory = None
+        self.is_available = False
+    
+    async def initialize(self):
+        """Initialize Memory service"""
+        try:
+            from mem0 import Memory
+            self.memory = Memory()
+            self.is_available = True
+            print("✅ SchedulerMemoryService initialized")
+            return True
+        except Exception as e:
+            print(f"⚠️ Could not initialize Memory: {e}")
+            return False
+    
+    # Category 1: Priority & Importance
+    async def add_priority(self, user_id: str, task: str, signal: str):
+        """Store task importance signals"""
+        if not self.is_available:
+            return False
+        await self.memory.add(
+            f"{task}: {signal}",
+            user_id=user_id,
+            metadata={
+                "category": "priority",
+                "task": task,
+                "timestamp": datetime.now().isoformat()
+            }
+        )
+        return True
+    
+    # Category 2: Habits & Patterns  
+    async def add_habit(self, user_id: str, pattern: str):
+        """Store behavioral patterns and preferences"""
+        if not self.is_available:
+            return False
+        await self.memory.add(
+            pattern,
+            user_id=user_id,
+            metadata={
+                "category": "habit",
+                "timestamp": datetime.now().isoformat()
+            }
+        )
+        return True
+    
+    # Category 3: Energy & Performance
+    async def add_energy(self, user_id: str, observation: str):
+        """Store energy patterns and performance observations"""
+        if not self.is_available:
+            return False
+        await self.memory.add(
+            observation,
+            user_id=user_id,
+            metadata={
+                "category": "energy",
+                "timestamp": datetime.now().isoformat()
+            }
+        )
+        return True
+    
+    # Category 4: Context & Goals
+    async def add_context(self, user_id: str, context: str):
+        """Store current goals, feelings, life context, details"""
+        if not self.is_available:
+            return False
+        await self.memory.add(
+            context,
+            user_id=user_id,
+            metadata={
+                "category": "context",
+                "timestamp": datetime.now().isoformat()
+            }
+        )
+        return True
+    
+    # Query methods for each category
+    async def get_priority_context(self, user_id: str, task_type: str) -> List[Dict]:
+        """Get importance/priority insights for a specific task"""
+        if not self.is_available:
+            return []
+        results = await self.memory.search(
+            query=f"{task_type} importance priority critical essential deadline",
+            user_id=user_id,
+            filters={"category": "priority"},
+            limit=10
+        )
+        return results
+    
+    async def get_habit_patterns(self, user_id: str) -> List[Dict]:
+        """Get user's behavioral patterns"""
+        if not self.is_available:
+            return []
+        results = await self.memory.search(
+            query="morning afternoon evening prefer time schedule pattern",
+            user_id=user_id,
+            filters={"category": "habit"},
+            limit=10
+        )
+        return results
+    
+    async def get_energy_patterns(self, user_id: str) -> List[Dict]:
+        """Get energy and performance patterns"""
+        if not self.is_available:
+            return []
+        results = await self.memory.search(
+            query="energy tired focused productive peak low performance",
+            user_id=user_id,
+            filters={"category": "energy"},
+            limit=10
+        )
+        return results
+    
+    async def get_life_context(self, user_id: str) -> List[Dict]:
+        """Get current goals, feelings, and context"""
+        if not self.is_available:
+            return []
+        results = await self.memory.search(
+            query="goal current feeling deadline project focus",
+            user_id=user_id,
+            filters={"category": "context"},
+            limit=10
+        )
+        return results
+    
+    async def get_full_context_for_task_creation(self, user_id: str, task_type: str, description: Optional[str] = None) -> str:
+        """Prepare comprehensive context for LLM task analysis"""
+        if not self.is_available:
+            return ""
+        
+        # Get all relevant memories
+        priority_memories = await self.get_priority_context(user_id, task_type)
+        habit_memories = await self.get_habit_patterns(user_id)
+        energy_memories = await self.get_energy_patterns(user_id)
+        context_memories = await self.get_life_context(user_id)
+        
+        # Format for LLM context
+        context_parts = []
+        
+        if priority_memories:
+            priority_text = "\n".join([m.get('memory', '') for m in priority_memories[:3]])
+            context_parts.append(f"TASK IMPORTANCE CONTEXT:\n{priority_text}")
+        
+        if habit_memories:
+            habit_text = "\n".join([m.get('memory', '') for m in habit_memories[:3]])
+            context_parts.append(f"USER SCHEDULING HABITS:\n{habit_text}")
+        
+        if energy_memories:
+            energy_text = "\n".join([m.get('memory', '') for m in energy_memories[:3]])
+            context_parts.append(f"ENERGY PATTERNS:\n{energy_text}")
+        
+        if context_memories:
+            context_text = "\n".join([m.get('memory', '') for m in context_memories[:3]])
+            context_parts.append(f"CURRENT CONTEXT & GOALS:\n{context_text}")
+        
+        return "\n\n".join(context_parts) if context_parts else ""
+
+
 class Mem0Service:
     def __init__(self, memory_service=None, task_type_service=None):
         """Initialize Mem0 service with optional AsyncMemory backend and task type service"""
         self.memory_service = memory_service
+        self.scheduler_memory = SchedulerMemoryService()  # New simplified structure
         self.task_type_service = task_type_service
         self.is_available = memory_service is not None
     
@@ -27,19 +191,42 @@ class Mem0Service:
             self.memory_service = AsyncMemory()
             self.is_available = True
             print("✅ AsyncMemory service initialized successfully")
+            
+            # Also initialize simplified scheduler memory
+            await self.scheduler_memory.initialize()
             return True
         except Exception as e:
             print(f"⚠️ Could not initialize AsyncMemory service: {e}")
             self.is_available = False
+            # Try to initialize simplified memory anyway
+            await self.scheduler_memory.initialize()
             return False
     
     async def query_scheduling_context(self, 
                                      user_id: str, 
                                      task_type: TaskType,
                                      request: ScheduleEventRequest) -> str:
-        """Query Mem0 for actionable task insights - importance, cognitive load, and time preferences"""
+        """Query both structured and unstructured memory for actionable task insights"""
+        
+        # Try simplified memory first
+        context_parts = []
+        if self.scheduler_memory.is_available:
+            try:
+                # Get structured context using 4 categories
+                structured_context = await self.scheduler_memory.get_full_context_for_task_creation(
+                    user_id, task_type.task_type, getattr(request, 'description', None)
+                )
+                if structured_context:
+                    context_parts.append("STRUCTURED INSIGHTS:\n" + structured_context)
+            except Exception as e:
+                print(f"⚠️ Failed to get structured context: {e}")
+        
+        # Fallback to original AsyncMemory search
         if not self.is_available:
-            return "Memory service not available."
+            if context_parts:
+                return "\n\n".join(context_parts) + f"\n\nCURRENT TASK PROPERTIES: importance={task_type.importance_score:.2f}, cognitive_load={task_type.cognitive_load:.2f}"
+            else:
+                return f"Memory service not available. Current task properties: importance={task_type.importance_score:.2f}, cognitive_load={task_type.cognitive_load:.2f}"
             
         try:
             # Search for actionable task insights
@@ -73,76 +260,160 @@ class Mem0Service:
             
             if relevant_insights:
                 # Format actionable insights for LLM context
-                context_summary = "LEARNED TASK INSIGHTS:\n"
+                unstructured_context = "LEARNED TASK INSIGHTS:\n"
                 for insight in relevant_insights[:5]:  # Limit to 5 most relevant
-                    context_summary += f"- {insight}\n"
-                
-                # Add current task type properties
-                context_summary += f"\nCURRENT TASK TYPE PROPERTIES:\n"
-                context_summary += f"- Importance Score: {task_type.importance_score:.2f} (0.0=low priority, 1.0=critical)\n"
-                context_summary += f"- Cognitive Load: {task_type.cognitive_load:.2f} (0.0=easy/relaxing, 1.0=intense focus)\n"
-                context_summary += f"- Total Completions: {task_type.completion_count}\n"
-                
-                return context_summary
-            else:
-                # Return default task properties when no mem0 insights found
-                return f"No previous insights found. Current task properties: importance={task_type.importance_score:.2f}, cognitive_load={task_type.cognitive_load:.2f}"
+                    unstructured_context += f"- {insight}\n"
+                context_parts.append(unstructured_context)
+            
+            # Add current task type properties
+            task_properties = f"CURRENT TASK TYPE PROPERTIES:\n"
+            task_properties += f"- Importance Score: {task_type.importance_score:.2f} (0.0=low priority, 1.0=critical)\n"
+            task_properties += f"- Cognitive Load: {task_type.cognitive_load:.2f} (0.0=easy/relaxing, 1.0=intense focus)\n"
+            task_properties += f"- Total Completions: {task_type.completion_count}\n"
+            context_parts.append(task_properties)
+            
+            return "\n\n".join(context_parts) if context_parts else f"Current task properties: importance={task_type.importance_score:.2f}, cognitive_load={task_type.cognitive_load:.2f}"
                 
         except Exception as e:
             print(f"⚠️ Failed to query Mem0 for task insights: {e}")
             return "Memory service unavailable."
     
-    async def store_scheduling_preferences(self, 
+    async def extract_and_store_text_insights(self, 
                                          user_id: str, 
-                                         user_preferences: str,
-                                         task_type: TaskType,
-                                         detected_patterns: List[str],
-                                         openai_client=None) -> bool:
-        """Extract and store scheduling preferences in AsyncMemory"""
-        if not self.is_available:
-            print(f"⚠️ AsyncMemory not available - preferences stored locally only")
-            return False
-            
+                                         text_content: str,
+                                         context: str = "",
+                                         openai_client=None) -> Dict[str, bool]:
+        """LLM-powered extraction and categorization of user content into 4 memory categories"""
+        
+        if not openai_client:
+            print("⚠️ OpenAI client required for LLM categorization")
+            return {"priority": False, "habit": False, "energy": False, "context": False}
+        
+        function_schema = {
+            "name": "categorize_user_content",
+            "description": "Categorize user content into memory categories and extract actionable insights",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "priority_insights": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Task importance signals, urgency markers, deadlines, critical needs"
+                    },
+                    "habit_insights": {
+                        "type": "array", 
+                        "items": {"type": "string"},
+                        "description": "Time preferences, routine patterns, scheduling habits, recurring behaviors"
+                    },
+                    "energy_insights": {
+                        "type": "array",
+                        "items": {"type": "string"}, 
+                        "description": "Energy levels, focus patterns, productivity observations, performance notes"
+                    },
+                    "context_insights": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Goals, feelings, life situation, general context, other relevant information"
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "description": "Confidence in categorization (0.0-1.0)",
+                        "minimum": 0.0,
+                        "maximum": 1.0
+                    }
+                },
+                "required": ["priority_insights", "habit_insights", "energy_insights", "context_insights", "confidence"]
+            }
+        }
+        
+        prompt = f"""
+Analyze this user content and extract insights for scheduling optimization:
+
+USER CONTENT: "{text_content}"
+CONTEXT: "{context}"
+
+Categorize into 4 memory types:
+
+1. PRIORITY: Importance signals, urgency, deadlines, critical tasks
+   - Look for: "important", "urgent", "deadline", "critical", "must do", "priority"
+   
+2. HABIT: Time preferences, routines, scheduling patterns  
+   - Look for: "morning", "evening", "prefer", "usually", "schedule", "routine"
+   
+3. ENERGY: Focus, productivity, energy patterns, performance
+   - Look for: "focused", "tired", "energy", "productive", "peak", "performance"
+   
+4. CONTEXT: Goals, feelings, life situation, general information
+   - Everything else that provides useful scheduling context
+
+Extract specific, actionable insights for each category. Return empty arrays for categories with no relevant content.
+"""
+        
         try:
-            # Store the full user input with context
-            await self.memory_service.add(
-                user_id=user_id,
-                messages=[{
-                    "role": "user",
-                    "content": f"When scheduling {task_type.task_type}: {user_preferences}"
-                }],
-                metadata={
-                    "category": "scheduling_preference",
-                    "task_type": task_type.task_type,
-                    "preference_type": "user_stated_preference",
-                    "timestamp": datetime.now().isoformat()
-                }
+            response = openai_client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "You are a scheduling assistant that categorizes user content into memory types for intelligent task scheduling."},
+                    {"role": "user", "content": prompt}
+                ],
+                functions=[function_schema],
+                function_call={"name": "categorize_user_content"},
+                temperature=0.2
             )
             
-            # Store each detected pattern separately for better retrieval
-            for pattern in detected_patterns:
-                await self.memory_service.add(
-                    user_id=user_id,
-                    messages=[{
-                        "role": "assistant",
-                        "content": f"User scheduling pattern: {pattern}"
-                    }],
-                    metadata={
-                        "category": "scheduling_pattern",
-                        "pattern_type": "extracted_preference",
-                        "timestamp": datetime.now().isoformat()
-                    }
-                )
-            
-            print(f"✅ Stored {len(detected_patterns) + 1} scheduling preferences in Mem0")
-            
-            # Also extract and store specific time-related preferences using LLM
-            await self._extract_time_preferences(user_id, user_preferences, task_type, openai_client, save_to_db=True)
-            return True
-            
+            function_call = response.choices[0].message.function_call
+            if function_call and function_call.name == "categorize_user_content":
+                result = json.loads(function_call.arguments)
+                
+                confidence = result.get("confidence", 0.0)
+                if confidence < 0.3:
+                    print(f"⚠️ Low confidence ({confidence:.2f}) in content categorization")
+                    return {"priority": False, "habit": False, "energy": False, "context": False}
+                
+                # Store insights in appropriate categories
+                storage_results = {"priority": False, "habit": False, "energy": False, "context": False}
+                
+                if self.scheduler_memory.is_available:
+                    # Store priority insights
+                    priority_insights = result.get("priority_insights", [])
+                    for insight in priority_insights:
+                        if insight.strip():
+                            await self.scheduler_memory.add_priority(user_id, context or "general", insight)
+                            storage_results["priority"] = True
+                    
+                    # Store habit insights  
+                    habit_insights = result.get("habit_insights", [])
+                    for insight in habit_insights:
+                        if insight.strip():
+                            await self.scheduler_memory.add_habit(user_id, insight)
+                            storage_results["habit"] = True
+                    
+                    # Store energy insights
+                    energy_insights = result.get("energy_insights", [])
+                    for insight in energy_insights:
+                        if insight.strip():
+                            await self.scheduler_memory.add_energy(user_id, insight)
+                            storage_results["energy"] = True
+                    
+                    # Store context insights
+                    context_insights = result.get("context_insights", [])
+                    for insight in context_insights:
+                        if insight.strip():
+                            await self.scheduler_memory.add_context(user_id, insight)
+                            storage_results["context"] = True
+                    
+                    total_insights = len(priority_insights) + len(habit_insights) + len(energy_insights) + len(context_insights)
+                    stored_categories = sum(storage_results.values())
+                    print(f"✅ LLM extracted {total_insights} insights → stored in {stored_categories} categories (confidence: {confidence:.2f})")
+                
+                return storage_results
+            else:
+                print("⚠️ LLM did not return expected categorization")
+                return {"priority": False, "habit": False, "energy": False, "context": False}
+                
         except Exception as e:
-            print(f"⚠️ Failed to extract and store preferences in Mem0: {e}")
-            return False
+            print(f"❌ Error in LLM content categorization: {e}")
+            return {"priority": False, "habit": False, "energy": False, "context": False}
     
     async def _extract_time_preferences(self, 
                                       user_id: str, 
@@ -331,70 +602,17 @@ Extract meaningful insights that will improve scheduling decisions.
     async def store_onboarding_preferences(self, 
                                          user_id: str,
                                          user_input: str,
-                                         task_name: str = "",
-                                         preferences: List[str] = None,
-                                         openai_client=None) -> bool:
-        """Store onboarding preferences in AsyncMemory"""
-        if not self.is_available:
-            print(f"⚠️ Memory service not available - stored locally only")
-            return False
-            
-        try:
-            await self.memory_service.add(
-                user_id=user_id,
-                messages=[{
-                    "role": "user",
-                    "content": user_input
-                }],
-                metadata={
-                    "category": "onboarding_preference",
-                    "task_type": task_name if task_name else "general",
-                    "preferences": preferences or [],
-                    "timestamp": datetime.now().isoformat()
-                }
-            )
-            
-            # Also store extracted patterns
-            if preferences:
-                for preference in preferences:
-                    await self.memory_service.add(
-                        user_id=user_id,
-                        messages=[{
-                            "role": "assistant",
-                            "content": f"User scheduling pattern: {preference}"
-                        }],
-                        metadata={
-                            "category": "scheduling_pattern",
-                            "pattern_type": "onboarding_extracted",
-                            "task_type": task_name if task_name else "general",
-                            "timestamp": datetime.now().isoformat()
-                        }
-                    )
-                    
-            # If task_name provided and openai_client available, also extract time preferences with LLM
-            if task_name and openai_client:
-                from models import TaskType
-                # Create a mock task type for preference extraction (DO NOT SAVE TO DB)
-                mock_task_type = TaskType(
-                    id=uuid.uuid4(),
-                    user_id=uuid.UUID(user_id),
-                    task_type=task_name,
-                    description="Onboarding task type for preference extraction",
-                    weekly_habit_scores=[0.5] * 168,
-                    slot_confidence=[[0.1 for _ in range(24)] for _ in range(7)],
-                    created_at=datetime.now(),
-                    updated_at=datetime.now()
-                )
-                
-                # Extract preferences but don't save mock task type to database
-                await self._extract_time_preferences(user_id, user_input, mock_task_type, openai_client, save_to_db=False)
-            
-            print(f"✅ Stored {len(preferences or []) + 1} preference items in memory!")
-            return True
-            
-        except Exception as e:
-            print(f"⚠️ Could not store in memory: {e}")
-            return False
+                                         context: str = "onboarding",
+                                         openai_client=None) -> Dict[str, bool]:
+        """Store onboarding preferences using LLM categorization"""
+        
+        # Use the new LLM-powered categorization
+        return await self.extract_and_store_text_insights(
+            user_id=user_id,
+            text_content=user_input,
+            context=context,
+            openai_client=openai_client
+        )
     
     async def search_user_patterns(self, 
                                  user_id: str, 
@@ -430,7 +648,8 @@ Extract meaningful insights that will improve scheduling decisions.
         return {
             "available": self.is_available,
             "service_type": "mem0" if self.memory_service else "none",
-            "initialized": self.memory_service is not None
+            "initialized": self.memory_service is not None,
+            "scheduler_memory_available": self.scheduler_memory.is_available
         }
 
 
@@ -449,6 +668,11 @@ def set_task_type_service(task_type_service):
     service = get_mem0_service()
     service.task_type_service = task_type_service
 
+def set_scheduler_memory_service(scheduler_memory_service):
+    """Set the scheduler memory service for the global mem0 service instance"""
+    service = get_mem0_service()
+    service.scheduler_memory = scheduler_memory_service
+
 async def initialize_mem0_service(memory_service=None, task_type_service=None) -> Mem0Service:
     """Initialize and return mem0 service"""
     service = get_mem0_service()
@@ -461,4 +685,10 @@ async def initialize_mem0_service(memory_service=None, task_type_service=None) -
     if task_type_service:
         service.task_type_service = task_type_service
         
-    return service 
+    return service
+
+async def get_scheduler_memory() -> SchedulerMemoryService:
+    """Get or create simplified scheduler memory service"""
+    memory_service = SchedulerMemoryService()
+    await memory_service.initialize()
+    return memory_service 
