@@ -19,7 +19,7 @@ async def main():
     # Setup
     supabase = create_client(
         os.getenv("SUPABASE_URL"), 
-        os.getenv("SUPABASE_ANON_KEY")
+        os.getenv("SUPABASE_SERVICE_ROLE_KEY")
     )
     openai_api_key = os.getenv("OPENAI_API_KEY")
     task_service = TaskTypeService(supabase, openai_api_key)

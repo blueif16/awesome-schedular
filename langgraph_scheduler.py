@@ -61,13 +61,13 @@ def schedule_task_tool(
         # Initialize services
         from supabase import create_client
         supabase_url = os.getenv("SUPABASE_URL")
-        supabase_key = os.getenv("SUPABASE_ANON_KEY")
+        supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
         
         if not supabase_url or not supabase_key:
             return {
                 "success": False,
                 "error": "Supabase credentials not configured",
-                "message": "Please configure SUPABASE_URL and SUPABASE_ANON_KEY environment variables"
+                "message": "Please configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables"
             }
         
         supabase = create_client(supabase_url, supabase_key)
