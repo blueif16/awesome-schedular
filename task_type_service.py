@@ -11,11 +11,15 @@ from supabase import Client
 from models import TaskType, TaskTypeSimilarity, initialize_neutral_weekly_habit_array, initialize_slot_confidence
 from datetime import datetime
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class TaskTypeService:
-    def __init__(self, supabase: Client, openai_api_key: str):
+    def __init__(self, supabase: Client):
         self.supabase = supabase
-        self.openai_client = openai.OpenAI(api_key=openai_api_key)
+        self.openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     
     def _parse_embedding(self, embedding_data: Any) -> Optional[List[float]]:
         """Parse embedding data from database - handles both string and list formats"""
@@ -276,6 +280,12 @@ Analyze the following task type and generate behavioral scheduling patterns:
 TASK TYPE: "{task_type}"
 DESCRIPTION: "{description or 'No description provided'}"
 
+🔍 IMPORTANT: Carefully analyze the DESCRIPTION for time preferences like:
+- "morning", "afternoon", "evening" 
+- "prefer in morning", "focus", "creative hours"
+- Any specific time mentions or scheduling hints
+- Energy level indicators ("when I'm most focused", "peak energy")
+
 Please analyze this task and generate:
 
 1. TIME_PATTERNS: Compact string format for scheduling preferences
@@ -288,6 +298,8 @@ Please analyze this task and generate:
    - Business meeting: "0-4:9-17:0.8" (weekdays 9AM-5PM)
    - Workout: "0-6:6-8:0.9,0-6:18-20:0.8" (morning and evening)
    - Study session: "0-6:8-11:0.9,0-6:20-22:0.7" (morning focus + evening)
+   - Morning preference: "0-6:6-11:0.9,0-6:14-17:0.5" (strong morning preference)
+   - Creative tasks: "0-6:8-12:0.9,0-6:20-22:0.7" (morning creativity + evening)
 
 2. BASE_CONFIDENCE: Single confidence level (0.0-1.0) that will be applied to all time slots
    - Start moderate (0.3-0.5) for new task types
@@ -300,12 +312,16 @@ Please analyze this task and generate:
    - Recovery hours: Buffer time needed after completion
 
 GUIDELINES:
-- Morning (6-11): Focus work, exercise, planning
-- Afternoon (12-17): Meetings, routine work, administrative
+- Morning (6-11): Focus work, exercise, planning, high cognitive tasks
+- Afternoon (12-17): Meetings, routine work, administrative tasks
 - Evening (18-22): Creative work, learning, personal tasks
 - Night (23-5): Generally avoid except for specific cases
 
-Be concise! Output only the essential time patterns.
+⚠️ CRITICAL: If description mentions time preferences, MUST adjust time patterns accordingly!
+Example: "prefer in morning" → high scores for 6-11, lower for afternoon
+Example: "creative tasks in morning hours" → 0-6:8-12:0.9
+
+Be specific! Generate patterns that match the described preferences.
 """
         
         try:
@@ -345,6 +361,13 @@ Be concise! Output only the essential time patterns.
                 if not weekly_scores:
                     print(f"   ⚠️ Could not parse time patterns, using fallback")
                     weekly_scores = self._generate_fallback_weekly_scores(task_type)
+                else:
+                    print(f"   ✅ Successfully parsed time patterns into weekly scores")
+                    # Show some sample scores for verification
+                    sample_morning = [weekly_scores[i*24 + 8] for i in range(7)]  # 8 AM each day
+                    sample_afternoon = [weekly_scores[i*24 + 14] for i in range(7)]  # 2 PM each day
+                    print(f"   📊 Morning (8AM) scores: {[f'{s:.1f}' for s in sample_morning]}")
+                    print(f"   📊 Afternoon (2PM) scores: {[f'{s:.1f}' for s in sample_afternoon]}")
                 
                 # Create confidence matrix from base confidence
                 slot_conf = self._create_confidence_matrix_from_base(base_confidence)
@@ -371,6 +394,10 @@ Be concise! Output only the essential time patterns.
         """Generate fallback slot confidence matrix"""
         # 7 days x 24 hours, moderate confidence
         return [[0.4 for _ in range(24)] for _ in range(7)]
+    
+    def _generate_fallback_weekly_scores(self, task_type: str) -> List[float]:
+        """Generate fallback weekly habit scores when parsing fails"""
+        return [0.4] * 168  # 7 days × 24 hours, neutral baseline
     
     def _generate_fallback_patterns(self, task_type: str) -> Dict:
         """Generate complete fallback patterns when LLM fails"""
@@ -426,6 +453,65 @@ Be concise! Output only the essential time patterns.
         
         # Create 7 days × 24 hours matrix with same confidence value
         return [[confidence for _ in range(24)] for _ in range(7)]
+    
+    def _parse_time_pattern_string(self, pattern_string: str) -> List[Dict]:
+        """Parse compact time pattern string into structured format
+        
+        Format: "days:hour_start-hour_end:boost,days:hour_start-hour_end:boost"
+        Example: "0-6:6-11:0.8,5-6:17-21:0.9"
+        """
+        patterns = []
+        
+        if not pattern_string or not pattern_string.strip():
+            return patterns
+
+        # Split by comma to get individual patterns
+        for pattern_part in pattern_string.split(','):
+            pattern_part = pattern_part.strip()
+            if not pattern_part:
+                continue
+                
+            try:
+                # Split by colon: days:hour_start-hour_end:boost
+                parts = pattern_part.split(':')
+                if len(parts) != 3:
+                    continue
+                    
+                days_part, hours_part, boost_part = parts
+                
+                # Parse days (can be range like "0-6" or specific like "0,2,4")
+                days = []
+                if '-' in days_part:
+                    # Range format like "0-6"
+                    start_day, end_day = map(int, days_part.split('-'))
+                    days = list(range(start_day, end_day + 1))
+                else:
+                    # Specific days like "0,2,4" or single day "0"
+                    days = [int(d.strip()) for d in days_part.split(',')]
+                
+                # Parse hours (format: "start-end")
+                hour_start, hour_end = map(int, hours_part.split('-'))
+                
+                # Parse boost
+                boost = float(boost_part)
+                
+                # Validate ranges
+                if (all(0 <= d <= 6 for d in days) and 
+                    0 <= hour_start <= 23 and 0 <= hour_end <= 23 and
+                    0.0 <= boost <= 1.0):
+                    
+                    patterns.append({
+                        "days": days,
+                        "hour_start": hour_start,
+                        "hour_end": hour_end,
+                        "boost": boost
+                    })
+                    
+            except (ValueError, IndexError) as e:
+                print(f"⚠️ Could not parse pattern part '{pattern_part}': {e}")
+                continue
+        
+        return patterns
     
     async def get_task_type(self, task_type_id: str) -> Optional[TaskType]:
         """Get task type by ID"""
