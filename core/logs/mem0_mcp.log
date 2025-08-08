@@ -1,0 +1,53 @@
+2025-08-07 11:26:01,799 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:26:01,802 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:26:01,812 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 11:38:46,232 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:38:46,245 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:50:41,268 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:50:41,279 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:50:46,104 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:50:46,118 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:50:50,915 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:50:50,928 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:53:31,048 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:53:31,060 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:57:05,746 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:57:05,757 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:57:22,823 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:57:22,833 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:58:39,415 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 11:58:39,425 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 11:58:39,453 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 11:58:39,455 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 13:42:05,657 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 13:42:05,671 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 13:42:05,734 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 13:42:05,736 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 13:48:53,380 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 13:48:53,394 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 13:48:53,467 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 13:48:53,469 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 13:49:36,079 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 13:49:36,091 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 13:49:36,160 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 13:49:36,163 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 13:49:40,878 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 13:49:40,889 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 13:49:40,951 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 13:49:40,953 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 13:49:45,622 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 13:49:45,634 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 13:49:45,694 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 13:49:45,697 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 13:52:13,224 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 13:52:13,235 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 13:52:13,294 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 13:52:13,297 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 14:00:16,205 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 14:00:16,217 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 14:00:16,279 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 14:00:16,280 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport
+2025-08-07 14:01:01,174 - mem0_mcp - INFO - Mem0 MCP server initializing with log level: INFO
+2025-08-07 14:01:01,185 - mem0_mcp - INFO - Mem0 MCP server initialized
+2025-08-07 14:01:01,246 - mem0_mcp - INFO - Mem0 service instance obtained
+2025-08-07 14:01:01,248 - mem0_mcp - INFO - Starting Mem0 MCP server with stdio transport

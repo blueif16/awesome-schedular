@@ -3300,3 +3300,128 @@ AttributeError: 'str' object has no attribute 'get'
 2025-08-06 15:41:35,685 - __main__ - INFO - API_INIT: All services loaded successfully
 2025-08-06 15:41:35,701 - werkzeug - WARNING -  * Debugger is active!
 2025-08-06 15:41:35,704 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 17:24:47,184 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-06 17:24:47,184 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 17:24:47,185 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-06 17:24:47,186 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-06 17:24:47,186 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 17:24:47,187 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-06 17:24:47,188 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-06 17:24:47,188 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-06 17:24:47,188 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-06 17:24:47,189 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-06 17:24:47,189 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-06 17:24:47,190 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-06 17:24:47,191 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-06 17:24:47,191 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-06 17:24:47,191 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-06 17:24:47,192 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-06 17:24:47,192 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-06 17:24:47,193 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-06 17:24:47,193 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-06 17:24:47,194 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-06 17:24:47,194 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-06 17:24:47,194 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-06 17:24:47,195 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-06 17:24:47,195 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-06 17:24:47,196 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-06 17:24:48,158 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 17:24:50,282 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 17:24:50,680 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 17:24:50,686 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 17:24:50,686 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 17:24:50,686 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 17:24:50,686 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 17:24:50,707 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 17:24:50,710 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 20:26:03,597 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-06 20:26:03,599 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 20:26:03,599 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 20:26:03,600 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-06 20:26:03,602 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-06 20:26:03,604 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-06 20:26:03,606 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-06 20:26:03,607 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-06 20:26:03,608 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-06 20:26:03,609 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-06 20:26:03,609 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-06 20:26:03,609 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-06 20:26:03,610 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-06 20:26:03,610 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-06 20:26:03,610 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-06 20:26:03,613 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-06 20:26:03,615 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-06 20:26:03,618 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-06 20:26:03,622 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-06 20:26:03,628 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-06 20:26:03,631 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-06 20:26:03,633 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-06 20:26:03,633 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-06 20:26:03,633 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-06 20:26:03,636 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-06 20:26:05,825 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 20:26:12,635 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 20:26:13,512 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 20:26:13,522 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 20:26:13,524 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 20:26:13,525 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 20:26:13,526 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 20:26:13,561 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 20:26:13,568 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-06 21:37:06,170 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_langgraph_simple.py', reloading
+2025-08-06 21:37:06,177 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-06 21:37:06,178 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\hybrid_learning_service.py', reloading
+2025-08-06 21:37:06,179 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_simple_llm.py', reloading
+2025-08-06 21:37:06,180 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-06 21:37:06,180 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_langgraph_scheduler.py', reloading
+2025-08-06 21:37:06,186 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\db_service.py', reloading
+2025-08-06 21:37:06,189 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-06 21:37:06,193 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_unified_scheduling.py', reloading
+2025-08-06 21:37:06,200 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_simplified_endpoints.py', reloading
+2025-08-06 21:37:06,200 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\prototype.py', reloading
+2025-08-06 21:37:06,201 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\pattern_sync_service.py', reloading
+2025-08-06 21:37:06,206 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_logging.py', reloading
+2025-08-06 21:37:06,208 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\models.py', reloading
+2025-08-06 21:37:06,213 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-06 21:37:06,214 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\mem0_service.py', reloading
+2025-08-06 21:37:06,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\learning_service.py', reloading
+2025-08-06 21:37:06,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_enhanced_scheduling.py', reloading
+2025-08-06 21:37:06,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-06 21:37:06,228 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\debug_imports.py', reloading
+2025-08-06 21:37:06,229 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api_endpoints.py', reloading
+2025-08-06 21:37:06,235 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_api.py', reloading
+2025-08-06 21:37:06,237 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\app.py', reloading
+2025-08-06 21:37:06,265 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\quick_test.py', reloading
+2025-08-06 21:37:06,269 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\demo_payloads.py', reloading
+2025-08-06 21:37:06,975 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-08-06 21:37:08,838 - __main__ - WARNING - API_INIT: Mem0 service not available: no running event loop
+2025-08-06 21:37:09,187 - __main__ - INFO - AGENT: Creating React agent with schedule tool
+2025-08-06 21:37:09,209 - __main__ - INFO - AGENT: React agent created successfully
+2025-08-06 21:37:09,209 - __main__ - INFO - API_INIT: System initialized with demo user: 33a07e45-c5a8-4b95-9e39-c12752012e36
+2025-08-06 21:37:09,209 - __main__ - INFO - API_INIT: React scheduling agent ready
+2025-08-06 21:37:09,209 - __main__ - INFO - API_INIT: All services loaded successfully
+2025-08-06 21:37:09,232 - werkzeug - WARNING -  * Debugger is active!
+2025-08-06 21:37:09,238 - werkzeug - INFO -  * Debugger PIN: 124-098-567
+2025-08-07 00:01:25,217 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-07 00:01:25,218 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-07 00:01:25,218 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\api\\test_llm_task_analysis.py', reloading
+2025-08-07 00:01:25,218 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-07 00:01:25,219 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-07 00:01:25,219 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\demo_llm_analysis.py', reloading
+2025-08-07 00:01:25,219 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-07 00:01:25,219 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-07 00:01:25,220 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\langgraph_scheduler.py', reloading
+2025-08-07 00:01:25,220 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-07 00:01:25,220 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-07 00:01:25,220 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\scheduler_service.py', reloading
+2025-08-07 00:01:25,220 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-07 00:01:25,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-07 00:01:25,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\task_type_service.py', reloading
+2025-08-07 00:01:25,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_collision_detection.py', reloading
+2025-08-07 00:01:25,221 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_collision_detection.py', reloading
+2025-08-07 00:01:25,222 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_robust_collision.py', reloading
+2025-08-07 00:01:25,223 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_robust_collision.py', reloading
+2025-08-07 00:01:25,223 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_robust_collision.py', reloading
+2025-08-07 00:01:25,223 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_simple_collision.py', reloading
+2025-08-07 00:01:25,224 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ran\\Desktop\\new_canlah\\schedular\\test_simple_collision.py', reloading
+2025-08-07 00:01:25,866 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)

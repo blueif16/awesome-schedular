@@ -1,0 +1,325 @@
+2025-08-07 13:52:08,760 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-08-07 14:00:10,902 - __main__ - INFO - Setting up MCP integration...
+2025-08-07 14:00:10,902 - __main__ - INFO - MCP imports loaded successfully
+2025-08-07 14:00:10,902 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-08-07 14:00:10,903 - __main__ - INFO - Initializing SchedulingChatbot with MCP...
+2025-08-07 14:00:10,903 - __main__ - INFO - MCP client initialized with scheduler and mem0 servers
+2025-08-07 14:00:10,904 - __main__ - INFO - Using model: gpt-4o
+2025-08-07 14:00:14,582 - __main__ - INFO - Getting tools from MCP servers...
+2025-08-07 14:00:16,407 - __main__ - ERROR - Failed to initialize MCP tools: unhandled errors in a TaskGroup (1 sub-exception)
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\ran\Desktop\new_canlah\schedular\core\langgraph_scheduler.py", line 87, in initialize
+  |     self.tools = await self.client.get_tools()
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\client.py", line 142, in get_tools
+  |     tools_list = await asyncio.gather(*load_mcp_tool_tasks)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 168, in load_mcp_tools
+  |     async with create_session(connection) as tool_session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 394, in create_session
+  |     async with _create_stdio_session(**params) as session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+  |     async with (
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 173, in stdio_client
+  |     anyio.create_task_group() as tg,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 179, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+    |     async with (
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 218, in __aexit__
+    |     return await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 224, in _create_stdio_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 395, in create_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 169, in load_mcp_tools
+      |     await tool_session.initialize()
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\session.py", line 123, in initialize
+      |     result = await self.send_request(
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 286, in send_request
+      |     raise McpError(response_or_error.error)
+      | mcp.shared.exceptions.McpError: Connection closed
+      +------------------------------------
+2025-08-07 14:00:58,666 - __main__ - INFO - Setting up MCP integration...
+2025-08-07 14:00:58,666 - __main__ - INFO - MCP imports loaded successfully
+2025-08-07 14:00:58,666 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-08-07 14:00:58,667 - __main__ - INFO - Initializing SchedulingChatbot with MCP...
+2025-08-07 14:00:58,667 - __main__ - INFO - MCP client initialized with scheduler and mem0 servers
+2025-08-07 14:00:58,667 - __main__ - INFO - Using model: gpt-4o
+2025-08-07 14:00:59,678 - __main__ - INFO - Getting tools from MCP servers...
+2025-08-07 14:01:01,398 - __main__ - ERROR - Failed to initialize MCP tools: unhandled errors in a TaskGroup (1 sub-exception)
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\ran\Desktop\new_canlah\schedular\core\langgraph_scheduler.py", line 87, in initialize
+  |     self.tools = await self.client.get_tools()
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\client.py", line 142, in get_tools
+  |     tools_list = await asyncio.gather(*load_mcp_tool_tasks)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 168, in load_mcp_tools
+  |     async with create_session(connection) as tool_session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 394, in create_session
+  |     async with _create_stdio_session(**params) as session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+  |     async with (
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 173, in stdio_client
+  |     anyio.create_task_group() as tg,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 179, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+    |     async with (
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 218, in __aexit__
+    |     return await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 224, in _create_stdio_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 395, in create_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 169, in load_mcp_tools
+      |     await tool_session.initialize()
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\session.py", line 123, in initialize
+      |     result = await self.send_request(
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 286, in send_request
+      |     raise McpError(response_or_error.error)
+      | mcp.shared.exceptions.McpError: Connection closed
+      +------------------------------------
+2025-08-07 14:01:01,402 - __main__ - ERROR - Failed to run chatbot: unhandled errors in a TaskGroup (1 sub-exception)
+2025-08-07 14:15:19,362 - __main__ - INFO - Setting up MCP integration...
+2025-08-07 14:15:19,362 - __main__ - INFO - MCP imports loaded successfully
+2025-08-07 14:15:19,362 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-08-07 14:15:19,363 - __main__ - INFO - Initializing SchedulingChatbot with MCP...
+2025-08-07 14:15:19,364 - __main__ - INFO - MCP client initialized with scheduler and mem0 servers
+2025-08-07 14:15:19,364 - __main__ - INFO - Using model: gpt-4o
+2025-08-07 14:15:22,020 - __main__ - INFO - Getting tools from MCP servers...
+2025-08-07 14:15:22,077 - __main__ - ERROR - Failed to initialize MCP tools: unhandled errors in a TaskGroup (1 sub-exception)
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\ran\Desktop\new_canlah\schedular\core\langgraph_scheduler.py", line 82, in initialize
+  |     self.tools = await self.client.get_tools()
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\client.py", line 142, in get_tools
+  |     tools_list = await asyncio.gather(*load_mcp_tool_tasks)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 168, in load_mcp_tools
+  |     async with create_session(connection) as tool_session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 394, in create_session
+  |     async with _create_stdio_session(**params) as session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+  |     async with (
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 173, in stdio_client
+  |     anyio.create_task_group() as tg,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 179, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+    |     async with (
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 218, in __aexit__
+    |     return await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 224, in _create_stdio_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 395, in create_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 169, in load_mcp_tools
+      |     await tool_session.initialize()
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\session.py", line 123, in initialize
+      |     result = await self.send_request(
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 286, in send_request
+      |     raise McpError(response_or_error.error)
+      | mcp.shared.exceptions.McpError: Connection closed
+      +------------------------------------
+2025-08-07 14:15:22,080 - __main__ - ERROR - Failed to run chatbot: unhandled errors in a TaskGroup (1 sub-exception)
+2025-08-07 14:15:22,082 - asyncio - ERROR - unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<load_mcp_tools() done, defined at C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py:144> exception=UnboundLocalError("cannot access local variable 'tools' where it is not associated with a value")>
+Traceback (most recent call last):
+  File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 175, in load_mcp_tools
+    convert_mcp_tool_to_langchain_tool(session, tool, connection=connection) for tool in tools
+                                                                                         ^^^^^
+UnboundLocalError: cannot access local variable 'tools' where it is not associated with a value
+2025-08-07 14:18:45,635 - __main__ - INFO - Setting up MCP integration...
+2025-08-07 14:18:45,635 - __main__ - INFO - MCP imports loaded successfully
+2025-08-07 14:18:45,636 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-08-07 14:18:45,637 - __main__ - INFO - Initializing SchedulingChatbot with MCP...
+2025-08-07 14:18:45,637 - __main__ - INFO - MCP client initialized with scheduler and mem0 servers
+2025-08-07 14:18:45,637 - __main__ - INFO - Using model: gpt-4o
+2025-08-07 14:18:46,777 - __main__ - INFO - Getting tools from MCP servers...
+2025-08-07 14:18:46,831 - __main__ - ERROR - Failed to initialize MCP tools: unhandled errors in a TaskGroup (1 sub-exception)
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\ran\Desktop\new_canlah\schedular\core\langgraph_scheduler.py", line 82, in initialize
+  |     self.tools = await self.client.get_tools()
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\client.py", line 142, in get_tools
+  |     tools_list = await asyncio.gather(*load_mcp_tool_tasks)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 168, in load_mcp_tools
+  |     async with create_session(connection) as tool_session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 394, in create_session
+  |     async with _create_stdio_session(**params) as session:
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+  |     async with (
+  |   File "C:\Users\ran\Anaconda3\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 173, in stdio_client
+  |     anyio.create_task_group() as tg,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\stdio\__init__.py", line 179, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 220, in _create_stdio_session
+    |     async with (
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 218, in __aexit__
+    |     return await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 224, in _create_stdio_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\sessions.py", line 395, in create_session
+      |     yield session
+      |   File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 169, in load_mcp_tools
+      |     await tool_session.initialize()
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\client\session.py", line 123, in initialize
+      |     result = await self.send_request(
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "C:\Users\ran\AppData\Roaming\Python\Python312\site-packages\mcp\shared\session.py", line 286, in send_request
+      |     raise McpError(response_or_error.error)
+      | mcp.shared.exceptions.McpError: Connection closed
+      +------------------------------------
+2025-08-07 14:18:46,837 - __main__ - ERROR - Failed to run chatbot: unhandled errors in a TaskGroup (1 sub-exception)
+2025-08-07 14:18:46,840 - asyncio - ERROR - unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<load_mcp_tools() done, defined at C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py:144> exception=UnboundLocalError("cannot access local variable 'tools' where it is not associated with a value")>
+Traceback (most recent call last):
+  File "C:\Users\ran\Anaconda3\Lib\site-packages\langchain_mcp_adapters\tools.py", line 175, in load_mcp_tools
+    convert_mcp_tool_to_langchain_tool(session, tool, connection=connection) for tool in tools
+                                                                                         ^^^^^
+UnboundLocalError: cannot access local variable 'tools' where it is not associated with a value
+2025-08-07 14:54:57,618 - __main__ - INFO - Setting up MCP integration...
+2025-08-07 14:54:57,618 - __main__ - INFO - MCP imports loaded successfully
+2025-08-07 14:54:57,619 - asyncio - DEBUG - Using selector: EpollSelector
+2025-08-07 14:54:57,619 - __main__ - INFO - Initializing SchedulingChatbot with MCP...
+2025-08-07 14:54:57,625 - __main__ - INFO - MCP client initialized with scheduler and mem0 servers
+2025-08-07 14:54:57,625 - __main__ - INFO - Using model: gpt-4o
+2025-08-07 14:54:59,370 - __main__ - INFO - Getting tools from MCP servers...
+2025-08-07 14:54:59,397 - __main__ - ERROR - Failed to initialize MCP tools: unhandled errors in a TaskGroup (1 sub-exception)
+  + Exception Group Traceback (most recent call last):
+  |   File "/mnt/c/Users/ran/Desktop/new_canlah/schedular/core/langgraph_scheduler.py", line 82, in initialize
+  |     self.tools = await self.client.get_tools()
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/client.py", line 142, in get_tools
+  |     tools_list = await asyncio.gather(*load_mcp_tool_tasks)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/tools.py", line 168, in load_mcp_tools
+  |     async with create_session(connection) as tool_session:
+  |   File "/home/ran/miniconda3/lib/python3.12/contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/sessions.py", line 394, in create_session
+  |     async with _create_stdio_session(**params) as session:
+  |   File "/home/ran/miniconda3/lib/python3.12/contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/sessions.py", line 220, in _create_stdio_session
+  |     async with (
+  |   File "/home/ran/miniconda3/lib/python3.12/contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/home/ran/miniconda3/lib/python3.12/site-packages/mcp/client/stdio/__init__.py", line 180, in stdio_client
+  |     async with (
+  |   File "/home/ran/miniconda3/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "/home/ran/miniconda3/lib/python3.12/site-packages/mcp/client/stdio/__init__.py", line 187, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/sessions.py", line 220, in _create_stdio_session
+    |     async with (
+    |   File "/home/ran/miniconda3/lib/python3.12/site-packages/mcp/shared/session.py", line 218, in __aexit__
+    |     return await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/ran/miniconda3/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/sessions.py", line 224, in _create_stdio_session
+      |     yield session
+      |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/sessions.py", line 395, in create_session
+      |     yield session
+      |   File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/tools.py", line 169, in load_mcp_tools
+      |     await tool_session.initialize()
+      |   File "/home/ran/miniconda3/lib/python3.12/site-packages/mcp/client/session.py", line 151, in initialize
+      |     result = await self.send_request(
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "/home/ran/miniconda3/lib/python3.12/site-packages/mcp/shared/session.py", line 286, in send_request
+      |     raise McpError(response_or_error.error)
+      | mcp.shared.exceptions.McpError: Connection closed
+      +------------------------------------
+2025-08-07 14:54:59,402 - __main__ - ERROR - Failed to run chatbot: unhandled errors in a TaskGroup (1 sub-exception)
+2025-08-07 14:54:59,403 - asyncio - ERROR - unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<load_mcp_tools() done, defined at /home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/tools.py:144> exception=UnboundLocalError("cannot access local variable 'tools' where it is not associated with a value")>
+Traceback (most recent call last):
+  File "/home/ran/miniconda3/lib/python3.12/site-packages/langchain_mcp_adapters/tools.py", line 175, in load_mcp_tools
+    convert_mcp_tool_to_langchain_tool(session, tool, connection=connection) for tool in tools
+                                                                                         ^^^^^
+UnboundLocalError: cannot access local variable 'tools' where it is not associated with a value
