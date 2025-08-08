@@ -10,16 +10,14 @@ from typing import List, Optional, Dict, Any
 from supabase import Client
 from models import TaskType, TaskTypeSimilarity, initialize_neutral_weekly_habit_array, initialize_slot_confidence
 from datetime import datetime
-
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from .config import get_openai_client, get_instructor_client
+from .models import TaskPatternAnalysis
 
 
 class TaskTypeService:
     def __init__(self, supabase: Client, memory_service=None):
         self.supabase = supabase
-        self.openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.openai_client = openai.OpenAI(api_key=get_openai_client().openai_api_key)
         self.memory_service = memory_service  # SchedulerMemoryService instance
     
     def _parse_embedding(self, embedding_data: Any) -> Optional[List[float]]:
@@ -233,54 +231,8 @@ class TaskTypeService:
                 user_id, task_type, description
             )
         
-        function_schema = {
-            "name": "analyze_task_behavioral_patterns",
-            "description": "Analyze a task type and generate behavioral scheduling patterns",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "time_patterns": {
-                        "type": "string",
-                        "description": "Compact time patterns: 'days:hour_start-hour_end:preference_score'. Days: 0-6=Mon-Sun, 0-4=weekdays, 5-6=weekend. Example: '0-4:9-17:0.8,5-6:10-14:0.6'"
-                    },
-                    "base_confidence": {
-                        "type": "number",
-                        "description": "Base confidence level for all time slots (0.0-1.0). Will be used to initialize the entire 7×24 confidence matrix",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                    },
-                    "cognitive_load": {
-                        "type": "number",
-                        "description": "Cognitive demand of the task (0.0=very easy, 1.0=very demanding)",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                    },
-                    "typical_duration": {
-                        "type": "number",
-                        "description": "Expected duration in hours for this type of task",
-                        "minimum": 0.25,
-                        "maximum": 8.0
-                    },
-                    "importance_score": {
-                        "type": "number",
-                        "description": "General importance level (0.0=low priority, 1.0=critical)",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                    },
-                    "recovery_hours": {
-                        "type": "number",
-                        "description": "Buffer time needed after completing this task type (in hours)",
-                        "minimum": 0.0,
-                        "maximum": 4.0
-                    },
-                    "analysis_reasoning": {
-                        "type": "string",
-                        "description": "Brief explanation of the behavioral pattern analysis"
-                    }
-                },
-                "required": ["time_patterns", "base_confidence", "cognitive_load", "typical_duration", "importance_score", "recovery_hours", "analysis_reasoning"]
-            }
-        }
+        # Get instructor client for structured outputs
+        instructor_client = get_instructor_client()
         
         context = f"""
 Analyze the following task type and generate behavioral scheduling patterns:
@@ -337,8 +289,10 @@ Be specific! Generate patterns that match the described preferences.
 """
         
         try:
-            response = self.openai_client.chat.completions.create(
+            # Use instructor for structured output
+            result = instructor_client.chat.completions.create(
                 model="gpt-4o",
+                response_model=TaskPatternAnalysis,
                 messages=[
                     {
                         "role": "system", 
@@ -349,52 +303,44 @@ Be specific! Generate patterns that match the described preferences.
                         "content": context
                     }
                 ],
-                functions=[function_schema],
-                function_call={"name": "analyze_task_behavioral_patterns"},
-                temperature=0.3
+                temperature=0.3,
+                max_retries=3
             )
             
-            function_call = response.choices[0].message.function_call
-            if function_call and function_call.name == "analyze_task_behavioral_patterns":
-                import json
-                result = json.loads(function_call.arguments)
-                
-                print(f"   🤖 LLM Analysis: {result.get('analysis_reasoning', 'No reasoning provided')}")
-                
-                # Parse compact format and expand into full arrays
-                time_patterns = result.get('time_patterns', '')
-                base_confidence = result.get('base_confidence', 0.4)
-                
-                print(f"   📋 Time patterns: '{time_patterns}'")
-                print(f"   🎯 Base confidence: {base_confidence:.2f}")
-                
-                # Expand time patterns into 168-element weekly habit scores
-                weekly_scores = self._expand_time_patterns_to_weekly_scores(time_patterns)
-                if not weekly_scores:
-                    print(f"   ⚠️ Could not parse time patterns, using fallback")
-                    weekly_scores = self._generate_fallback_weekly_scores(task_type)
-                else:
-                    print(f"   ✅ Successfully parsed time patterns into weekly scores")
-                    # Show some sample scores for verification
-                    sample_morning = [weekly_scores[i*24 + 8] for i in range(7)]  # 8 AM each day
-                    sample_afternoon = [weekly_scores[i*24 + 14] for i in range(7)]  # 2 PM each day
-                    print(f"   📊 Morning (8AM) scores: {[f'{s:.1f}' for s in sample_morning]}")
-                    print(f"   📊 Afternoon (2PM) scores: {[f'{s:.1f}' for s in sample_afternoon]}")
-                
-                # Create confidence matrix from base confidence
-                slot_conf = self._create_confidence_matrix_from_base(base_confidence)
-                
-                return {
-                    'weekly_habit_scores': weekly_scores,
-                    'slot_confidence': slot_conf,
-                    'cognitive_load': max(0.0, min(1.0, result.get('cognitive_load', 0.5))),
-                    'typical_duration': max(0.25, min(8.0, result.get('typical_duration', 1.0))),
-                    'importance_score': max(0.0, min(1.0, result.get('importance_score', 0.5))),
-                    'recovery_hours': max(0.0, min(4.0, result.get('recovery_hours', 0.5))),
-                    'reasoning': result.get('analysis_reasoning', '')
-                }
+            print(f"   🤖 LLM Analysis: {result.analysis_reasoning}")
+            
+            # Parse compact format and expand into full arrays
+            time_patterns = result.time_patterns
+            base_confidence = result.base_confidence
+            
+            print(f"   📋 Time patterns: '{time_patterns}'")
+            print(f"   🎯 Base confidence: {base_confidence:.2f}")
+            
+            # Expand time patterns into 168-element weekly habit scores
+            weekly_scores = self._expand_time_patterns_to_weekly_scores(time_patterns)
+            if not weekly_scores:
+                print(f"   ⚠️ Could not parse time patterns, using fallback")
+                weekly_scores = self._generate_fallback_weekly_scores(task_type)
             else:
-                raise ValueError("LLM did not return expected function call")
+                print(f"   ✅ Successfully parsed time patterns into weekly scores")
+                # Show some sample scores for verification
+                sample_morning = [weekly_scores[i*24 + 8] for i in range(7)]  # 8 AM each day
+                sample_afternoon = [weekly_scores[i*24 + 14] for i in range(7)]  # 2 PM each day
+                print(f"   📊 Morning (8AM) scores: {[f'{s:.1f}' for s in sample_morning]}")
+                print(f"   📊 Afternoon (2PM) scores: {[f'{s:.1f}' for s in sample_afternoon]}")
+            
+            # Create confidence matrix from base confidence
+            slot_conf = self._create_confidence_matrix_from_base(base_confidence)
+            
+            return {
+                'weekly_habit_scores': weekly_scores,
+                'slot_confidence': slot_conf,
+                'cognitive_load': max(0.0, min(1.0, result.cognitive_load)),
+                'typical_duration': max(0.25, min(8.0, result.typical_duration)),
+                'importance_score': max(0.0, min(1.0, result.importance_score)),
+                'recovery_hours': max(0.0, min(4.0, result.recovery_hours)),
+                'reasoning': result.analysis_reasoning
+            }
                 
         except Exception as e:
             print(f"❌ Error analyzing task patterns with LLM: {e}")

@@ -9,9 +9,11 @@ import json
 import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional, Tuple
+from langchain_core.tools import tool
 from models import TaskType, Event, SchedulingResult
-from task_type_service import TaskTypeService
-from db_service import DatabaseService
+from .task_type_service import TaskTypeService
+from .db_service import DatabaseService
+from .config import get_openai_client
 
 # Configure logging for scheduler service
 logger = logging.getLogger(__name__)
@@ -24,45 +26,51 @@ class SchedulerService:
     # PUBLIC SCHEDULING METHODS
     # ============================================================================
     
-    # @tool  # Removed - tool wrapper is created in API layer
+    @tool
     async def schedule_with_pattern(self,
                                    user_id: str,
-                                   start: str = None,
-                                   end: str = None,
-                                   timeZone: str = None,
-                                   summary: str = None,
-                                   description: str = None,
-                                   location: str = None,
-                                   category: str = None,
+                                   start: str | None = None,
+                                   end: str | None = None,
+                                   timeZone: str | None = None,
+                                   summary: str | None = None,
+                                   description: str | None = None,
+                                   location: str | None = None,
+                                   category: str | None = None,
                                    duration: float = 1.0,
                                    importance_score: float = 0.5,
-                                   deadline: str = None,
-                                   available_periods: Optional[List[Tuple[datetime, datetime]]] = None) -> Dict:
+                                   deadline: str | None = None,
+                                   available_periods: str | None = None) -> str:
         """
         Creates a NEW calendar event with the provided details using pattern-based scheduling.
         Routes to LLM if similarity < 0.4 threshold.
 
         Args:
             user_id (str): The user's ID to use their specific credentials
-            start (str): Event start time in ISO 8601 format.
-            end (str): Event end time in ISO 8601 format.
-            timeZone (str, optional): User timezone as IANA Time Zone name.
+            start (str, optional): Event start time in ISO 8601 format. Defaults to None.
+            end (str, optional): Event end time in ISO 8601 format. Defaults to None.
+            timeZone (str, optional): User timezone as IANA Time Zone name. Defaults to None.
             summary (str, optional): Short title/description of the event. Defaults to None.
+            description (str, optional): Detailed description of the event. Defaults to None.
             location (str, optional): Location of the event. Defaults to None.
-            category (str): If user provide a start time or a fixed time, the category will be "Event", 
-                          else if no time or only a deadline, the category will be "Task".
-            duration: Duration in hours (default: 1.0)
-            importance_score: Task importance 0.0-1.0 (default: 0.5)
-            deadline: Optional deadline in ISO 8601 format
-            available_periods: Optional time periods to search within
+            category (str, optional): If user provide a start time or a fixed time, the category will be "Event", 
+                          else if no time or only a deadline, the category will be "Task". Defaults to None.
+            duration (float): Duration in hours. Defaults to 1.0.
+            importance_score (float): Task importance 0.0-1.0 (0.0=low priority, 1.0=critical). Defaults to 0.5.
+            deadline (str, optional): Optional deadline in ISO 8601 format. Defaults to None.
+            available_periods (str, optional): Time periods to search within. Format: "start1,end1;start2,end2" 
+                          where each date is in ISO 8601 format. Example: "2024-01-15T09:00:00,2024-01-15T17:00:00;2024-01-16T09:00:00,2024-01-16T17:00:00". Defaults to None.
             
         Returns:
-            str: Brief message if successful with Firebase ID 
+            str: Event ID if successful, or error message if failed
         """
         
+        logger.info("🔧 SCHEDULER TOOL INVOKED")
         logger.info(f"📅 SCHEDULE START: User {user_id}, task '{summary}', duration {duration}h")
         logger.info(f"📅 SCHEDULE PARAMS: start={start}, end={end}, timezone={timeZone}")
-        logger.info(f"📅 SCHEDULE PARAMS: importance={importance_score}, deadline={deadline}, description='{description or 'None'}'")
+        logger.info(f"📅 SCHEDULE PARAMS: importance={importance_score}, deadline={deadline}")
+        logger.info(f"📅 SCHEDULE PARAMS: location='{location}', category='{category}'")
+        logger.info(f"📅 SCHEDULE PARAMS: available_periods='{available_periods}'")
+        logger.info(f"📅 SCHEDULE PARAMS: description='{description or 'None'}'")
         
         # Parse deadline if provided
         parsed_deadline = None
@@ -87,7 +95,11 @@ class SchedulerService:
         
         # Fetch existing events for collision detection (for all scheduling types)
         if is_auto_schedule:
-            time_periods = self._setup_time_periods(available_periods)
+            # Parse available_periods string if provided
+            parsed_periods = None
+            if available_periods:
+                parsed_periods = self._parse_available_periods_string(available_periods)
+            time_periods = self._setup_time_periods(parsed_periods)
             all_existing_events = await self._fetch_existing_events(user_id, time_periods)
         else:
             # For direct scheduling, fetch events in a broader range for collision detection
@@ -735,6 +747,43 @@ class SchedulerService:
             return dt.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
         else:
             return dt.replace(minute=0, second=0, microsecond=0)
+
+    def _parse_available_periods_string(self, periods_str: str) -> List[Tuple[datetime, datetime]]:
+        """Parse available_periods string format into list of datetime tuples
+        
+        Format: "start1,end1;start2,end2" where dates are ISO 8601
+        Example: "2024-01-15T09:00:00,2024-01-15T17:00:00;2024-01-16T09:00:00,2024-01-16T17:00:00"
+        """
+        try:
+            periods = []
+            if not periods_str.strip():
+                return periods
+                
+            # Split by semicolon to get individual periods
+            period_parts = periods_str.split(';')
+            
+            for period_part in period_parts:
+                period_part = period_part.strip()
+                if not period_part:
+                    continue
+                    
+                # Split by comma to get start and end
+                start_str, end_str = period_part.split(',')
+                start_str = start_str.strip()
+                end_str = end_str.strip()
+                
+                # Parse ISO 8601 format
+                start_dt = datetime.fromisoformat(start_str.replace('Z', '+00:00'))
+                end_dt = datetime.fromisoformat(end_str.replace('Z', '+00:00'))
+                
+                periods.append((start_dt, end_dt))
+                
+            logger.info(f"📅 Parsed {len(periods)} available periods from string")
+            return periods
+            
+        except Exception as e:
+            logger.error(f"📅 Error parsing available_periods string '{periods_str}': {e}")
+            return []
 
     def _setup_time_periods(self, available_periods: Optional[List[Tuple[datetime, datetime]]] = None) -> List[Tuple[datetime, datetime]]:
         """Set up time periods for scheduling"""
