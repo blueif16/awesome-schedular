@@ -64,7 +64,7 @@ async def schedule_with_pattern(
     start: str | None = None,
     end: str | None = None,
     timeZone: str | None = None,
-    summary: str | None = None,
+    title: str | None = None,
     description: str | None = None,
     location: str | None = None,
     category: str | None = None,
@@ -82,7 +82,7 @@ async def schedule_with_pattern(
         start (str, optional): Event start time in ISO 8601 format. Defaults to None.
         end (str, optional): Event end time in ISO 8601 format. Defaults to None.
         timeZone (str, optional): User timezone as IANA Time Zone name. Defaults to None.
-        summary (str, optional): Short title/description of the event. Defaults to None.
+        title (str, optional): Short title/description of the event. Defaults to None.
         description (str, optional): Detailed description of the event. Defaults to None.
         location (str, optional): Location of the event. Defaults to None.
         category (str, optional): If user provide a start time or a fixed time, the category will be "Event", 
@@ -98,7 +98,7 @@ async def schedule_with_pattern(
     """
     
     logger.info("SCHEDULER MCP TOOL INVOKED")
-    logger.info(f"SCHEDULE START: User {user_id}, task '{summary}', duration {duration}h")
+    logger.info(f"SCHEDULE START: User {user_id}, task '{title}', duration {duration}h")
     logger.info(f"SCHEDULE PARAMS: start={start}, end={end}, timezone={timeZone}")
     logger.info(f"SCHEDULE PARAMS: importance={importance_score}, deadline={deadline}")
     logger.info(f"SCHEDULE PARAMS: location='{location}', category='{category}'")
@@ -112,7 +112,7 @@ async def schedule_with_pattern(
             start=start,
             end=end,
             timeZone=timeZone,
-            summary=summary,
+            title=title,
             description=description,
             location=location,
             category=category,

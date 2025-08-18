@@ -26,13 +26,12 @@ class SchedulerService:
     # PUBLIC SCHEDULING METHODS
     # ============================================================================
     
-    @tool
     async def schedule_with_pattern(self,
                                    user_id: str,
                                    start: str | None = None,
                                    end: str | None = None,
                                    timeZone: str | None = None,
-                                   summary: str | None = None,
+                                   title: str | None = None,
                                    description: str | None = None,
                                    location: str | None = None,
                                    category: str | None = None,
@@ -49,7 +48,7 @@ class SchedulerService:
             start (str, optional): Event start time in ISO 8601 format. Defaults to None.
             end (str, optional): Event end time in ISO 8601 format. Defaults to None.
             timeZone (str, optional): User timezone as IANA Time Zone name. Defaults to None.
-            summary (str, optional): Short title/description of the event. Defaults to None.
+            title (str, optional): Short title/description of the event. Defaults to None.
             description (str, optional): Detailed description of the event. Defaults to None.
             location (str, optional): Location of the event. Defaults to None.
             category (str, optional): If user provide a start time or a fixed time, the category will be "Event", 
@@ -65,7 +64,7 @@ class SchedulerService:
         """
         
         logger.info("🔧 SCHEDULER TOOL INVOKED")
-        logger.info(f"📅 SCHEDULE START: User {user_id}, task '{summary}', duration {duration}h")
+        logger.info(f"📅 SCHEDULE START: User {user_id}, task '{title}', duration {duration}h")
         logger.info(f"📅 SCHEDULE PARAMS: start={start}, end={end}, timezone={timeZone}")
         logger.info(f"📅 SCHEDULE PARAMS: importance={importance_score}, deadline={deadline}")
         logger.info(f"📅 SCHEDULE PARAMS: location='{location}', category='{category}'")
@@ -82,12 +81,22 @@ class SchedulerService:
                 logger.warning(f"📅 DEADLINE WARNING: Invalid deadline format '{deadline}': {e}")
         
         # Validate required parameters
-        if not summary:
-            logger.error("📅 SCHEDULE ERROR: Summary/title is required")
-            raise ValueError("Summary/title is required for scheduling")
+        if not title:
+            logger.error(" SCHEDULE ERROR: Title is required")
+            raise ValueError("Title is required for scheduling")
         
         # Determine if this is auto-schedule or direct schedule
         is_auto_schedule = not (start and end)
+        
+        # Map category to item_type and auto_schedule fields
+        if category == "Event":
+            item_type = "event"
+            auto_schedule = False  # Events are fixed-time
+        else:
+            item_type = "task" 
+            auto_schedule = is_auto_schedule   # Tasks are movable by default
+        
+        logger.info(f" ITEM CLASSIFICATION: item_type='{item_type}', auto_schedule={auto_schedule}")
         
         # Setup common variables
         task_type_id = None
@@ -110,28 +119,28 @@ class SchedulerService:
             time_periods = [(query_start, query_end)]
             all_existing_events = await self._fetch_existing_events(user_id, time_periods)
         
-        logger.info(f"📅 EXISTING EVENTS: Found {len(all_existing_events)} events for collision check")
+        logger.info(f" EXISTING EVENTS: Found {len(all_existing_events)} events for collision check")
         
         if is_auto_schedule:
             # Auto-scheduling: Pattern-based scheduling
-            logger.info(f"🎯 AUTO-SCHEDULING: Finding optimal time slot using patterns")
+            logger.info(f" AUTO-SCHEDULING: Finding optimal time slot using patterns")
             
             existing_events = all_existing_events  # Use all events for pattern scheduling
             
             # Find similar task type via RAG/similarity search
-            logger.info(f"🔍 SIMILARITY SEARCH: Looking for similar task types")
-            similar_task = await self.task_type_service.find_similar_task_type(user_id, summary)
+            logger.info(f" SIMILARITY SEARCH: Looking for similar task types")
+            similar_task, embedding = await self.task_type_service.find_similar_task_type(user_id, title, description)
             
             if similar_task and similar_task.similarity >= 0.4:
                 task_type = similar_task.task_type
-                logger.info(f"🎯 PATTERN SCHEDULING: Using '{task_type.task_type}' (similarity: {similar_task.similarity:.3f}, completions: {task_type.completion_count})")
+                logger.info(f" PATTERN SCHEDULING: Using '{task_type.task_type}' (similarity: {similar_task.similarity:.3f}, completions: {task_type.completion_count})")
                 task_type_id = str(task_type.id)
             else:
-                # Create new task type when similarity < 0.4
+                # Create new task type when similarity < 0.4, reuse embedding
                 similarity_msg = f"similarity: {similar_task.similarity:.3f}" if similar_task else "no matches found"
-                logger.info(f"🆕 CREATING NEW TASK TYPE: {similarity_msg} < 0.4 threshold")
-                task_type = await self.task_type_service.create_task_type(user_id, summary, description)
-                logger.info(f"🆕 NEW TASK TYPE: Created '{task_type.task_type}' with LLM-generated patterns")
+                logger.info(f" CREATING NEW TASK TYPE: {similarity_msg} < 0.4 threshold")
+                task_type = await self.task_type_service.create_task_type(user_id, title, description, embedding)
+                logger.info(f" NEW TASK TYPE: Created '{task_type.task_type}' with LLM-generated patterns")
                 task_type_id = str(task_type.id)
             
             # Find optimal slot using behavioral patterns
@@ -140,7 +149,7 @@ class SchedulerService:
             )
             
             if not optimal_result:
-                logger.error("🔍 SLOT FINDING ERROR: No available time slots found")
+                logger.error(" SLOT FINDING ERROR: No available time slots found")
                 raise ValueError("No available time slots found using pattern-based scheduling")
                 
             optimal_slot = optimal_result['optimal_slot']
@@ -148,19 +157,19 @@ class SchedulerService:
             
         else:
             # Direct scheduling - user provided specific times with collision detection
-            logger.info(f"🎯 DIRECT SCHEDULING: User provided start/end times")
+            logger.info(f" DIRECT SCHEDULING: User provided start/end times")
             
             try:
                 scheduled_start = datetime.fromisoformat(start.replace('Z', '+00:00'))
                 scheduled_end = datetime.fromisoformat(end.replace('Z', '+00:00'))
-                logger.info(f"🎯 DIRECT SCHEDULING: Parsed times - start: {scheduled_start}, end: {scheduled_end}")
+                logger.info(f" DIRECT SCHEDULING: Parsed times - start: {scheduled_start}, end: {scheduled_end}")
                 
                 # For direct scheduling, always displace conflicting movable events (100% priority)
                 conflicting_events = self._find_conflicting_events(scheduled_start, scheduled_end, all_existing_events)
-                movable_conflicts = [e for e in conflicting_events if e.get('task_type_id')]  # Only movable events
+                movable_conflicts = [e for e in conflicting_events if e.get('auto_schedule', False)]  # Only auto-schedulable events
                 
                 if movable_conflicts:
-                    logger.info(f"🔄 DIRECT SCHEDULE DISPLACEMENT: Moving {len(movable_conflicts)} conflicting auto-scheduled events")
+                    logger.info(f" DIRECT SCHEDULE DISPLACEMENT: Moving {len(movable_conflicts)} conflicting auto-scheduled events")
                     await self._displace_conflicting_events(movable_conflicts)
                 
                 optimal_slot = {
@@ -171,7 +180,7 @@ class SchedulerService:
                 scheduling_method = "direct_schedule"
                 
             except Exception as e:
-                logger.error(f"🎯 DIRECT SCHEDULING ERROR: Invalid time format: {e}")
+                logger.error(f" DIRECT SCHEDULING ERROR: Invalid time format: {e}")
                 raise ValueError(f"Invalid start/end time format: {e}")
         
         # Single event creation for both auto and direct scheduling
@@ -191,12 +200,17 @@ class SchedulerService:
             
             event_id = await self.db_service.create_event(
                 user_id=user_id,
-                title=summary,
+                title=title,
                 description=description,
                 scheduled_start=optimal_slot['start_time'],
                 scheduled_end=optimal_slot['end_time'],
                 task_type_id=task_type_id,
-                calculated_priority=importance_score,
+                item_type=item_type,
+                auto_schedule=auto_schedule,
+                alternative_slots=alternative_slots,
+                timezone=timeZone or "UTC",
+                location=location,
+                importance_score=importance_score,
                 deadline=parsed_deadline
             )
             logger.info(f"DATABASE_CREATE_SUCCESS: Event created with ID: {event_id}, {len(alternative_slots)} alternatives stored")
@@ -377,7 +391,7 @@ class SchedulerService:
             
             # Remove segments blocked by fixed events
             for event in fixed_events:
-                if not event.get('task_type_id'):  # Fixed event (no task_type_id)
+                if not event.get('auto_schedule', True):  # Fixed event (auto_schedule=False)
                     event_start = event['scheduled_start']
                     event_end = event['scheduled_end']
                     
@@ -467,9 +481,9 @@ class SchedulerService:
         # 🔧 FIX: Get user energy pattern once to avoid repeated DB queries
         user_energy_pattern = await self._get_user_energy_pattern(user_id)
         
-        # Separate fixed and movable events
-        fixed_events = [e for e in existing_events if not e.get('task_type_id')]
-        movable_events = [e for e in existing_events if e.get('task_type_id')]
+        # Separate fixed and movable events - updated to use auto_schedule
+        fixed_events = [e for e in existing_events if not e.get('auto_schedule', True)]
+        movable_events = [e for e in existing_events if e.get('auto_schedule', True)]
         
         logger.info(f"EVENTS_BREAKDOWN: {len(fixed_events)} fixed events, {len(movable_events)} movable events")
         
@@ -547,7 +561,7 @@ class SchedulerService:
                         # Reschedule it (recursive call)
                         await self.schedule_with_pattern(
                             user_id=displaced_event['user_id'],
-                            summary=displaced_event['title'],
+                            title=displaced_event['title'],
                             description=displaced_event.get('description'),
                             duration=(displaced_event['scheduled_end'] - displaced_event['scheduled_start']).total_seconds() / 3600,
                             importance_score=displaced_event.get('priority_score', 0.5),
@@ -605,8 +619,8 @@ class SchedulerService:
             event_end = event['scheduled_end']
             
             if (start_time < event_end and end_time > event_start):
-                # Check if event is movable (has task_type_id) or immovable
-                if event.get('task_type_id'):
+                # Check if event is movable (auto_schedule=True) or immovable
+                if event.get('auto_schedule', True):
                     conflicting_events.append(event)
                 else:
                     immovable_conflicts.append(event)
@@ -816,9 +830,9 @@ class SchedulerService:
             earliest_start = min(period[0] for period in time_periods)
             latest_end = max(period[1] for period in time_periods)
             
-            # Query events from database
+            # Query events from database - updated for new unified schema
             result = self.task_type_service.supabase.table("events") \
-                .select("id, user_id, task_type_id, title, description, scheduled_start, scheduled_end, fit_score, priority_score, alternative_slots") \
+                .select("id, user_id, task_type_id, title, description, scheduled_start, scheduled_end, item_type, auto_schedule, alternative_slots, importance_score, fit_score") \
                 .eq("user_id", user_id) \
                 .gte("scheduled_start", earliest_start.isoformat()) \
                 .lte("scheduled_end", latest_end.isoformat()) \
@@ -826,7 +840,7 @@ class SchedulerService:
             
             existing_events = []
             for event_data in result.data:
-                # Convert to our expected format
+                # Convert to our expected format - updated for new unified schema
                 existing_events.append({
                     "id": event_data["id"],
                     "user_id": event_data["user_id"],
@@ -835,8 +849,10 @@ class SchedulerService:
                     "description": event_data.get("description"),
                     "scheduled_start": datetime.fromisoformat(event_data["scheduled_start"]),
                     "scheduled_end": datetime.fromisoformat(event_data["scheduled_end"]),
+                    "item_type": event_data.get("item_type", "task"),
+                    "auto_schedule": event_data.get("auto_schedule", True),
                     "fit_score": event_data.get("fit_score", 0.5),
-                    "priority_score": event_data.get("priority_score", 0.5),
+                    "priority_score": event_data.get("importance_score", 0.5),  # Map importance_score to priority_score
                     "alternative_slots": event_data.get("alternative_slots", [])
                 })
             
@@ -1065,7 +1081,7 @@ Be concise! Output only the pattern string.
                     duration = (event['scheduled_end'] - event['scheduled_start']).total_seconds() / 3600
                     await self.schedule_with_pattern(
                         user_id=event['user_id'],
-                        summary=event['title'],
+                        title=event['title'],
                         description=event.get('description'),
                         duration=duration,
                         importance_score=0.5

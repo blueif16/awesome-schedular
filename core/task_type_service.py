@@ -6,7 +6,7 @@ Handles task type creation, vector search, and similarity matching
 import openai
 import uuid
 import json
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 from supabase import Client
 from models import TaskType, TaskTypeSimilarity, initialize_neutral_weekly_habit_array, initialize_slot_confidence
 from datetime import datetime
@@ -59,8 +59,12 @@ class TaskTypeService:
     async def find_similar_task_type(self, user_id: str, 
                                    task_type: str,
                                    description: str = None,
-                                   threshold: float = 0.4) -> Optional[TaskTypeSimilarity]:
-        """Find similar task type using vector search"""
+                                   threshold: float = 0.4) -> Tuple[Optional[TaskTypeSimilarity], List[float]]:
+        """Find similar task type using vector search
+        
+        Returns:
+            tuple: (TaskTypeSimilarity or None, embedding) - Returns embedding for reuse
+        """
         
         # First, let's see what task types this user already has
         try:
@@ -129,33 +133,44 @@ class TaskTypeService:
                 
                 # Only return the match if it meets the threshold
                 if best_similarity >= threshold:
-                    return TaskTypeSimilarity(
+                    return (TaskTypeSimilarity(
                         task_type=task_type_obj,
                         similarity=best_match['similarity']
-                    )
+                    ), embedding)
                 else:
                     # Return None but we've already logged the best match found
-                    return None
+                    return (None, embedding)
             else:
                 print(f"❌ RAG Search: No task types found for user {user_id}")
                 
         except Exception as e:
             print(f"❌ RAG Search Error: {e}")
             
-        return None
+        return (None, embedding)
     
     async def create_task_type(self, user_id: str, 
                              task_type: str, 
-                             description: Optional[str] = None) -> TaskType:
-        """Create new task type with LLM-analyzed behavioral patterns"""
+                             description: Optional[str] = None,
+                             embedding: Optional[List[float]] = None) -> TaskType:
+        """Create new task type with LLM-analyzed behavioral patterns
+        
+        Args:
+            user_id: User identifier
+            task_type: Name of the task type
+            description: Optional description
+            embedding: Pre-generated embedding to reuse (avoids duplicate API call)
+        """
         
         print(f"🆕 Creating new task type: '{task_type}' for user {user_id[:8]}...")
         if description:
             print(f"   📝 Description: {description}")
         
-        # Generate embedding from task type name only
-        embedding = self.generate_embedding(task_type)
-        print(f"   🧮 Generated embedding (dimensions: {len(embedding)})")
+        # Use provided embedding or generate new one
+        if embedding is None:
+            embedding = self.generate_embedding(task_type)
+            print(f"   🧮 Generated embedding (dimensions: {len(embedding)})")
+        else:
+            print(f"   🔄 Reusing provided embedding (dimensions: {len(embedding)})")
         
         # Use LLM to analyze task and generate behavioral patterns with Mem0 context
         print(f"   🤖 Analyzing task with LLM to generate behavioral patterns (with Mem0 context)...")
@@ -195,7 +210,8 @@ class TaskTypeService:
             data = result.data[0]
             
             print(f"✅ Task type created successfully!")
-            print(f"   🆔 ID: {data['id']}")
+            print(f"   🆔 ID: {data['id']} (UUID type)")
+            print(f"   🔗 ID as string: {str(data['id'])} (for references)")
             print(f"   📊 Completion count: {data['completion_count']}")
             print(f"   ⭐ Importance score: {data['importance_score']}")
             

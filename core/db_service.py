@@ -20,10 +20,15 @@ class DatabaseService:
                           scheduled_start: datetime,
                           scheduled_end: datetime,
                           task_type_id: Optional[str] = None,
-                          deadline: Optional[datetime] = None,
-                          calculated_priority: float = 0.5) -> str:
+                          item_type: str = "task",
+                          auto_schedule: bool = True,
+                          alternative_slots: Optional[list] = None,
+                          timezone: str = "UTC",
+                          location: Optional[str] = None,
+                          importance_score: float = 0.5,
+                          deadline: Optional[datetime] = None) -> str:
         """
-        Create a new event in the database
+        Create a new event in the database with unified schema
         
         Args:
             user_id: User identifier
@@ -32,8 +37,13 @@ class DatabaseService:
             scheduled_start: Event start time
             scheduled_end: Event end time
             task_type_id: Optional task type ID for pattern tracking
+            item_type: "task" or "event" to distinguish type
+            auto_schedule: Whether this event can be moved automatically
+            alternative_slots: List of alternative time slots
+            timezone: Event timezone
+            location: Optional event location
+            importance_score: Priority score (0.0-1.0)
             deadline: Optional deadline for urgency
-            calculated_priority: Priority score (0.0-1.0)
             
         Returns:
             str: Event ID if successful
@@ -45,7 +55,12 @@ class DatabaseService:
                 "description": description,
                 "scheduled_start": scheduled_start.isoformat(),
                 "scheduled_end": scheduled_end.isoformat(),
-                "calculated_priority": calculated_priority,
+                "item_type": item_type,
+                "auto_schedule": auto_schedule,
+                "alternative_slots": alternative_slots or [],
+                "timezone": timezone,
+                "location": location,
+                "importance_score": importance_score,
                 "completed": False
             }
             
